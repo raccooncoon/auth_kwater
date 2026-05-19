@@ -35,7 +35,6 @@ export default function App() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [codeLang, setCodeLang] = useState('react'); // react | spring
-  const [showStateInspector, setShowStateInspector] = useState(true);
 
   const triggerToast = (msg) => {
     setToastMessage(msg);
@@ -937,20 +936,9 @@ export default function App() {
 
               {/* Master Control Panel */}
               <div className="bg-slate-950 rounded-2xl border border-slate-800 p-6 space-y-6">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-                  <div className="flex items-center space-x-2">
-                    <Settings className="text-indigo-400 animate-spin-slow" size={20} />
-                    <span className="text-md font-bold text-slate-100">시뮬레이터 제어 센터</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button 
-                      onClick={() => setShowStateInspector(!showStateInspector)}
-                      className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5"
-                    >
-                      <Eye size={14} />
-                      <span>{showStateInspector ? "실시간 스키마 숨기기" : "실시간 스키마 보기"}</span>
-                    </button>
-                  </div>
+                <div className="flex items-center space-x-2 border-b border-slate-800 pb-4">
+                  <Settings className="text-indigo-400 animate-spin-slow" size={20} />
+                  <span className="text-md font-bold text-slate-100">시뮬레이터 제어 센터</span>
                 </div>
 
                 {/* Progress Indicators */}
@@ -1072,8 +1060,7 @@ export default function App() {
                   </div>
 
                   {/* Right Side: State Inspector */}
-                  {showStateInspector && (
-                    <div className="lg:col-span-5 space-y-6">
+                  <div className="lg:col-span-5 space-y-6">
                       
                       {/* Browser Local Storage Inspection */}
                       <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-lg">
@@ -1142,8 +1129,7 @@ export default function App() {
                         </div>
                       </div>
 
-                    </div>
-                  )}
+                  </div>
 
                 </div>
               </div>
@@ -2007,110 +1993,329 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-Water>`}</pre>
               <div>
                 <h2 className="text-3xl font-extrabold text-white tracking-tight mb-2">인증 API 엔드포인트 세부 명세</h2>
                 <p className="text-slate-400 text-lg leading-relaxed">
-                  인증 서버가 노출하는 RESTful API 엔드포인트 상세 사양서입니다.
+                  디지털플랫폼 통합인증 서버가 노출하는 OIDC 표준 엔드포인트 + K-Water 연동 전용 엔드포인트 + 하위 포털 백채널 로그아웃 수신 엔드포인트의 전체 명세입니다.
                 </p>
               </div>
 
-              {/* K-Water Callback Endpoint */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden mb-6">
-                <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
+              {/* Endpoint summary table */}
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-2">
+                  <Terminal className="text-indigo-400" size={18} />
+                  <h3 className="font-bold text-white text-base">엔드포인트 개요</h3>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs border-collapse text-slate-300">
+                    <thead>
+                      <tr className="border-b border-slate-800 text-slate-500 uppercase">
+                        <th className="py-2.5 px-5">Method</th>
+                        <th className="py-2.5 px-5">Path</th>
+                        <th className="py-2.5 px-5">분류</th>
+                        <th className="py-2.5 px-5">용도</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/40">
+                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">GET</span></td><td className="py-2 px-5 font-mono">/.well-known/openid-configuration</td><td className="py-2 px-5 text-slate-400">Discovery</td><td className="py-2 px-5 text-slate-400">메타데이터·엔드포인트·지원 알고리즘 자동 노출</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/jwks</td><td className="py-2 px-5 text-slate-400">Discovery</td><td className="py-2 px-5 text-slate-400">JWT 서명 검증용 공개 키 집합</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/authorize</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">사용자 인가 요청 (front-channel)</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/token</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">인가 코드 ↔ 토큰 교환 · Refresh Token 갱신</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/userinfo</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">Access Token으로 사용자 프로필 조회</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/logout</td><td className="py-2 px-5 text-slate-400">RP-Initiated Logout</td><td className="py-2 px-5 text-slate-400">사용자 발화 통합 로그아웃 시작점</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/introspect</td><td className="py-2 px-5 text-slate-400">RFC 7662</td><td className="py-2 px-5 text-slate-400">토큰 유효성/메타 정보 조회 (서버 간)</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/revoke</td><td className="py-2 px-5 text-slate-400">RFC 7009</td><td className="py-2 px-5 text-slate-400">개별 토큰 즉시 폐기</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/kwater/callback</td><td className="py-2 px-5 text-slate-400">K-Water 연동</td><td className="py-2 px-5 text-slate-400">K-Water 암호화 페이로드 수신·복호화·SSO 발급</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/kwater/backchannel-logout</td><td className="py-2 px-5 text-slate-400">RFC 8417 (수신)</td><td className="py-2 px-5 text-slate-400">K-Water가 호출 — 상위 SLO 수신</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">POST</span></td><td className="py-2 px-5 font-mono">{`{portal}/oauth2/v1/backchannel-logout`}</td><td className="py-2 px-5 text-slate-400">RFC 8417 (송신)</td><td className="py-2 px-5 text-slate-400">IdP가 각 포털 백엔드로 호출 — 하위 SLO 전파</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* ─── Discovery & Keys ─── */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-bold text-slate-300 tracking-wider uppercase flex items-center gap-2">
+                  <span className="w-1 h-4 bg-emerald-400 rounded"></span>
+                  Discovery & Keys
+                </h3>
+
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                  <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
                     <span className="bg-emerald-600/10 text-emerald-400 font-mono text-xs font-bold px-2 py-1 rounded border border-emerald-500/20">GET</span>
-                    <h3 className="font-bold text-white text-md">/oauth2/kwater/callback (K-Water 연동 및 SSO 세션 발급)</h3>
+                    <h4 className="font-bold text-white text-sm">/.well-known/openid-configuration</h4>
+                  </div>
+                  <div className="p-6 space-y-3 text-sm">
+                    <p className="text-slate-400">OIDC Discovery 표준 문서. 클라이언트·리소스 서버가 모든 엔드포인트·지원 알고리즘·JWKS URI를 자동 발견하도록 합니다.</p>
+                    <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK · 일부 발췌)</div>
+                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+  "issuer": "https://auth.kwater.com/oauth2/v1",
+  "authorization_endpoint": "https://auth.kwater.com/oauth2/v1/authorize",
+  "token_endpoint": "https://auth.kwater.com/oauth2/v1/token",
+  "userinfo_endpoint": "https://auth.kwater.com/oauth2/v1/userinfo",
+  "jwks_uri": "https://auth.kwater.com/oauth2/v1/jwks",
+  "end_session_endpoint": "https://auth.kwater.com/oauth2/v1/logout",
+  "introspection_endpoint": "https://auth.kwater.com/oauth2/v1/introspect",
+  "revocation_endpoint": "https://auth.kwater.com/oauth2/v1/revoke",
+  "response_types_supported": ["code"],
+  "grant_types_supported": ["authorization_code", "refresh_token"],
+  "id_token_signing_alg_values_supported": ["RS256"],
+  "backchannel_logout_supported": true,
+  "backchannel_logout_session_supported": true
+}`}</pre>
                   </div>
                 </div>
-                <div className="p-6 space-y-4">
-                  <p className="text-sm text-slate-400">K-Water 인증 시스템에서 암호화되어 전달된 페이로드(JWE 등)를 수신하고 복호화하여 디지털플랫폼 통합 SSO 세션을 생성합니다.</p>
-                  <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mb-1">Query Parameters</div>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs border-collapse text-slate-300">
-                      <thead>
-                        <tr className="border-b border-slate-800 text-slate-500">
-                          <th className="py-2 px-3 font-semibold">파라미터명</th>
-                          <th className="py-2 px-3 font-semibold">필수 여부</th>
-                          <th className="py-2 px-3 font-semibold">타입</th>
-                          <th className="py-2 px-3 font-semibold">설명</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-800/40">
-                        <tr>
-                          <td className="py-2 px-3 font-mono text-white">kwater_enc_payload</td>
-                          <td className="py-2 px-3 text-rose-400 font-semibold">Required</td>
-                          <td className="py-2 px-3">String</td>
-                          <td className="py-2 px-3 text-slate-400">K-Water에서 발급한 암호화된 사용자 정보 토큰.</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 px-3 font-mono text-white">state</td>
-                          <td className="py-2 px-3 text-rose-400 font-semibold">Required</td>
-                          <td className="py-2 px-3">String</td>
-                          <td className="py-2 px-3 text-slate-400">보안 검증을 위한 랜덤 state 파라미터.</td>
-                        </tr>
-                      </tbody>
-                    </table>
+
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                  <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
+                    <span className="bg-emerald-600/10 text-emerald-400 font-mono text-xs font-bold px-2 py-1 rounded border border-emerald-500/20">GET</span>
+                    <h4 className="font-bold text-white text-sm">/oauth2/v1/jwks</h4>
+                  </div>
+                  <div className="p-6 space-y-3 text-sm">
+                    <p className="text-slate-400">JWT 서명을 검증할 공개 키 집합. 리소스 서버가 캐싱(TTL 1시간 권장)하여 사용합니다. <code className="text-emerald-300">kid</code>로 회전된 키를 추적합니다.</p>
+                    <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK)</div>
+                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+  "keys": [
+    {
+      "kty": "RSA",
+      "kid": "key-2026-q2",
+      "use": "sig",
+      "alg": "RS256",
+      "n": "<modulus base64url>",
+      "e": "AQAB"
+    }
+  ]
+}`}</pre>
                   </div>
                 </div>
               </div>
 
-              {/* Authorization Code Endpoint */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-                <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <span className="bg-blue-600/10 text-blue-400 font-mono text-xs font-bold px-2 py-1 rounded border border-blue-500/20">GET</span>
-                    <h3 className="font-bold text-white text-md">/oauth2/v1/authorize (사용자 인가 요청)</h3>
+              {/* ─── OAuth/OIDC 핵심 흐름 ─── */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-bold text-slate-300 tracking-wider uppercase flex items-center gap-2">
+                  <span className="w-1 h-4 bg-indigo-400 rounded"></span>
+                  OAuth/OIDC 핵심 흐름
+                </h3>
+
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                  <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
+                    <span className="bg-emerald-600/10 text-emerald-400 font-mono text-xs font-bold px-2 py-1 rounded border border-emerald-500/20">GET</span>
+                    <h4 className="font-bold text-white text-sm">/oauth2/v1/authorize (사용자 인가 요청)</h4>
+                  </div>
+                  <div className="p-6 space-y-4">
+                    <p className="text-sm text-slate-400">사용자를 SSO 통합 로그인 화면으로 유도하거나, 하위 포털에서 Silent 인증을 요청하기 위한 관문 엔드포인트입니다.</p>
+                    <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mb-1">Query Parameters</div>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs border-collapse text-slate-300">
+                        <thead>
+                          <tr className="border-b border-slate-800 text-slate-500">
+                            <th className="py-2 px-3 font-semibold">파라미터명</th>
+                            <th className="py-2 px-3 font-semibold">필수 여부</th>
+                            <th className="py-2 px-3 font-semibold">타입</th>
+                            <th className="py-2 px-3 font-semibold">설명</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-800/40">
+                          <tr><td className="py-2 px-3 font-mono text-white">response_type</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3">String</td><td className="py-2 px-3 text-slate-400">반드시 <code className="text-slate-300">code</code></td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">client_id</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3">String</td><td className="py-2 px-3 text-slate-400">요청 포털 고유 식별자</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">redirect_uri</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3">String</td><td className="py-2 px-3 text-slate-400">인가 코드를 수신할 콜백 주소 (사전 등록 필수)</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">scope</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3">String</td><td className="py-2 px-3 text-slate-400">최소 <code className="text-slate-300">openid</code> 포함, 공백 구분</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">state</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3">String</td><td className="py-2 px-3 text-slate-400">CSRF 방지 일회용 무작위 값</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">prompt</td><td className="py-2 px-3 text-slate-400">Optional</td><td className="py-2 px-3">String</td><td className="py-2 px-3 text-slate-400"><code className="text-slate-300">none</code> 사용 시 Silent SSO</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">nonce</td><td className="py-2 px-3 text-slate-400">Optional</td><td className="py-2 px-3">String</td><td className="py-2 px-3 text-slate-400">Replay 방지용 — ID Token에 그대로 반환</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">code_challenge</td><td className="py-2 px-3 text-slate-400">Optional (PKCE)</td><td className="py-2 px-3">String</td><td className="py-2 px-3 text-slate-400">SPA·모바일 등 공용 클라이언트에서 권장</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
-                <div className="p-6 space-y-4">
-                  <p className="text-sm text-slate-400">사용자를 SSO 통합 로그인 화면으로 유도하거나, 하위 포털에서 Silent 인증을 요청하기 위한 관문 엔드포인트입니다.</p>
-                  <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mb-1">Query Parameters</div>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs border-collapse text-slate-300">
-                      <thead>
-                        <tr className="border-b border-slate-800 text-slate-500">
-                          <th className="py-2 px-3 font-semibold">파라미터명</th>
-                          <th className="py-2 px-3 font-semibold">필수 여부</th>
-                          <th className="py-2 px-3 font-semibold">타입</th>
-                          <th className="py-2 px-3 font-semibold">설명</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-800/40">
-                        <tr>
-                          <td className="py-2 px-3 font-mono text-white">response_type</td>
-                          <td className="py-2 px-3 text-rose-400 font-semibold">Required</td>
-                          <td className="py-2 px-3">String</td>
-                          <td className="py-2 px-3 text-slate-400">반드시 <code className="text-slate-300">code</code> 값이어야 합니다.</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 px-3 font-mono text-white">client_id</td>
-                          <td className="py-2 px-3 text-rose-400 font-semibold">Required</td>
-                          <td className="py-2 px-3">String</td>
-                          <td className="py-2 px-3 text-slate-400">요청 포털(통합 또는 특정 하위 포털)에 부여된 고유 식별자.</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 px-3 font-mono text-white">redirect_uri</td>
-                          <td className="py-2 px-3 text-rose-400 font-semibold">Required</td>
-                          <td className="py-2 px-3">String</td>
-                          <td className="py-2 px-3 text-slate-400">인가 코드를 수신할 해당 포털 도메인의 콜백 주소.</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 px-3 font-mono text-white">scope</td>
-                          <td className="py-2 px-3 text-rose-400 font-semibold">Required</td>
-                          <td className="py-2 px-3">String</td>
-                          <td className="py-2 px-3 text-slate-400">최소 <code className="text-slate-300">openid</code> 을 포함하며, 필요한 권한(예: <code className="text-slate-300">profile datahub:read</code>)을 공백으로 구분해 나열합니다.</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 px-3 font-mono text-white">state</td>
-                          <td className="py-2 px-3 text-rose-400 font-semibold">Required</td>
-                          <td className="py-2 px-3">String</td>
-                          <td className="py-2 px-3 text-slate-400">CSRF 방지를 위한 일회용 무작위 값. 클라이언트가 sessionStorage 에 저장한 값과 콜백 시 동일해야 합니다.</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 px-3 font-mono text-white">prompt</td>
-                          <td className="py-2 px-3 text-slate-400">Optional</td>
-                          <td className="py-2 px-3">String</td>
-                          <td className="py-2 px-3 text-slate-400">하위 포털 자동 연동 시 <code className="text-slate-300">none</code>을 주면 화면 전환 없이 세션 감지만 진행합니다.</td>
-                        </tr>
-                      </tbody>
-                    </table>
+
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                  <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
+                    <span className="bg-indigo-500/10 text-indigo-400 font-mono text-xs font-bold px-2 py-1 rounded border border-indigo-500/20">POST</span>
+                    <h4 className="font-bold text-white text-sm">/oauth2/v1/token (토큰 발급 · 갱신)</h4>
+                  </div>
+                  <div className="p-6 space-y-4">
+                    <p className="text-sm text-slate-400">인가 코드를 Access/Refresh Token으로 교환하거나, Refresh Token으로 새 토큰을 갱신(RTR)합니다. Confidential client는 <code className="text-indigo-300">client_secret</code> 필수, 공용 client는 PKCE 사용.</p>
+                    <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mb-1">Request Body (application/x-www-form-urlencoded)</div>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs border-collapse text-slate-300">
+                        <thead>
+                          <tr className="border-b border-slate-800 text-slate-500">
+                            <th className="py-2 px-3 font-semibold">파라미터명</th>
+                            <th className="py-2 px-3 font-semibold">필수 여부</th>
+                            <th className="py-2 px-3 font-semibold">설명</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-800/40">
+                          <tr><td className="py-2 px-3 font-mono text-white">grant_type</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3 text-slate-400"><code className="text-slate-300">authorization_code</code> 또는 <code className="text-slate-300">refresh_token</code></td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">code</td><td className="py-2 px-3 text-amber-400">Code 교환 시</td><td className="py-2 px-3 text-slate-400">/authorize에서 받은 일회용 인가 코드</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">refresh_token</td><td className="py-2 px-3 text-amber-400">갱신 시</td><td className="py-2 px-3 text-slate-400">HttpOnly 쿠키 또는 본문 어느 쪽으로든 가능</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">redirect_uri</td><td className="py-2 px-3 text-amber-400">Code 교환 시</td><td className="py-2 px-3 text-slate-400">/authorize에서 사용한 값과 정확히 일치</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">client_id</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3 text-slate-400">포털 식별자</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">client_secret</td><td className="py-2 px-3 text-amber-400">Confidential</td><td className="py-2 px-3 text-slate-400">백엔드 환경변수에서만 주입 (BFF·서버)</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">code_verifier</td><td className="py-2 px-3 text-amber-400">PKCE</td><td className="py-2 px-3 text-slate-400">/authorize에 보낸 challenge의 원본</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK)</div>
+                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+  "access_token": "eyJhbGciOiJSUzI1NiIs...",
+  "refresh_token": "rfr_771239ab8c19ef",
+  "id_token": "eyJhbGciOiJSUzI1NiIs...",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "scope": "openid profile datahub:read"
+}`}</pre>
+                  </div>
+                </div>
+
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                  <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
+                    <span className="bg-emerald-600/10 text-emerald-400 font-mono text-xs font-bold px-2 py-1 rounded border border-emerald-500/20">GET</span>
+                    <h4 className="font-bold text-white text-sm">/oauth2/v1/userinfo (사용자 프로필 조회)</h4>
+                  </div>
+                  <div className="p-6 space-y-3 text-sm">
+                    <p className="text-slate-400">Access Token으로 인증된 사용자의 프로필 정보를 반환합니다. <code className="text-emerald-300">Authorization: Bearer ...</code> 헤더 필수.</p>
+                    <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK)</div>
+                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+  "sub": "kwater_user_1234",
+  "name": "홍길동",
+  "email": "hong@kwater.or.kr",
+  "department": "수자원관리본부",
+  "role": "ADMIN",
+  "kwater_employee_id": "K012345"
+}`}</pre>
+                  </div>
+                </div>
+              </div>
+
+              {/* ─── K-Water 연동 ─── */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-bold text-slate-300 tracking-wider uppercase flex items-center gap-2">
+                  <span className="w-1 h-4 bg-sky-400 rounded"></span>
+                  K-Water 연동 (Upstream)
+                </h3>
+
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                  <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
+                    <span className="bg-emerald-600/10 text-emerald-400 font-mono text-xs font-bold px-2 py-1 rounded border border-emerald-500/20">GET</span>
+                    <h4 className="font-bold text-white text-sm">/oauth2/kwater/callback (K-Water 페이로드 수신)</h4>
+                  </div>
+                  <div className="p-6 space-y-4">
+                    <p className="text-sm text-slate-400">K-Water 인증 시스템에서 암호화 페이로드(JWE/SAML)를 수신·복호화하여 디지털플랫폼 통합 SSO 세션을 생성합니다.</p>
+                    <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mb-1">Query Parameters</div>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs border-collapse text-slate-300">
+                        <thead>
+                          <tr className="border-b border-slate-800 text-slate-500">
+                            <th className="py-2 px-3 font-semibold">파라미터명</th>
+                            <th className="py-2 px-3 font-semibold">필수 여부</th>
+                            <th className="py-2 px-3 font-semibold">설명</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-800/40">
+                          <tr><td className="py-2 px-3 font-mono text-white">kwater_enc_payload</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3 text-slate-400">K-Water가 발급한 암호화 사용자 정보 토큰 (JWE/SAML Assertion)</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">state</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3 text-slate-400">CSRF 방지 — 리다이렉트 시작 시 저장해둔 값과 일치 검증</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                  <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
+                    <span className="bg-indigo-500/10 text-indigo-400 font-mono text-xs font-bold px-2 py-1 rounded border border-indigo-500/20">POST</span>
+                    <h4 className="font-bold text-white text-sm">/oauth2/v1/kwater/backchannel-logout (K-Water 로그아웃 수신)</h4>
+                  </div>
+                  <div className="p-6 space-y-3 text-sm">
+                    <p className="text-slate-400">K-Water에서 사용자가 로그아웃하면 호출되는 엔드포인트. <code className="text-sky-300">logout_token</code> JWT 검증 후 디지털플랫폼 SSO 세션을 만료시키고 모든 하위 포털로 백채널 로그아웃을 전파합니다.</p>
+                    <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Request Body (application/x-www-form-urlencoded)</div>
+                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`logout_token=<JWT signed by K-Water, RFC 8417 §2.6>`}</pre>
+                    <p className="text-[11px] text-slate-400 leading-relaxed">검증: iss=K-Water · aud=우리 client_id · iat 신선도 · jti 재사용 차단 · events에 backchannel-logout 포함 · nonce 부재 · sub 또는 sid 식별.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* ─── 세션 관리 ─── */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-bold text-slate-300 tracking-wider uppercase flex items-center gap-2">
+                  <span className="w-1 h-4 bg-rose-400 rounded"></span>
+                  세션 · 토큰 관리
+                </h3>
+
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                  <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
+                    <span className="bg-emerald-600/10 text-emerald-400 font-mono text-xs font-bold px-2 py-1 rounded border border-emerald-500/20">GET</span>
+                    <h4 className="font-bold text-white text-sm">/oauth2/v1/logout (RP-Initiated Logout)</h4>
+                  </div>
+                  <div className="p-6 space-y-3 text-sm">
+                    <p className="text-slate-400">사용자가 임의 포털에서 로그아웃 클릭 시 브라우저가 이동하는 엔드포인트. SSO 세션 쿠키를 만료시키고 등록된 모든 포털로 백채널 로그아웃을 푸시합니다.</p>
+                    <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Query Parameters</div>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs border-collapse text-slate-300">
+                        <tbody className="divide-y divide-slate-800/40">
+                          <tr><td className="py-2 px-3 font-mono text-white">id_token_hint</td><td className="py-2 px-3 text-slate-400">사용자 식별 ID Token (권장)</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">post_logout_redirect_uri</td><td className="py-2 px-3 text-slate-400">로그아웃 완료 후 이동할 URL (사전 등록 필수)</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">state</td><td className="py-2 px-3 text-slate-400">CSRF 방지</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                  <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
+                    <span className="bg-indigo-500/10 text-indigo-400 font-mono text-xs font-bold px-2 py-1 rounded border border-indigo-500/20">POST</span>
+                    <h4 className="font-bold text-white text-sm">/oauth2/v1/introspect (토큰 검증 · RFC 7662)</h4>
+                  </div>
+                  <div className="p-6 space-y-3 text-sm">
+                    <p className="text-slate-400">리소스 서버가 Access Token의 유효성과 메타 정보를 IdP에 직접 묻는 엔드포인트. JWT 자체검증을 못 하거나 폐기 여부까지 확인하고 싶을 때 사용. <strong className="text-white">Confidential client만 호출 가능</strong>.</p>
+                    <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK)</div>
+                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+  "active": true,
+  "scope": "openid profile datahub:read",
+  "client_id": "datahub-portal-id",
+  "username": "kwater_user_1234",
+  "exp": 1716985593,
+  "iat": 1716981993,
+  "sub": "kwater_user_1234"
+}`}</pre>
+                    <p className="text-[11px] text-slate-400">폐기/만료된 토큰은 <code className="text-rose-300">{`{ "active": false }`}</code>만 반환.</p>
+                  </div>
+                </div>
+
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                  <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
+                    <span className="bg-indigo-500/10 text-indigo-400 font-mono text-xs font-bold px-2 py-1 rounded border border-indigo-500/20">POST</span>
+                    <h4 className="font-bold text-white text-sm">/oauth2/v1/revoke (토큰 폐기 · RFC 7009)</h4>
+                  </div>
+                  <div className="p-6 space-y-3 text-sm">
+                    <p className="text-slate-400">특정 Access Token 또는 Refresh Token을 즉시 무효화합니다. 사용자가 명시적으로 "이 기기에서 로그아웃"을 누르거나, 도난 감지 시 사용.</p>
+                    <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Request Body</div>
+                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`token=<폐기할 토큰>
+token_type_hint=refresh_token   # 또는 access_token
+client_id=cmp-portal
+client_secret=<...>`}</pre>
+                    <p className="text-[11px] text-slate-400">성공/실패 모두 <code className="text-slate-300">200 OK</code> (스펙상 동일) — 응답 본문 없음.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* ─── 백채널 로그아웃 송신 ─── */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-bold text-slate-300 tracking-wider uppercase flex items-center gap-2">
+                  <span className="w-1 h-4 bg-purple-400 rounded"></span>
+                  백채널 로그아웃 송신 (하위 포털 측 구현)
+                </h3>
+
+                <div className="bg-slate-900 border border-purple-500/30 rounded-2xl overflow-hidden">
+                  <div className="bg-purple-950/30 px-6 py-4 border-b border-purple-500/20 flex items-center gap-3">
+                    <span className="bg-indigo-500/10 text-indigo-400 font-mono text-xs font-bold px-2 py-1 rounded border border-indigo-500/20">POST</span>
+                    <h4 className="font-bold text-white text-sm">{`{portal}/oauth2/v1/backchannel-logout`}</h4>
+                  </div>
+                  <div className="p-6 space-y-3 text-sm">
+                    <p className="text-slate-400">디지털플랫폼 통합인증 서버가 SLO 시 각 하위 포털 백엔드로 호출하는 엔드포인트입니다. <strong className="text-white">각 포털이 구현하여 IdP에 등록</strong>합니다 (예: <code className="text-purple-300">https://api.datahub.kwater.com/oauth2/v1/backchannel-logout</code>).</p>
+                    <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Request Body</div>
+                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`logout_token=<JWT signed by IdP, RFC 8417>`}</pre>
+                    <p className="text-[11px] text-slate-400 leading-relaxed">검증 후 해당 sub/sid에 해당하는 자체 세션·Refresh Token을 폐기. <code className="text-purple-300">200 OK</code>(빈 본문) 반환. 실패 시 IdP가 재시도 큐에 적재.</p>
                   </div>
                 </div>
               </div>
