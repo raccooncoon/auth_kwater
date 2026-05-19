@@ -2264,11 +2264,55 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`} />
                     <span className="bg-indigo-500/10 text-indigo-400 font-mono text-xs font-bold px-2 py-1 rounded border border-indigo-500/20">POST</span>
                     <h4 className="font-bold text-white text-sm">/oauth2/v1/kwater/backchannel-logout (K-water 로그아웃 수신)</h4>
                   </div>
-                  <div className="p-6 space-y-3 text-sm">
-                    <p className="text-slate-400">K-water에서 사용자가 로그아웃하면 호출되는 엔드포인트. <code className="text-sky-300">logout_token</code> JWT 검증 후 디지털플랫폼 SSO 세션을 만료시키고 모든 하위 포털로 백채널 로그아웃을 전파합니다.</p>
-                    <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Request Body (application/x-www-form-urlencoded)</div>
-                    <CodeBlock language="bash" code={`logout_token=<JWT signed by K-water, RFC 8417 §2.6>`} />
-                    <p className="text-[13px] text-slate-400 leading-relaxed">검증: iss=K-water · aud=우리 client_id · iat 신선도 · jti 재사용 차단 · events에 backchannel-logout 포함 · nonce 부재 · sub 또는 sid 식별.</p>
+                  <div className="p-6 space-y-4 text-sm">
+                    <p className="text-slate-400 leading-relaxed">K-water 측에서 사용자가 로그아웃하면 K-water가 이 엔드포인트로 <code className="text-sky-300">logout_token</code>(JWT)을 POST합니다. 디지털플랫폼 통합인증 서버는 이를 검증한 뒤 SSO 세션을 만료시키고, 다시 하위 4개 포털로 백채널 로그아웃을 연쇄 전파합니다.</p>
+
+                    <div>
+                      <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mb-1">Request Body (application/x-www-form-urlencoded)</div>
+                      <CodeBlock language="bash" code={`logout_token=<JWT signed by K-water, RFC 8417 §2.6>`} />
+                    </div>
+
+                    <div className="bg-slate-950/60 border border-sky-500/30 rounded-xl p-4">
+                      <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-sky-300 mb-2">logout_token 검증 항목 (RFC 8417 §2.6)</div>
+                      <p className="text-[13px] text-slate-400 leading-relaxed mb-3">
+                        K-water가 보낸 JWT 안의 클레임들을 한 줄 한 줄 확인하여 — <strong className="text-white">정말 K-water가 보낸 것인지 + 우리에게 보낸 것인지 + 변조·재사용·위장이 없는지</strong>를 검증합니다.
+                      </p>
+                      <ul className="space-y-2 text-[13px] text-slate-300">
+                        <li className="flex gap-2">
+                          <code className="shrink-0 text-sky-300 font-mono">typ</code>
+                          <span>JWT 헤더가 <code className="text-slate-300">&quot;logout+jwt&quot;</code> — 일반 ID Token으로 위장된 공격 차단</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <code className="shrink-0 text-sky-300 font-mono">iss</code>
+                          <span>발행자가 <strong className="text-white">K-water issuer URL과 정확히 일치</strong> (예: <code className="text-slate-300">https://auth.kwater.go.kr/auth</code>)</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <code className="shrink-0 text-sky-300 font-mono">aud</code>
+                          <span>수신자가 <strong className="text-white">우리 client_id</strong> — 다른 RP에게 보낸 토큰을 우리가 받으면 거부</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <code className="shrink-0 text-sky-300 font-mono">iat</code>
+                          <span>발행 시각이 <strong className="text-white">최근 5분 이내</strong> (서버 간 clock skew ±30초 허용) — 오래된 토큰 재생(replay) 차단</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <code className="shrink-0 text-sky-300 font-mono">jti</code>
+                          <span>JWT 고유 ID — 이미 처리한 jti는 재사용 차단 (Caffeine 같은 TTL 캐시 권장)</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <code className="shrink-0 text-sky-300 font-mono">events</code>
+                          <span>{`{ "http://schemas.openid.net/event/backchannel-logout": {} }`} 가 들어있어야 함 — 로그아웃 이벤트임을 명시</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <code className="shrink-0 text-rose-300 font-mono line-through">nonce</code>
+                          <span><strong className="text-rose-300">절대 있어선 안 됨</strong> — RFC 8417 §2.6 명시. nonce가 있으면 ID Token 위장 공격이므로 거부</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <code className="shrink-0 text-sky-300 font-mono">sub / sid</code>
+                          <span>둘 중 최소 하나는 있어야 — 누구 세션을 끊을지 식별. <code className="text-slate-300">sub</code>는 사용자, <code className="text-slate-300">sid</code>는 특정 세션 ID</span>
+                        </li>
+                      </ul>
+                      <p className="text-[12px] text-slate-500 mt-3 italic">한 항목이라도 실패하면 <span className="text-rose-300">400 Bad Request</span> 반환. 검증 통과 시 해당 sub/sid 세션을 폐기하고 <span className="text-emerald-300">200 OK</span> + <code className="text-slate-300">Cache-Control: no-store</code>.</p>
+                    </div>
                   </div>
                 </div>
               </div>
