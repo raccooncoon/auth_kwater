@@ -6,16 +6,16 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-3xl font-extrabold text-white tracking-tight mb-2">통합 & 하위 포털 연동 상세 추적</h2>
+        <h2 className="text-3xl font-extrabold text-white tracking-tight mb-2">상세 연동 시뮬레이터</h2>
         <p className="text-slate-400 text-lg leading-relaxed">
-          브라우저 로컬 데이터, 토큰 상태 및 백그라운드 교환 처리를 각 단계별 데이터 스냅샷을 통해 입체적으로 분석합니다.
+          브라우저 로컬 데이터, 토큰 상태 및 백그라운드 교환 처리를 각 단계별 데이터 스냅샷을 통해 입체적으로 분석합니다. 각 Step 카드의 제목 끝 괄호는 시퀀스 다이어그램의 대응 단계 번호입니다.
         </p>
       </div>
 
       <div className="bg-indigo-500/5 border border-indigo-500/30 rounded-xl px-4 py-3 flex items-start gap-2">
         <Info className="text-indigo-400 shrink-0 mt-0.5" size={16} />
         <p className="text-[13px] text-slate-300 leading-relaxed">
-          본 시뮬레이터는 핵심 흐름만 <strong className="text-white">6개 단계</strong>로 단순화하여 페이로드·상태 변화를 추적합니다. 토큰 갱신(RTR)·사용자 로그아웃 트리거 등을 포함한 <strong className="text-white">전체 15단계 흐름</strong>은 <button onClick={() => setActiveTab('sequence')} className="text-indigo-300 hover:text-indigo-200 underline underline-offset-2">3. 데이터 흐름 시퀀스</button> 탭의 시퀀스 다이어그램을 참고하세요.
+          본 시뮬레이터는 핵심 흐름만 <strong className="text-white">6개 단계</strong>로 단순화하여 페이로드·상태 변화를 추적합니다. 토큰 갱신(RTR)·사용자 로그아웃 트리거 등을 포함한 <strong className="text-white">전체 17단계 흐름</strong>은 <button onClick={() => setActiveTab('sequence')} className="text-indigo-300 hover:text-indigo-200 underline underline-offset-2">3. 데이터 흐름 시퀀스</button> 탭의 시퀀스 다이어그램을 참고하세요.
         </p>
       </div>
 
@@ -39,7 +39,7 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
               }`}
             >
               <span className="text-[12px] font-bold tracking-wider uppercase mb-1.5">Step {idx + 1}</span>
-              <span className="text-[13px] font-semibold line-clamp-2 leading-relaxed text-slate-300">{step.title}</span>
+              <span className="text-[13px] font-semibold line-clamp-2 leading-relaxed text-slate-300">{step.shortTitle || step.title}</span>
             </button>
           ))}
         </div>

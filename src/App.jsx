@@ -174,7 +174,7 @@ export default function App() {
         </nav>
 
         {/* Content Area */}
-        <main className="flex-1 p-6 md:p-10 max-w-5xl overflow-y-auto">
+        <main className="flex-1 p-6 md:p-10 max-w-7xl overflow-y-auto">
           
           {/* TOAST NOTIFICATION */}
           {showToast && (

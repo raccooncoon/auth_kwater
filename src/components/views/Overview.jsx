@@ -30,7 +30,7 @@ export default function Overview({ setActiveTab, handleCopy }) {
             <div className="text-[13px] text-slate-400 mt-1">클라이언트 포털 (CMP + 3 Sub)</div>
           </div>
           <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4">
-            <div className="text-3xl font-extrabold text-emerald-300">15</div>
+            <div className="text-3xl font-extrabold text-emerald-300">17</div>
             <div className="text-[13px] text-slate-400 mt-1">시퀀스 단계 (4 Phase)</div>
           </div>
           <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4">
@@ -258,7 +258,7 @@ export default function Overview({ setActiveTab, handleCopy }) {
               <span className="text-sm font-bold text-white">3. 데이터 흐름 시퀀스</span>
               <ChevronRight size={12} className="ml-auto text-slate-600 group-hover:text-indigo-400 transition" />
             </div>
-            <p className="text-[13px] text-slate-400">12단계 · 4페이즈 시퀀스 다이어그램</p>
+            <p className="text-[13px] text-slate-400">17단계 · 4페이즈 시퀀스 다이어그램</p>
           </button>
           <button onClick={() => setActiveTab('flow')} className="text-left bg-slate-900 border border-slate-800 hover:border-indigo-500/50 rounded-xl p-4 transition group">
             <div className="flex items-center gap-2 mb-1">
