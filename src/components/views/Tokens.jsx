@@ -2,8 +2,46 @@ import React, { useState } from 'react';
 import { Info, ShieldCheck, Key, RefreshCw, Code2, Database, Laptop, Server, Activity, AlertTriangle, Check, ChevronRight, ChevronDown } from 'lucide-react';
 import CodeBlock from '../shared/CodeBlock';
 
+// 접이식 섹션 헤더 — JWT 구조 분해부터 아래 모든 동급 섹션에 사용
+function Collapsible({ open, onToggle, icon: Icon, iconColor = 'text-indigo-400', title, subtitle, children }) {
+  return (
+    <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        className="w-full bg-slate-950/80 hover:bg-slate-950 px-6 py-4 border-b border-slate-800 flex items-center gap-3 transition text-left"
+      >
+        {Icon && <Icon className={`${iconColor} shrink-0`} size={18} />}
+        <div className="flex-1 min-w-0">
+          <h3 className="font-bold text-white text-base">{title}</h3>
+          {subtitle && <p className="text-[12px] text-slate-500 mt-0.5">{subtitle}</p>}
+        </div>
+        <span className="shrink-0 text-[11px] font-mono font-bold uppercase tracking-widest text-slate-500 mr-1">
+          {open ? '접기' : '펼치기'}
+        </span>
+        <ChevronDown
+          className={`shrink-0 text-slate-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          size={18}
+        />
+      </button>
+      {open && children}
+    </div>
+  );
+}
+
 export default function Tokens() {
-  const [spaSectionOpen, setSpaSectionOpen] = useState(false);
+  // 6개 섹션 + 1개 nested (SPA) 접이식 상태 — 모두 기본 닫힘
+  const [open, setOpen] = useState({
+    jwt: false,
+    storage: false,
+    lifecycle: false,
+    rtr: false,
+    threat: false,
+    checklist: false,
+    spa: false,         // nested in storage
+  });
+  const toggle = (key) => setOpen(prev => ({ ...prev, [key]: !prev[key] }));
   return (
     <div className="space-y-8">
       <div>
@@ -74,12 +112,15 @@ export default function Tokens() {
         </div>
       </div>
 
-      {/* JWT decomposition */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-        <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-2">
-          <Code2 className="text-indigo-400" size={18} />
-          <h3 className="font-bold text-white text-base">JWT 구조 분해 — Access Token이 실제로 어떻게 생겼는가</h3>
-        </div>
+      {/* JWT decomposition — 접이식 */}
+      <Collapsible
+        open={open.jwt}
+        onToggle={() => toggle('jwt')}
+        icon={Code2}
+        iconColor="text-indigo-400"
+        title="JWT 구조 분해 — Access Token이 실제로 어떻게 생겼는가"
+        subtitle="Header·Payload·Signature 3부분의 base64 인코딩 구조와 클레임 의미"
+      >
         <div className="p-6 space-y-4">
           <p className="text-sm text-slate-300 leading-relaxed">
             JWT는 점(.)으로 구분된 3부분의 Base64URL 문자열입니다. 디코딩하면 사람이 읽을 수 있는 JSON이지만, 마지막 서명 덕분에 위·변조가 불가능합니다.
@@ -119,14 +160,17 @@ export default function Tokens() {
             </div>
           </div>
         </div>
-      </div>
+      </Collapsible>
 
-      {/* Token storage comparison */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-        <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-2">
-          <Database className="text-emerald-400" size={18} />
-          <h3 className="font-bold text-white text-base">토큰을 어디에 저장해야 하는가</h3>
-        </div>
+      {/* Token storage comparison — 접이식 */}
+      <Collapsible
+        open={open.storage}
+        onToggle={() => toggle('storage')}
+        icon={Database}
+        iconColor="text-emerald-400"
+        title="토큰을 어디에 저장해야 하는가"
+        subtitle="BFF 패턴 저장 구조 · 브라우저 쿠키 풀이 · 저장 위치 5종 비교"
+      >
         <div className="p-6 space-y-6">
           <p className="text-sm text-slate-300 leading-relaxed">
             저장 위치가 보안의 절반입니다. 같은 토큰도 보관 장소가 어디냐에 따라 XSS·CSRF 노출도가 달라집니다.
@@ -349,30 +393,17 @@ TTL: 86400`} />
             </table>
           </div>
         </div>
-      </div>
+      </Collapsible>
 
-      {/* SPA 환경에서 백엔드를 못 둘 때 — 의사결정 트리 + 4가지 패턴 비교 (접이식, 기본 닫힘) */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-        <button
-          type="button"
-          onClick={() => setSpaSectionOpen(!spaSectionOpen)}
-          aria-expanded={spaSectionOpen}
-          className="w-full bg-slate-950/80 hover:bg-slate-950 px-6 py-4 border-b border-slate-800 flex items-center gap-3 transition text-left"
-        >
-          <ShieldCheck className="text-amber-400 shrink-0" size={18} />
-          <div className="flex-1 min-w-0">
-            <h3 className="font-bold text-white text-base">백엔드를 못 둘 때 — SPA 환경의 저장 전략</h3>
-            <p className="text-[12px] text-slate-500 mt-0.5">고급 주제 · 정적 호스팅 SPA처럼 백엔드를 둘 수 없는 경우의 대안. 펼쳐서 확인하세요.</p>
-          </div>
-          <span className="shrink-0 text-[11px] font-mono font-bold uppercase tracking-widest text-slate-500 mr-1">
-            {spaSectionOpen ? '접기' : '펼치기'}
-          </span>
-          <ChevronDown
-            className={`shrink-0 text-slate-400 transition-transform duration-200 ${spaSectionOpen ? 'rotate-180' : ''}`}
-            size={18}
-          />
-        </button>
-        {spaSectionOpen && (
+      {/* SPA 환경에서 백엔드를 못 둘 때 — 접이식 */}
+      <Collapsible
+        open={open.spa}
+        onToggle={() => toggle('spa')}
+        icon={ShieldCheck}
+        iconColor="text-amber-400"
+        title="백엔드를 못 둘 때 — SPA 환경의 저장 전략 (고급)"
+        subtitle="정적 호스팅 SPA처럼 백엔드를 둘 수 없는 경우의 대안 — 의사결정 트리 + 4가지 패턴"
+      >
         <div className="p-6 space-y-6">
           <p className="text-sm text-slate-300 leading-relaxed">
             BFF(Backend-for-Frontend)가 가장 안전하지만, 정적 호스팅 SPA처럼 백엔드를 둘 수 없을 때도 있습니다.
@@ -640,15 +671,17 @@ TTL: 86400`} />
             </ol>
           </div>
         </div>
-        )}
-      </div>
+      </Collapsible>
 
-      {/* Lifecycle timeline (visual) */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-        <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-2">
-          <Activity className="text-indigo-400" size={18} />
-          <h3 className="font-bold text-white text-base">한 토큰 쌍의 라이프사이클 타임라인</h3>
-        </div>
+      {/* Lifecycle timeline — 접이식 */}
+      <Collapsible
+        open={open.lifecycle}
+        onToggle={() => toggle('lifecycle')}
+        icon={Activity}
+        iconColor="text-indigo-400"
+        title="한 토큰 쌍의 라이프사이클 타임라인"
+        subtitle="Access Token vs Refresh Token 수명 비교 · 발급→사용→갱신→폐기 4단계"
+      >
         <div className="p-6 space-y-5">
           <p className="text-sm text-slate-300 leading-relaxed">
             Access Token은 짧게 여러 번 교체되고, Refresh Token은 길게 유지됩니다. 두 토큰의 수명을 한 축에 비교하면 다음과 같습니다.
@@ -732,14 +765,17 @@ TTL: 86400`} />
             </div>
           </div>
         </div>
-      </div>
+      </Collapsible>
 
-      {/* Refresh Token Rotation Detail */}
-      <div className="bg-slate-900 border border-emerald-500/30 rounded-2xl overflow-hidden">
-        <div className="bg-emerald-950/30 px-6 py-4 border-b border-emerald-500/20 flex items-center gap-2">
-          <ShieldCheck className="text-emerald-400" size={20} />
-          <h3 className="font-bold text-white text-base">보안의 핵심: Refresh Token Rotation (RTR)</h3>
-        </div>
+      {/* Refresh Token Rotation — 접이식 */}
+      <Collapsible
+        open={open.rtr}
+        onToggle={() => toggle('rtr')}
+        icon={ShieldCheck}
+        iconColor="text-emerald-400"
+        title="보안의 핵심: Refresh Token Rotation (RTR)"
+        subtitle="한 번 쓰면 회전 · 정상 회전 vs 도난 감지 시나리오 · family 전체 폐기"
+      >
         <div className="p-6 space-y-5 text-sm text-slate-300 leading-relaxed">
           <p>
             RTR은 "Refresh Token을 한 번만 쓰고 즉시 새것으로 교체"하는 정책입니다. 단순하지만 강력한 도난 감지 메커니즘이 따라옵니다.
@@ -858,14 +894,17 @@ TTL: 86400`} />
             </ul>
           </div>
         </div>
-      </div>
+      </Collapsible>
 
-      {/* Threat vs Defense matrix */}
-      <div className="bg-slate-900 border border-rose-500/30 rounded-2xl overflow-hidden">
-        <div className="bg-rose-950/30 px-6 py-4 border-b border-rose-500/20 flex items-center gap-2">
-          <ShieldCheck className="text-rose-400" size={18} />
-          <h3 className="font-bold text-white text-base">보안 위협 ➜ 방어책 매핑</h3>
-        </div>
+      {/* Threat vs Defense matrix — 접이식 */}
+      <Collapsible
+        open={open.threat}
+        onToggle={() => toggle('threat')}
+        icon={ShieldCheck}
+        iconColor="text-rose-400"
+        title="보안 위협 ➜ 방어책 매핑"
+        subtitle="XSS · CSRF · Token 탈취 · Replay · JWT 위조 · Confused Deputy 6가지 위협별 방어책"
+      >
         <div className="p-6">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse text-slate-300">
@@ -911,33 +950,38 @@ TTL: 86400`} />
             </table>
           </div>
         </div>
-      </div>
+      </Collapsible>
 
-      {/* Implementation checklist */}
-      <div className="bg-indigo-950/30 border border-indigo-500/30 rounded-2xl p-6">
-        <h3 className="font-bold text-white text-base mb-3 flex items-center gap-2">
-          <Check className="text-indigo-400" size={18} />
-          토큰 구현 체크리스트
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
-          <ul className="space-y-1.5 text-xs text-slate-300">
-            <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Access Token 만료 15분~1시간</span></li>
-            <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Refresh Token 만료 7~30일</span></li>
-            <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Refresh Token은 HttpOnly + Secure + SameSite 쿠키</span></li>
-            <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>localStorage에 어떤 토큰도 저장 금지</span></li>
-            <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Refresh Token 발급 시 RTR 활성화 (한 번 쓰면 회전)</span></li>
-            <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Refresh Token은 DB에 해시(SHA-256)로 저장</span></li>
-          </ul>
-          <ul className="space-y-1.5 text-xs text-slate-300">
-            <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>JWT 검증 시 iss · aud · exp · nbf · signature 모두 확인</span></li>
-            <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>리소스 서버는 JWKS 캐싱(TTL 1시간) + 키 회전 대응</span></li>
-            <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>도난 감지 시 사용자 family 전체 Refresh Token 폐기 로직</span></li>
-            <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>토큰 payload에 비밀번호·개인정보 절대 금지</span></li>
-            <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>HTTPS 미사용 환경 운영 금지 (Secure 쿠키 전제)</span></li>
-            <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>로그에 토큰 원본 절대 남기지 않기 (앞 8자만 마스킹)</span></li>
-          </ul>
+      {/* Implementation checklist — 접이식 */}
+      <Collapsible
+        open={open.checklist}
+        onToggle={() => toggle('checklist')}
+        icon={Check}
+        iconColor="text-indigo-400"
+        title="토큰 구현 체크리스트"
+        subtitle="실서비스 배포 전 점검할 12개 항목 — 만료 시간 · 저장 위치 · RTR · JWKS · 로깅"
+      >
+        <div className="p-6 bg-indigo-950/20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+            <ul className="space-y-1.5 text-xs text-slate-300">
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Access Token 만료 15분~1시간</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Refresh Token 만료 7~30일</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Refresh Token은 HttpOnly + Secure + SameSite 쿠키</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>localStorage에 어떤 토큰도 저장 금지</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Refresh Token 발급 시 RTR 활성화 (한 번 쓰면 회전)</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Refresh Token은 DB에 해시(SHA-256)로 저장</span></li>
+            </ul>
+            <ul className="space-y-1.5 text-xs text-slate-300">
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>JWT 검증 시 iss · aud · exp · nbf · signature 모두 확인</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>리소스 서버는 JWKS 캐싱(TTL 1시간) + 키 회전 대응</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>도난 감지 시 사용자 family 전체 Refresh Token 폐기 로직</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>토큰 payload에 비밀번호·개인정보 절대 금지</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>HTTPS 미사용 환경 운영 금지 (Secure 쿠키 전제)</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>로그에 토큰 원본 절대 남기지 않기 (앞 8자만 마스킹)</span></li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </Collapsible>
     </div>
   );
 }
