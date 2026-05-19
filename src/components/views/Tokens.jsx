@@ -1,8 +1,9 @@
-import React from 'react';
-import { Info, ShieldCheck, Key, RefreshCw, Code2, Database, Laptop, Server, Activity, AlertTriangle, Check, ChevronRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Info, ShieldCheck, Key, RefreshCw, Code2, Database, Laptop, Server, Activity, AlertTriangle, Check, ChevronRight, ChevronDown } from 'lucide-react';
 import CodeBlock from '../shared/CodeBlock';
 
 export default function Tokens() {
+  const [spaSectionOpen, setSpaSectionOpen] = useState(false);
   return (
     <div className="space-y-8">
       <div>
@@ -350,12 +351,28 @@ TTL: 86400`} />
         </div>
       </div>
 
-      {/* SPA 환경에서 백엔드를 못 둘 때 — 의사결정 트리 + 4가지 패턴 비교 */}
+      {/* SPA 환경에서 백엔드를 못 둘 때 — 의사결정 트리 + 4가지 패턴 비교 (접이식, 기본 닫힘) */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-        <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-2">
-          <ShieldCheck className="text-amber-400" size={18} />
-          <h3 className="font-bold text-white text-base">백엔드를 못 둘 때 — SPA 환경의 저장 전략</h3>
-        </div>
+        <button
+          type="button"
+          onClick={() => setSpaSectionOpen(!spaSectionOpen)}
+          aria-expanded={spaSectionOpen}
+          className="w-full bg-slate-950/80 hover:bg-slate-950 px-6 py-4 border-b border-slate-800 flex items-center gap-3 transition text-left"
+        >
+          <ShieldCheck className="text-amber-400 shrink-0" size={18} />
+          <div className="flex-1 min-w-0">
+            <h3 className="font-bold text-white text-base">백엔드를 못 둘 때 — SPA 환경의 저장 전략</h3>
+            <p className="text-[12px] text-slate-500 mt-0.5">고급 주제 · 정적 호스팅 SPA처럼 백엔드를 둘 수 없는 경우의 대안. 펼쳐서 확인하세요.</p>
+          </div>
+          <span className="shrink-0 text-[11px] font-mono font-bold uppercase tracking-widest text-slate-500 mr-1">
+            {spaSectionOpen ? '접기' : '펼치기'}
+          </span>
+          <ChevronDown
+            className={`shrink-0 text-slate-400 transition-transform duration-200 ${spaSectionOpen ? 'rotate-180' : ''}`}
+            size={18}
+          />
+        </button>
+        {spaSectionOpen && (
         <div className="p-6 space-y-6">
           <p className="text-sm text-slate-300 leading-relaxed">
             BFF(Backend-for-Frontend)가 가장 안전하지만, 정적 호스팅 SPA처럼 백엔드를 둘 수 없을 때도 있습니다.
@@ -623,6 +640,7 @@ TTL: 86400`} />
             </ol>
           </div>
         </div>
+        )}
       </div>
 
       {/* Lifecycle timeline (visual) */}
