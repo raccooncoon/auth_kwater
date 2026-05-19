@@ -192,6 +192,111 @@ export default function Tokens() {
             </div>
           </div>
 
+          {/* 브라우저 쿠키 내용 친절 풀이 */}
+          <div className="bg-slate-900 border border-emerald-500/30 rounded-2xl overflow-hidden">
+            <div className="bg-emerald-950/30 px-5 py-3 border-b border-emerald-500/20 flex items-center gap-2">
+              <Laptop className="text-emerald-400" size={16} />
+              <h4 className="font-bold text-white text-sm">브라우저 쿠키, 정확히 뭐가 들어있나? (BFF 패턴)</h4>
+            </div>
+            <div className="p-5 space-y-5">
+              <p className="text-[13px] text-slate-300 leading-relaxed">
+                BFF 패턴에서 브라우저가 가지는 건 <strong className="text-white">단 한 줄의 세션 ID 쿠키</strong>입니다.
+                토큰 자체는 절대 브라우저로 오지 않습니다.
+              </p>
+
+              {/* 쿠키 한 줄 분해 */}
+              <div>
+                <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-emerald-300 mb-2">실제 발급되는 쿠키 (Set-Cookie 한 줄)</div>
+                <CodeBlock language="http" fontSize="0.72rem" code={`Set-Cookie: portal_sid=A1f2eK_kLqz9wQv8mYpX...
+            Path=/;
+            HttpOnly;
+            Secure;
+            SameSite=Lax;
+            Max-Age=86400`} />
+                <div className="overflow-x-auto mt-3">
+                  <table className="w-full text-left text-[12px] border-collapse text-slate-300">
+                    <thead>
+                      <tr className="border-b border-slate-800 text-slate-500">
+                        <th className="py-2 px-2 font-semibold">속성</th>
+                        <th className="py-2 px-2 font-semibold">의미</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/40">
+                      <tr><td className="py-2 px-2 font-mono text-emerald-300">portal_sid</td><td className="py-2 px-2 text-slate-400">쿠키 이름 (개발자 작명 — JSESSIONID·connect.sid 등 어떤 이름이든 OK)</td></tr>
+                      <tr><td className="py-2 px-2 font-mono text-emerald-300">A1f2eK_kLqz9wQv...</td><td className="py-2 px-2 text-slate-400"><strong className="text-white">세션 ID 값</strong> — 백엔드가 발급한 무작위 토큰 (보통 128bit 이상 랜덤)</td></tr>
+                      <tr><td className="py-2 px-2 font-mono text-emerald-300">HttpOnly</td><td className="py-2 px-2 text-slate-400">JS 접근 불가 — XSS로 훔칠 수 없음</td></tr>
+                      <tr><td className="py-2 px-2 font-mono text-emerald-300">Secure</td><td className="py-2 px-2 text-slate-400">HTTPS에서만 전송 — 도청 방어</td></tr>
+                      <tr><td className="py-2 px-2 font-mono text-emerald-300">SameSite=Lax</td><td className="py-2 px-2 text-slate-400">다른 사이트가 요청 보낼 때 자동 첨부 차단 — CSRF 방어</td></tr>
+                      <tr><td className="py-2 px-2 font-mono text-emerald-300">Path=/</td><td className="py-2 px-2 text-slate-400">사이트 전체 경로에서 자동 전송</td></tr>
+                      <tr><td className="py-2 px-2 font-mono text-emerald-300">Max-Age=86400</td><td className="py-2 px-2 text-slate-400">24시간 후 만료 (초 단위)</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* 세션 ID 값 종류 */}
+              <div>
+                <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-indigo-300 mb-2">세션 ID 값의 3가지 형태</div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="bg-slate-950/60 border border-emerald-500/40 rounded-xl p-3">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <span className="text-[11px] font-mono font-bold bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded">권장</span>
+                      <span className="text-[13px] font-bold text-white">Opaque random</span>
+                    </div>
+                    <div className="text-[11px] font-mono text-emerald-300 break-all bg-slate-950 rounded px-1.5 py-1 mb-1.5">A1f2eK_kLqz9wQv...</div>
+                    <p className="text-[12px] text-slate-400 leading-relaxed">무의미한 랜덤 문자열. 백엔드가 세션 스토어에서 이걸 키로 lookup. 폐기 즉시 가능. <strong className="text-emerald-300">Spring Session · express-session · Django session 기본 방식</strong>.</p>
+                  </div>
+                  <div className="bg-slate-950/60 border border-amber-500/30 rounded-xl p-3">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <span className="text-[11px] font-mono font-bold bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded">대안</span>
+                      <span className="text-[13px] font-bold text-white">JWT (Stateless)</span>
+                    </div>
+                    <div className="text-[11px] font-mono text-amber-300 break-all bg-slate-950 rounded px-1.5 py-1 mb-1.5">eyJhbGciOiJIUzI1NiIs...</div>
+                    <p className="text-[12px] text-slate-400 leading-relaxed">세션 정보를 JWT로 인코딩해 쿠키 자체가 되는 방식. 서버 스토어 불필요. 단점: 폐기 어려움(블랙리스트 필요), 크기 큼.</p>
+                  </div>
+                  <div className="bg-slate-950/60 border border-indigo-500/30 rounded-xl p-3">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <span className="text-[11px] font-mono font-bold bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded">변형</span>
+                      <span className="text-[13px] font-bold text-white">Signed ID</span>
+                    </div>
+                    <div className="text-[11px] font-mono text-indigo-300 break-all bg-slate-950 rounded px-1.5 py-1 mb-1.5">A1f2eK.HMAC-SHA256(...)</div>
+                    <p className="text-[12px] text-slate-400 leading-relaxed">Opaque ID + HMAC 서명. ID는 서버 lookup용, 서명은 위변조 방지용.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* 백엔드 매핑 */}
+              <div>
+                <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-purple-300 mb-2">백엔드 세션 스토어 (Redis 예시)</div>
+                <CodeBlock language="bash" fontSize="0.72rem" code={`# Redis 키: session:<sessionId>
+session:A1f2eK_kLqz9wQv8mYpX = {
+  user_id:       "kwater_user_1234",
+  access_token:  "eyJhbGciOiJSUzI1NiIs...",    # ← 진짜 토큰은 여기에
+  refresh_token: "rfr_771239ab8c19ef",         # ← 여기에
+  id_token:      "eyJhbGciOiJSUzI1NiIs...",
+  expires_at:    1716985593,
+  scope:         "openid profile datahub:read"
+}
+TTL: 86400`} />
+              </div>
+
+              {/* API 호출 흐름 */}
+              <div>
+                <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-sky-300 mb-2">API 호출 흐름 — 토큰이 절대 브라우저에 노출되지 않는 이유</div>
+                <ol className="space-y-1.5 text-[13px] text-slate-300 list-decimal list-inside">
+                  <li>브라우저 → 포털 백엔드 요청 (<code className="text-emerald-300">portal_sid=A1f2eK...</code> 쿠키 자동 동봉)</li>
+                  <li>백엔드 → Redis lookup: <code className="text-purple-300">session:A1f2eK</code> → access_token 꺼냄</li>
+                  <li>백엔드 → IdP/리소스 서버 호출 (<code className="text-indigo-300">Authorization: Bearer eyJ...</code>)</li>
+                  <li>백엔드 → 응답을 브라우저에 그대로 전달</li>
+                </ol>
+                <p className="text-[12px] text-slate-400 mt-2 leading-relaxed">
+                  <strong className="text-slate-200">결과:</strong> 브라우저는 access_token이 존재하는지조차 모름. 그저 자기 portal_sid만 자동 동봉할 뿐.
+                  XSS가 일어나도 portal_sid만 노출되며(만료/회전 가능), 진짜 토큰은 영원히 안전.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse text-slate-300">
               <thead>
