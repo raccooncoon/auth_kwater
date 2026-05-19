@@ -245,6 +245,154 @@ export default function Tokens() {
         </div>
       </div>
 
+      {/* SPA 환경에서 백엔드를 못 둘 때 — 의사결정 트리 + 4가지 패턴 비교 */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+        <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-2">
+          <ShieldCheck className="text-amber-400" size={18} />
+          <h3 className="font-bold text-white text-base">백엔드를 못 둘 때 — SPA 환경의 저장 전략</h3>
+        </div>
+        <div className="p-6 space-y-6">
+          <p className="text-sm text-slate-300 leading-relaxed">
+            BFF(Backend-for-Frontend)가 가장 안전하지만, 정적 호스팅 SPA처럼 백엔드를 둘 수 없을 때도 있습니다.
+            그런 경우 <strong className="text-white">모든 옵션이 BFF보다 위험</strong>하다는 점을 인식하고, 다음 우선순위로 선택합니다.
+          </p>
+
+          {/* 의사결정 트리 */}
+          <div className="bg-slate-950 border border-slate-800 rounded-xl p-5">
+            <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-amber-300 mb-4 text-center">의사결정 트리</div>
+            <div className="space-y-3 text-sm">
+              <div className="bg-slate-900 border border-slate-700 rounded-lg p-3 text-center text-slate-200 font-semibold">
+                백엔드를 둘 수 있는가?
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 ml-0 md:ml-6">
+                <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
+                  <div className="text-emerald-300 font-bold text-[13px] mb-1">YES — BFF 패턴 ✓</div>
+                  <p className="text-[12px] text-slate-400 leading-relaxed">서버 세션 + HttpOnly 세션 쿠키만 브라우저로. 가장 안전.</p>
+                </div>
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+                  <div className="text-amber-300 font-bold text-[13px] mb-1">NO — SPA 환경 ↓</div>
+                  <p className="text-[12px] text-slate-400 leading-relaxed">아래 추가 결정 필요.</p>
+                </div>
+              </div>
+              <div className="bg-slate-900 border border-slate-700 rounded-lg p-3 text-center text-slate-200 font-semibold ml-0 md:ml-6">
+                IdP가 Silent SSO를 잘 지원하는가? (같은 도메인 + <code className="text-indigo-300">prompt=none</code>)
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 ml-0 md:ml-12">
+                <div className="bg-indigo-500/10 border border-indigo-500/30 rounded-lg p-3">
+                  <div className="text-indigo-300 font-bold text-[13px] mb-1">YES — Silent SSO 의존 🥉</div>
+                  <p className="text-[12px] text-slate-400 leading-relaxed">토큰 저장 안 함. 매번 IdP에서 새로 받음.</p>
+                </div>
+                <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3">
+                  <div className="text-purple-300 font-bold text-[13px] mb-1">NO — 메모리 + HttpOnly RT 쿠키 🥇</div>
+                  <p className="text-[12px] text-slate-400 leading-relaxed">+ RTR + CSP. 가능하면 Service Worker 격리 / DPoP 추가.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 4가지 패턴 카드 */}
+          <div>
+            <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
+              <span className="bg-purple-500/20 text-purple-300 text-[12px] font-mono px-2 py-0.5 rounded">PATTERNS</span>
+              SPA에서 쓸 수 있는 4가지 패턴
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* 1순위 */}
+              <div className="bg-slate-950/60 border border-purple-500/40 rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[12px] font-mono font-bold bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">🥇 1순위</span>
+                  <span className="text-sm font-bold text-white">메모리(AT) + HttpOnly 쿠키(RT)</span>
+                </div>
+                <p className="text-[13px] text-slate-300 leading-relaxed mb-2">
+                  <strong className="text-white">Access Token</strong>은 JS 메모리(전역 변수·Context·Zustand 등)에만,
+                  <strong className="text-white"> Refresh Token</strong>은 HttpOnly + Secure + SameSite 쿠키에.
+                </p>
+                <ul className="text-[12px] text-slate-400 space-y-1 leading-relaxed">
+                  <li>· 새로고침/새 탭 → 메모리 AT 사라짐 → RT 쿠키로 자동 갱신</li>
+                  <li>· XSS 시 AT는 짧은 시간 탈취 위험, RT는 절대 안전</li>
+                  <li>· <strong className="text-purple-300">RTR + CSP 필수</strong></li>
+                </ul>
+              </div>
+
+              {/* 2순위 */}
+              <div className="bg-slate-950/60 border border-indigo-500/40 rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[12px] font-mono font-bold bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded">🥈 2순위</span>
+                  <span className="text-sm font-bold text-white">Service Worker 격리</span>
+                </div>
+                <p className="text-[13px] text-slate-300 leading-relaxed mb-2">
+                  토큰을 <strong className="text-white">Service Worker 스코프</strong>에 보관. 메인 스레드 JS에서 토큰 접근 불가 → XSS가 일어나도 토큰을 볼 수 없음.
+                </p>
+                <ul className="text-[12px] text-slate-400 space-y-1 leading-relaxed">
+                  <li>· SW가 모든 fetch 가로채서 Authorization 헤더 자동 첨부</li>
+                  <li>· 사실상 "브라우저 안의 BFF"</li>
+                  <li>· Safari 시크릿 모드 등 일부 환경 제약</li>
+                </ul>
+              </div>
+
+              {/* 3순위 */}
+              <div className="bg-slate-950/60 border border-emerald-500/40 rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[12px] font-mono font-bold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">🥉 3순위</span>
+                  <span className="text-sm font-bold text-white">Silent SSO 의존 (저장 안 함)</span>
+                </div>
+                <p className="text-[13px] text-slate-300 leading-relaxed mb-2">
+                  토큰을 SPA에 보관하지 <strong className="text-white">않고</strong> 필요할 때마다 IdP에서 새로 받음. SSO 쿠키만 IdP 도메인에 HttpOnly로 박혀있으면 됨.
+                </p>
+                <ul className="text-[12px] text-slate-400 space-y-1 leading-relaxed">
+                  <li>· SPA 코드에 토큰 자체가 없음 → XSS로 훔칠 게 없음</li>
+                  <li>· 매번 IdP 왕복 → 지연 증가</li>
+                  <li>· <strong className="text-emerald-300">본 가이드처럼 잘 갖춰진 IdP 환경에 적합</strong></li>
+                </ul>
+              </div>
+
+              {/* 보너스 */}
+              <div className="bg-slate-950/60 border border-sky-500/40 rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[12px] font-mono font-bold bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded">💎 BONUS</span>
+                  <span className="text-sm font-bold text-white">DPoP (Sender-Constrained Token)</span>
+                </div>
+                <p className="text-[13px] text-slate-300 leading-relaxed mb-2">
+                  RFC 9449. 토큰을 클라이언트의 비공개 키쌍에 묶어, <strong className="text-white">탈취해도 비공개키 없이는 사용 불가</strong>.
+                </p>
+                <ul className="text-[12px] text-slate-400 space-y-1 leading-relaxed">
+                  <li>· <code className="text-sky-300">Authorization: DPoP &lt;token&gt;</code> + <code className="text-sky-300">DPoP: &lt;proof JWT&gt;</code></li>
+                  <li>· 위 1·2·3순위 어느 것에든 추가 가능</li>
+                  <li>· IdP·리소스 서버·SPA 모두 구현 필요</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* 절대 금지 */}
+          <div className="bg-rose-500/5 border border-rose-500/30 rounded-xl p-4">
+            <h4 className="text-sm font-bold text-rose-200 mb-2 flex items-center gap-2">
+              <AlertTriangle className="text-rose-400" size={14} />
+              어떤 SPA 패턴에서도 절대 금지
+            </h4>
+            <ul className="space-y-1 text-[13px] text-slate-300">
+              <li className="flex gap-2"><span className="text-rose-400 shrink-0">✗</span><span><code className="text-rose-300">localStorage</code> — XSS 한 번이면 모든 토큰 영구 유출</span></li>
+              <li className="flex gap-2"><span className="text-rose-400 shrink-0">✗</span><span><code className="text-rose-300">sessionStorage</code>에 토큰 (state 일회용 값에만 사용 OK)</span></li>
+              <li className="flex gap-2"><span className="text-rose-400 shrink-0">✗</span><span>URL 쿼리/해시에 토큰 — 브라우저 히스토리·서버 로그에 영구 노출</span></li>
+              <li className="flex gap-2"><span className="text-rose-400 shrink-0">✗</span><span>HttpOnly 없는 쿠키 — JS로 접근 가능 → XSS 노출</span></li>
+            </ul>
+          </div>
+
+          {/* 핵심 원칙 */}
+          <div className="bg-indigo-500/5 border border-indigo-500/30 rounded-xl p-4">
+            <h4 className="text-sm font-bold text-indigo-200 mb-2 flex items-center gap-2">
+              <Info className="text-indigo-400" size={14} />
+              어떤 패턴이든 공통 핵심 원칙 3가지
+            </h4>
+            <ol className="space-y-1.5 text-[13px] text-slate-300 list-decimal list-inside">
+              <li><strong className="text-white">localStorage·sessionStorage에 토큰 절대 금지</strong> — 첫 번째 방어선</li>
+              <li><strong className="text-white">CSP 헤더로 inline script 차단</strong> — XSS의 주 진입로 차단</li>
+              <li><strong className="text-white">Refresh Token Rotation 필수</strong> — 한 번 쓰면 회전, 도난 감지 시 family 전체 폐기</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
       {/* Lifecycle timeline (visual) */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
         <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-2">
