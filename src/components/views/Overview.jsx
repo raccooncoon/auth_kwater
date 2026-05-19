@@ -30,7 +30,7 @@ export default function Overview({ setActiveTab, handleCopy }) {
             <div className="text-[13px] text-slate-400 mt-1">클라이언트 포털 (CMP + 3 Sub)</div>
           </div>
           <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4">
-            <div className="text-3xl font-extrabold text-emerald-300">12</div>
+            <div className="text-3xl font-extrabold text-emerald-300">15</div>
             <div className="text-[13px] text-slate-400 mt-1">시퀀스 단계 (4 Phase)</div>
           </div>
           <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4">

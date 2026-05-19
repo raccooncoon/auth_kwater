@@ -15,7 +15,7 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
       <div className="bg-indigo-500/5 border border-indigo-500/30 rounded-xl px-4 py-3 flex items-start gap-2">
         <Info className="text-indigo-400 shrink-0 mt-0.5" size={16} />
         <p className="text-[13px] text-slate-300 leading-relaxed">
-          본 시뮬레이터는 핵심 흐름만 <strong className="text-white">6개 단계</strong>로 단순화하여 페이로드·상태 변화를 추적합니다. 토큰 갱신(RTR)·사용자 로그아웃 트리거 등을 포함한 <strong className="text-white">전체 12단계 흐름</strong>은 <button onClick={() => setActiveTab('sequence')} className="text-indigo-300 hover:text-indigo-200 underline underline-offset-2">3. 데이터 흐름 시퀀스</button> 탭의 시퀀스 다이어그램을 참고하세요.
+          본 시뮬레이터는 핵심 흐름만 <strong className="text-white">6개 단계</strong>로 단순화하여 페이로드·상태 변화를 추적합니다. 토큰 갱신(RTR)·사용자 로그아웃 트리거 등을 포함한 <strong className="text-white">전체 15단계 흐름</strong>은 <button onClick={() => setActiveTab('sequence')} className="text-indigo-300 hover:text-indigo-200 underline underline-offset-2">3. 데이터 흐름 시퀀스</button> 탭의 시퀀스 다이어그램을 참고하세요.
         </p>
       </div>
 

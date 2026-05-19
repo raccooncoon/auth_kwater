@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Code2, Check, Copy } from 'lucide-react';
+import { Code2, Check, Copy, Info } from 'lucide-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -7,10 +7,15 @@ function CodeSnippetCard({ snippet, language, copiedId, onCopy }) {
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
       <div className="bg-slate-950 px-6 py-4 border-b border-slate-800 flex items-center justify-between gap-3">
-        <div>
-          <div className="text-sm font-bold text-slate-200 flex items-center gap-2">
-            <Code2 className="text-indigo-400" size={16} />
-            {snippet.title}
+        <div className="min-w-0">
+          <div className="text-sm font-bold text-slate-200 flex items-center gap-2 flex-wrap">
+            <Code2 className="text-indigo-400 shrink-0" size={16} />
+            <span>{snippet.title}</span>
+            {snippet.badge && (
+              <span className={`text-[10px] font-mono font-bold uppercase tracking-widest px-2 py-0.5 rounded ${snippet.badgeColor || 'bg-slate-700 text-slate-200'}`}>
+                {snippet.badge}
+              </span>
+            )}
           </div>
           <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{snippet.desc}</p>
         </div>
@@ -309,6 +314,50 @@ export function CallbackPage() {
 }`;
 
 // React: 4) Logout - RP-Initiated
+// React: 3-BFF) Axios 인터셉터 (BFF) — 백엔드 경유 + 401 자동 갱신
+const reactAxiosBffCode = `import axios from 'axios';
+
+// BFF 패턴: 프론트는 토큰을 모름. 모든 요청을 자기 백엔드(/api) 경유로 보내고,
+// 백엔드가 세션 스토어에서 Access Token을 꺼내 IdP/리소스 서버로 보낸다.
+export const api = axios.create({
+  baseURL: '/api',           // ← 자기 백엔드 경유. IdP에 직접 가지 않음
+  withCredentials: true,     // portal_sid 세션 쿠키 자동 동봉
+});
+
+// 401 응답 시 백엔드의 갱신 엔드포인트 호출 후 원 요청 재시도
+let refreshing = null;       // 동시 401에 대해 단일 refresh 호출만 진행
+
+api.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    const { config, response } = error;
+    if (response?.status !== 401 || config._retry) return Promise.reject(error);
+    config._retry = true;
+
+    try {
+      // 진행 중인 갱신이 있으면 같이 기다림 (중복 호출 방지)
+      refreshing = refreshing || axios.post('/api/auth/refresh', null, {
+        withCredentials: true,
+      });
+      await refreshing;
+      refreshing = null;
+
+      // 백엔드가 세션의 토큰을 자동 갱신·새 portal_sid 쿠키도 갱신했으니
+      // 원 요청을 그대로 재시도 — 백엔드가 새 Access Token을 자동으로 첨부
+      return api(config);
+    } catch (refreshError) {
+      refreshing = null;
+      window.location.href = '/login';
+      return Promise.reject(refreshError);
+    }
+  }
+);
+
+// 사용 예:
+//   const { data } = await api.get('/datahub/datasets');   // → /api/datahub/datasets
+//   백엔드가 /api/datahub/datasets 핸들러에서 세션의 Access Token으로
+//   리소스 서버 호출하고 응답을 그대로 전달.`;
+
 const reactLogoutCode = `// LogoutButton.jsx — 디지털플랫폼 통합 로그아웃 시작
 const IDP_LOGOUT = 'https://auth.kwater.com/oauth2/v1/logout';
 const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
@@ -633,11 +682,20 @@ export default function CodeExample({ handleCopy, copiedId }) {
       {/* React Snippets */}
       {codeLang === 'react' && (
         <div className="space-y-6">
+          {/* BFF/SPA 안내 */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 flex items-start gap-2 text-[13px] text-slate-300 leading-relaxed">
+            <Info className="text-indigo-400 shrink-0 mt-0.5" size={16} />
+            <div>
+              본 가이드는 <strong className="text-emerald-300">BFF 패턴(권장)</strong>을 기본으로 합니다 — 토큰은 백엔드에 보관, 브라우저엔 세션 쿠키만.
+              백엔드를 둘 수 없는 환경에서는 마지막의 <strong className="text-amber-300">SPA 대안 스니펫</strong>을 참고하세요.
+            </div>
+          </div>
           {[
-            { id: 'react-login', title: '1) 로그인 시작 — /authorize 리다이렉트 (PKCE 포함)', desc: '사용자가 "로그인" 버튼을 누르면 IdP /authorize로 보내는 헬퍼. state·nonce·PKCE code_verifier 생성·저장 + code_challenge S256으로 전송.', code: reactLoginCode },
-            { id: 'react-callback', title: '2) 콜백 처리 — code → 백엔드 교환', desc: 'OAuth 콜백 URL(/callback)에서 code 추출. state 검증, Silent SSO 에러 폴백, PKCE verifier 함께 백엔드 전달.', code: reactCallbackCode },
-            { id: 'react-axios', title: '3) Axios 인터셉터 — 401 자동 갱신', desc: '401 응답 시 토큰 자동 갱신 후 원 요청 재시도. 중복 갱신 방지 + 갱신 실패 시 큐 reject로 promise leak 차단.', code: reactCode },
-            { id: 'react-logout', title: '4) 로그아웃 — RP-Initiated Logout', desc: 'BFF 백엔드 세션 정리 → IdP /logout 리다이렉트. id_token_hint 또는 client_id 첨부.', code: reactLogoutCode },
+            { id: 'react-login', title: '1) 로그인 시작 — /authorize 리다이렉트 (PKCE 포함)', desc: 'BFF·SPA 공통. 사용자가 "로그인" 버튼을 누르면 IdP /authorize로 보내는 헬퍼. state·nonce·PKCE code_verifier 생성·저장 + code_challenge S256으로 전송.', code: reactLoginCode, badge: 'COMMON', badgeColor: 'bg-slate-700 text-slate-200' },
+            { id: 'react-callback', title: '2) 콜백 처리 — code → 백엔드 교환', desc: '🥇 BFF 패턴. 콜백 URL에서 code 추출 후 백엔드 /api/auth/exchange로 전달 → 백엔드가 IdP /token과 교환하고 portal_sid 쿠키 발급. state 검증·PKCE verifier 함께 전달.', code: reactCallbackCode, badge: 'BFF', badgeColor: 'bg-emerald-500/20 text-emerald-300' },
+            { id: 'react-axios-bff', title: '3) Axios 인터셉터 — 백엔드 경유 + 401 자동 갱신', desc: '🥇 BFF 패턴. 프론트는 토큰을 보유하지 않음. 모든 요청은 자기 백엔드(/api) 경유, 401 시 백엔드의 /api/auth/refresh 호출. memoryAccessToken 변수 없음 — 백엔드가 자동으로 Authorization 헤더 첨부.', code: reactAxiosBffCode, badge: 'BFF', badgeColor: 'bg-emerald-500/20 text-emerald-300' },
+            { id: 'react-logout', title: '4) 로그아웃 — RP-Initiated Logout', desc: '🥇 BFF 패턴. /api/auth/logout으로 백엔드 세션 정리 후 IdP /logout 리다이렉트. id_token_hint 또는 client_id 첨부.', code: reactLogoutCode, badge: 'BFF', badgeColor: 'bg-emerald-500/20 text-emerald-300' },
+            { id: 'react-axios-spa', title: '5) [대안] Axios 인터셉터 (SPA) — 메모리 AT + HttpOnly RT 쿠키', desc: '🥈 SPA 패턴 (백엔드 못 둘 때만 사용). memoryAccessToken을 JS 메모리에 보유, IdP /token에 프론트가 직접 갱신 요청. RTR + CSP 필수. 토큰 탭 "SPA 환경 저장 전략" 섹션 참조.', code: reactCode, badge: 'SPA', badgeColor: 'bg-amber-500/20 text-amber-300' },
           ].map(s => (
             <CodeSnippetCard key={s.id} snippet={s} language="jsx"
               copiedId={copiedId} onCopy={handleCopy} />
