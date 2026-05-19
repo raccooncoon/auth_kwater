@@ -391,6 +391,106 @@ export default function Tokens() {
             </div>
           </div>
 
+          {/* RTR + CSP 친절 설명 */}
+          <div className="bg-slate-900 border border-emerald-500/30 rounded-2xl overflow-hidden">
+            <div className="bg-emerald-950/30 px-5 py-3 border-b border-emerald-500/20 flex items-center gap-2">
+              <ShieldCheck className="text-emerald-400" size={16} />
+              <h4 className="font-bold text-white text-sm">🥇 1순위 카드의 "RTR + CSP 필수" — 두 약어 풀이</h4>
+            </div>
+            <div className="p-5 space-y-5">
+              <p className="text-[13px] text-slate-300 leading-relaxed">
+                메모리 + HttpOnly RT 쿠키 패턴을 안전하게 운영하려면 <strong className="text-white">RTR</strong>과 <strong className="text-white">CSP</strong>를 둘 다 적용해야 합니다.
+                둘은 서로 다른 위협을 막는 짝꿍입니다.
+              </p>
+
+              {/* RTR 설명 */}
+              <div className="bg-slate-950/60 border border-emerald-500/30 rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[12px] font-mono font-bold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">RTR</span>
+                  <span className="text-sm font-bold text-white">Refresh Token Rotation — 한 번 쓰면 즉시 교체</span>
+                </div>
+                <p className="text-[13px] text-slate-300 leading-relaxed mb-2">
+                  Refresh Token을 <strong className="text-white">한 번 사용할 때마다 새것으로 회전</strong>하고 이전 것은 즉시 무효화하는 정책입니다.
+                </p>
+                <div className="bg-slate-950 border border-slate-800 rounded p-3 mb-2">
+                  <div className="text-[12px] font-mono text-slate-300 leading-relaxed">
+                    <div><span className="text-emerald-300">정상:</span> RT#1 사용 → 서버가 AT#2 + <strong className="text-emerald-300">RT#2</strong> 발급, RT#1 즉시 폐기</div>
+                    <div className="mt-1"><span className="text-rose-300">공격자:</span> 탈취한 RT#1 다시 사용 시도 → <strong className="text-rose-300">"이미 사용됨" 감지</strong> → 해당 사용자의 RT family 전체 폐기 + 알림</div>
+                  </div>
+                </div>
+                <ul className="text-[12px] text-slate-400 space-y-1 leading-relaxed">
+                  <li>· <strong className="text-slate-300">막는 것</strong>: Refresh Token이 탈취당해도 정상 사용자가 먼저 갱신하면 공격자 토큰이 자동 폐기됨</li>
+                  <li>· <strong className="text-slate-300">구현 포인트</strong>: 서버에 <code className="text-emerald-300">used_at</code>, <code className="text-emerald-300">replaced_by</code> 컬럼 두고 추적. 동시 요청은 5초 grace period 허용</li>
+                  <li>· <strong className="text-slate-300">상세</strong>: 이 페이지의 "Refresh Token Rotation (RTR)" 섹션 참조</li>
+                </ul>
+              </div>
+
+              {/* CSP 설명 */}
+              <div className="bg-slate-950/60 border border-indigo-500/30 rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[12px] font-mono font-bold bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded">CSP</span>
+                  <span className="text-sm font-bold text-white">Content Security Policy — 브라우저에게 "이것만 실행해" 알리기</span>
+                </div>
+                <p className="text-[13px] text-slate-300 leading-relaxed mb-2">
+                  서버가 보내는 <strong className="text-white">HTTP 응답 헤더</strong>로, 브라우저에게 "이 페이지에서는 이런 출처의 스크립트·이미지·연결만 허용한다"고 선언합니다.
+                  XSS 공격이 inline script를 끼워넣어도 브라우저가 차단합니다.
+                </p>
+                <div className="bg-slate-950 border border-slate-800 rounded p-3 mb-2">
+                  <div className="text-[12px] font-mono leading-relaxed">
+                    <div><span className="text-indigo-300">Content-Security-Policy:</span></div>
+                    <div className="ml-3"><span className="text-amber-300">default-src</span> &apos;self&apos;;</div>
+                    <div className="ml-3"><span className="text-amber-300">script-src</span> &apos;self&apos;;                  <span className="text-slate-500">{`/* 외부 스크립트·inline·eval 차단 */`}</span></div>
+                    <div className="ml-3"><span className="text-amber-300">connect-src</span> &apos;self&apos; https://auth.kwater.com;</div>
+                    <div className="ml-3"><span className="text-amber-300">frame-ancestors</span> &apos;none&apos;;          <span className="text-slate-500">{`/* iframe 임베드 차단 */`}</span></div>
+                    <div className="ml-3"><span className="text-amber-300">object-src</span> &apos;none&apos;;</div>
+                  </div>
+                </div>
+                <ul className="text-[12px] text-slate-400 space-y-1 leading-relaxed">
+                  <li>· <strong className="text-slate-300">막는 것</strong>: XSS가 페이지에 <code className="text-indigo-300">&lt;script&gt;evil()&lt;/script&gt;</code>을 삽입해도 브라우저가 실행 거부 → 메모리 AT 탈취 시도 차단</li>
+                  <li>· <strong className="text-slate-300">핵심 지시어</strong>: <code className="text-indigo-300">script-src &apos;self&apos;</code> (외부·inline 스크립트 금지), <code className="text-indigo-300">connect-src</code> (API 호출 가능 도메인 제한)</li>
+                  <li>· <strong className="text-slate-300">주의</strong>: <code className="text-rose-300">&apos;unsafe-inline&apos;</code>, <code className="text-rose-300">&apos;unsafe-eval&apos;</code> 절대 추가 금지 (CSP 효과 무력화)</li>
+                  <li>· <strong className="text-slate-300">테스트</strong>: 처음엔 <code className="text-indigo-300">Content-Security-Policy-Report-Only</code> 헤더로 위반만 로그 수집 후 점진 적용</li>
+                </ul>
+              </div>
+
+              {/* 함께 적용 시 효과 */}
+              <div className="bg-amber-500/5 border border-amber-500/30 rounded-xl p-4">
+                <h5 className="text-[13px] font-bold text-amber-200 mb-2 flex items-center gap-2">
+                  <Info className="text-amber-400" size={14} />
+                  둘을 함께 적용해야 하는 이유 — 보완 관계
+                </h5>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-[12px] border-collapse text-slate-300">
+                    <thead>
+                      <tr className="border-b border-slate-800 text-slate-500">
+                        <th className="py-2 px-2 font-semibold">방어책</th>
+                        <th className="py-2 px-2 font-semibold">막는 위협</th>
+                        <th className="py-2 px-2 font-semibold">단독으로는?</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/40">
+                      <tr>
+                        <td className="py-2 px-2 font-mono text-emerald-300">RTR</td>
+                        <td className="py-2 px-2 text-slate-400">Refresh Token 탈취 후 재사용</td>
+                        <td className="py-2 px-2 text-slate-400">XSS로 AT가 즉시 탈취되는 건 못 막음</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 px-2 font-mono text-indigo-300">CSP</td>
+                        <td className="py-2 px-2 text-slate-400">XSS로 인한 inline script 실행</td>
+                        <td className="py-2 px-2 text-slate-400">CSP를 우회한 RT 탈취까지는 못 막음</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 px-2 font-mono text-amber-300">RTR + CSP</td>
+                        <td className="py-2 px-2 text-emerald-300">두 위협 모두 차단 — 다층 방어</td>
+                        <td className="py-2 px-2 text-emerald-300">✓ 권장</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* 절대 금지 */}
           <div className="bg-rose-500/5 border border-rose-500/30 rounded-xl p-4">
             <h4 className="text-sm font-bold text-rose-200 mb-2 flex items-center gap-2">
