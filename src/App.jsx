@@ -274,7 +274,7 @@ export default function App() {
       {/* Sample data disclaimer banner */}
       <div className="bg-amber-500/10 border-b border-amber-500/30 px-6 py-2.5 flex items-center justify-center gap-2">
         <AlertTriangle className="text-amber-400 shrink-0" size={14} />
-        <p className="text-[11px] md:text-xs text-amber-200 leading-relaxed text-center">
+        <p className="text-[13px] md:text-xs text-amber-200 leading-relaxed text-center">
           본 가이드의 모든 <strong className="text-amber-100">URL · 도메인 · client_id · 토큰 값 · 사용자 정보</strong>는 설명을 위해 만든 <strong className="text-amber-100">임의의 예시 데이터</strong>입니다. 실제 운영 환경의 값과 다릅니다.
         </p>
       </div>
@@ -292,7 +292,7 @@ export default function App() {
             {sidebarCollapsed ? <ChevronRight size={18} /> : <><ChevronLeft size={16} /><span className="ml-1.5 text-xs font-semibold">메뉴 접기</span></>}
           </button>
 
-          {!sidebarCollapsed && <div className="hidden lg:block text-[11px] font-semibold text-slate-500 tracking-wider uppercase px-3 mb-2">메인 가이드</div>}
+          {!sidebarCollapsed && <div className="hidden lg:block text-[13px] font-semibold text-slate-500 tracking-wider uppercase px-3 mb-2">메인 가이드</div>}
 
           {[
             { id: 'overview', icon: BookOpen, label: '1. 연동 개요' },
@@ -317,7 +317,7 @@ export default function App() {
             );
           })}
 
-          {!sidebarCollapsed && <div className="hidden lg:block text-[11px] font-semibold text-slate-500 tracking-wider uppercase px-3 pt-6 mb-2">개발 정보</div>}
+          {!sidebarCollapsed && <div className="hidden lg:block text-[13px] font-semibold text-slate-500 tracking-wider uppercase px-3 pt-6 mb-2">개발 정보</div>}
           {sidebarCollapsed && <div className="hidden lg:block border-t border-slate-800 my-3"></div>}
 
           {[
@@ -360,8 +360,8 @@ export default function App() {
                 <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
                 <div className="relative">
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2.5 py-0.5 rounded">SSO Integration Guide v1.0</span>
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded">OIDC · OAuth 2.1</span>
+                    <span className="text-[12px] font-mono font-bold uppercase tracking-widest bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2.5 py-0.5 rounded">SSO Integration Guide v1.0</span>
+                    <span className="text-[12px] font-mono font-bold uppercase tracking-widest bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded">OIDC · OAuth 2.1</span>
                   </div>
                   <h2 className="text-4xl font-extrabold text-white tracking-tight mb-3 leading-tight">디지털플랫폼 통합인증 서버 연동 개요</h2>
                   <p className="text-slate-300 text-lg leading-relaxed max-w-3xl">
@@ -373,19 +373,19 @@ export default function App() {
                 <div className="relative mt-8 grid grid-cols-2 md:grid-cols-4 gap-3">
                   <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4">
                     <div className="text-3xl font-extrabold text-indigo-300">4</div>
-                    <div className="text-[11px] text-slate-400 mt-1">클라이언트 포털 (CMP + 3 Sub)</div>
+                    <div className="text-[13px] text-slate-400 mt-1">클라이언트 포털 (CMP + 3 Sub)</div>
                   </div>
                   <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4">
                     <div className="text-3xl font-extrabold text-emerald-300">12</div>
-                    <div className="text-[11px] text-slate-400 mt-1">시퀀스 단계 (4 Phase)</div>
+                    <div className="text-[13px] text-slate-400 mt-1">시퀀스 단계 (4 Phase)</div>
                   </div>
                   <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4">
                     <div className="text-3xl font-extrabold text-amber-300">15분</div>
-                    <div className="text-[11px] text-slate-400 mt-1">Access Token TTL</div>
+                    <div className="text-[13px] text-slate-400 mt-1">Access Token TTL</div>
                   </div>
                   <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4">
                     <div className="text-3xl font-extrabold text-rose-300">RTR</div>
-                    <div className="text-[11px] text-slate-400 mt-1">Refresh Token 회전 + 도난 감지</div>
+                    <div className="text-[13px] text-slate-400 mt-1">Refresh Token 회전 + 도난 감지</div>
                   </div>
                 </div>
               </div>
@@ -399,19 +399,19 @@ export default function App() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
                   <div className="bg-slate-950 border border-indigo-500/30 rounded-lg px-3 py-2.5 text-center">
                     <div className="text-indigo-300 font-bold font-mono">OIDC Core 1.0</div>
-                    <div className="text-[10px] text-slate-500 mt-0.5">OpenID Connect</div>
+                    <div className="text-[12px] text-slate-500 mt-0.5">OpenID Connect</div>
                   </div>
                   <div className="bg-slate-950 border border-emerald-500/30 rounded-lg px-3 py-2.5 text-center">
                     <div className="text-emerald-300 font-bold font-mono">OAuth 2.1</div>
-                    <div className="text-[10px] text-slate-500 mt-0.5">최신 보안 BCP 반영</div>
+                    <div className="text-[12px] text-slate-500 mt-0.5">최신 보안 BCP 반영</div>
                   </div>
                   <div className="bg-slate-950 border border-purple-500/30 rounded-lg px-3 py-2.5 text-center">
                     <div className="text-purple-300 font-bold font-mono">RFC 8417</div>
-                    <div className="text-[10px] text-slate-500 mt-0.5">Back-Channel Logout</div>
+                    <div className="text-[12px] text-slate-500 mt-0.5">Back-Channel Logout</div>
                   </div>
                   <div className="bg-slate-950 border border-amber-500/30 rounded-lg px-3 py-2.5 text-center">
                     <div className="text-amber-300 font-bold font-mono">JWT · JWS · JWE</div>
-                    <div className="text-[10px] text-slate-500 mt-0.5">RFC 7519 / 7515 / 7516</div>
+                    <div className="text-[12px] text-slate-500 mt-0.5">RFC 7519 / 7515 / 7516</div>
                   </div>
                 </div>
               </div>
@@ -423,36 +423,36 @@ export default function App() {
                     <Network size={18} className="text-indigo-400" />
                     아키텍처 미리보기
                   </h3>
-                  <button onClick={() => setActiveTab('multi-sso')} className="text-[11px] text-indigo-300 hover:text-indigo-200 flex items-center gap-1">
+                  <button onClick={() => setActiveTab('multi-sso')} className="text-[13px] text-indigo-300 hover:text-indigo-200 flex items-center gap-1">
                     전체 다이어그램 보기 <ChevronRight size={12} />
                   </button>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <div className="shrink-0 bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[10px] font-mono font-bold uppercase px-3 py-1.5 rounded">Tier 1</div>
+                    <div className="shrink-0 bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[12px] font-mono font-bold uppercase px-3 py-1.5 rounded">Tier 1</div>
                     <div className="flex-1 bg-slate-950 border border-sky-500/40 rounded-lg px-4 py-2.5 relative flex items-center justify-center gap-2">
                       <Building2 size={16} className="text-sky-400" />
                       <span className="text-sm text-white font-bold">K-Water 통합 인증 시스템</span>
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-500 font-mono">Upstream IdP</span>
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-slate-500 font-mono">Upstream IdP</span>
                     </div>
                   </div>
                   <div className="flex items-center justify-center text-slate-600 text-xs">↓ 암호화 페이로드 (JWE/SAML)</div>
                   <div className="flex items-center gap-3">
-                    <div className="shrink-0 bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 text-[10px] font-mono font-bold uppercase px-3 py-1.5 rounded">Tier 2</div>
+                    <div className="shrink-0 bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 text-[12px] font-mono font-bold uppercase px-3 py-1.5 rounded">Tier 2</div>
                     <div className="flex-1 bg-slate-950 border border-indigo-500/40 rounded-lg px-4 py-2.5 relative flex items-center justify-center gap-2">
                       <Server size={16} className="text-indigo-400" />
                       <span className="text-sm text-white font-bold">디지털플랫폼 통합인증 서버</span>
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-emerald-400 font-mono">auth.kwater.com</span>
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-emerald-400 font-mono">auth.kwater.com</span>
                     </div>
                   </div>
                   <div className="flex items-center justify-center text-slate-600 text-xs">↓ Silent SSO · 포털별 토큰 발급</div>
                   <div className="flex items-center gap-3">
-                    <div className="shrink-0 bg-purple-500/20 border border-purple-500/40 text-purple-300 text-[10px] font-mono font-bold uppercase px-3 py-1.5 rounded">Tier 3</div>
+                    <div className="shrink-0 bg-purple-500/20 border border-purple-500/40 text-purple-300 text-[12px] font-mono font-bold uppercase px-3 py-1.5 rounded">Tier 3</div>
                     <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-2">
-                      <div className="bg-slate-950 border border-indigo-500/30 rounded px-2 py-1.5 text-[11px] text-center text-indigo-200">CMP</div>
-                      <div className="bg-slate-950 border border-emerald-500/30 rounded px-2 py-1.5 text-[11px] text-center text-emerald-200">데이터허브</div>
-                      <div className="bg-slate-950 border border-purple-500/30 rounded px-2 py-1.5 text-[11px] text-center text-purple-200">생성형 AI</div>
-                      <div className="bg-slate-950 border border-amber-500/30 rounded px-2 py-1.5 text-[11px] text-center text-amber-200">SaaS</div>
+                      <div className="bg-slate-950 border border-indigo-500/30 rounded px-2 py-1.5 text-[13px] text-center text-indigo-200">CMP</div>
+                      <div className="bg-slate-950 border border-emerald-500/30 rounded px-2 py-1.5 text-[13px] text-center text-emerald-200">데이터허브</div>
+                      <div className="bg-slate-950 border border-purple-500/30 rounded px-2 py-1.5 text-[13px] text-center text-purple-200">생성형 AI</div>
+                      <div className="bg-slate-950 border border-amber-500/30 rounded px-2 py-1.5 text-[13px] text-center text-amber-200">SaaS</div>
                     </div>
                   </div>
                 </div>
@@ -497,7 +497,7 @@ export default function App() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left border-collapse">
                     <thead>
-                      <tr className="border-b border-slate-800 text-[11px] text-slate-500 uppercase">
+                      <tr className="border-b border-slate-800 text-[13px] text-slate-500 uppercase">
                         <th className="py-3 px-5 font-semibold">구성 요소</th>
                         <th className="py-3 px-5 font-semibold">도메인</th>
                         <th className="py-3 px-5 font-semibold">역할</th>
@@ -505,32 +505,32 @@ export default function App() {
                     </thead>
                     <tbody className="divide-y divide-slate-800/40 text-xs">
                       <tr>
-                        <td className="py-3 px-5"><span className="bg-sky-500/15 text-sky-300 border border-sky-500/30 rounded px-2 py-0.5 text-[10px] font-bold">UPSTREAM</span> <span className="text-white font-semibold ml-2">K-Water 통합 인증 시스템</span></td>
+                        <td className="py-3 px-5"><span className="bg-sky-500/15 text-sky-300 border border-sky-500/30 rounded px-2 py-0.5 text-[12px] font-bold">UPSTREAM</span> <span className="text-white font-semibold ml-2">K-Water 통합 인증 시스템</span></td>
                         <td className="py-3 px-5"><code className="text-slate-400 font-mono">(별도)</code></td>
                         <td className="py-3 px-5 text-slate-400">1차 사용자 인증 + 암호화 페이로드 발급</td>
                       </tr>
                       <tr>
-                        <td className="py-3 px-5"><span className="bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 rounded px-2 py-0.5 text-[10px] font-bold">IDP HUB</span> <span className="text-white font-semibold ml-2">디지털플랫폼 통합인증 서버</span></td>
+                        <td className="py-3 px-5"><span className="bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 rounded px-2 py-0.5 text-[12px] font-bold">IDP HUB</span> <span className="text-white font-semibold ml-2">디지털플랫폼 통합인증 서버</span></td>
                         <td className="py-3 px-5"><code className="text-emerald-400 font-mono">auth.kwater.com</code></td>
                         <td className="py-3 px-5 text-slate-400">SSO 세션 발급/관리 · 포털별 토큰 교환 · SLO 브로드캐스트</td>
                       </tr>
                       <tr>
-                        <td className="py-3 px-5"><span className="bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 rounded px-2 py-0.5 text-[10px] font-bold">MASTER</span> <span className="text-white font-semibold ml-2">클라우드 관리 포털 (CMP)</span></td>
+                        <td className="py-3 px-5"><span className="bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 rounded px-2 py-0.5 text-[12px] font-bold">MASTER</span> <span className="text-white font-semibold ml-2">클라우드 관리 포털 (CMP)</span></td>
                         <td className="py-3 px-5"><code className="text-slate-400 font-mono">cmp.kwater.com</code></td>
                         <td className="py-3 px-5 text-slate-400">K-Water 페이로드 최초 수신 · 디지털플랫폼 진입점</td>
                       </tr>
                       <tr>
-                        <td className="py-3 px-5"><span className="bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 rounded px-2 py-0.5 text-[10px] font-bold">SUB</span> <span className="text-white font-semibold ml-2">데이터허브 포털</span></td>
+                        <td className="py-3 px-5"><span className="bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 rounded px-2 py-0.5 text-[12px] font-bold">SUB</span> <span className="text-white font-semibold ml-2">데이터허브 포털</span></td>
                         <td className="py-3 px-5"><code className="text-slate-400 font-mono">datahub.kwater.com</code></td>
                         <td className="py-3 px-5 text-slate-400">데이터셋·테이블 조회 · 데이터허브 전용 scope</td>
                       </tr>
                       <tr>
-                        <td className="py-3 px-5"><span className="bg-purple-500/15 text-purple-300 border border-purple-500/30 rounded px-2 py-0.5 text-[10px] font-bold">SUB</span> <span className="text-white font-semibold ml-2">생성형 AI 포털</span></td>
+                        <td className="py-3 px-5"><span className="bg-purple-500/15 text-purple-300 border border-purple-500/30 rounded px-2 py-0.5 text-[12px] font-bold">SUB</span> <span className="text-white font-semibold ml-2">생성형 AI 포털</span></td>
                         <td className="py-3 px-5"><code className="text-slate-400 font-mono">genai.kwater.com</code></td>
                         <td className="py-3 px-5 text-slate-400">LLM 호출 · 토큰 사용량 관리</td>
                       </tr>
                       <tr>
-                        <td className="py-3 px-5"><span className="bg-amber-500/15 text-amber-300 border border-amber-500/30 rounded px-2 py-0.5 text-[10px] font-bold">SUB</span> <span className="text-white font-semibold ml-2">SaaS 포털</span></td>
+                        <td className="py-3 px-5"><span className="bg-amber-500/15 text-amber-300 border border-amber-500/30 rounded px-2 py-0.5 text-[12px] font-bold">SUB</span> <span className="text-white font-semibold ml-2">SaaS 포털</span></td>
                         <td className="py-3 px-5"><code className="text-slate-400 font-mono">saas.kwater.com</code></td>
                         <td className="py-3 px-5 text-slate-400">SaaS 카탈로그 · 라이선스 관리</td>
                       </tr>
@@ -546,7 +546,7 @@ export default function App() {
                     <Server size={18} className="text-indigo-400" />
                     기본 서버 연동 정보
                   </h3>
-                  <button onClick={() => handleCopy('https://auth.kwater.com/.well-known/openid-configuration', 'oidc-disc')} className="text-[11px] text-slate-400 hover:text-white flex items-center gap-1">
+                  <button onClick={() => handleCopy('https://auth.kwater.com/.well-known/openid-configuration', 'oidc-disc')} className="text-[13px] text-slate-400 hover:text-white flex items-center gap-1">
                     <Copy size={11} /> Discovery URL 복사
                   </button>
                 </div>
@@ -596,7 +596,7 @@ export default function App() {
                       <span className="text-sm font-bold text-white">2. SSO 아키텍처</span>
                       <ChevronRight size={12} className="ml-auto text-slate-600 group-hover:text-indigo-400 transition" />
                     </div>
-                    <p className="text-[11px] text-slate-400">3계층 토폴로지 + Silent SSO 상세 동작</p>
+                    <p className="text-[13px] text-slate-400">3계층 토폴로지 + Silent SSO 상세 동작</p>
                   </button>
                   <button onClick={() => setActiveTab('sequence')} className="text-left bg-slate-900 border border-slate-800 hover:border-indigo-500/50 rounded-xl p-4 transition group">
                     <div className="flex items-center gap-2 mb-1">
@@ -604,7 +604,7 @@ export default function App() {
                       <span className="text-sm font-bold text-white">3. 데이터 흐름 시퀀스</span>
                       <ChevronRight size={12} className="ml-auto text-slate-600 group-hover:text-indigo-400 transition" />
                     </div>
-                    <p className="text-[11px] text-slate-400">12단계 · 4페이즈 시퀀스 다이어그램</p>
+                    <p className="text-[13px] text-slate-400">12단계 · 4페이즈 시퀀스 다이어그램</p>
                   </button>
                   <button onClick={() => setActiveTab('flow')} className="text-left bg-slate-900 border border-slate-800 hover:border-indigo-500/50 rounded-xl p-4 transition group">
                     <div className="flex items-center gap-2 mb-1">
@@ -612,7 +612,7 @@ export default function App() {
                       <span className="text-sm font-bold text-white">4. 상세 연동 시뮬레이터</span>
                       <ChevronRight size={12} className="ml-auto text-slate-600 group-hover:text-indigo-400 transition" />
                     </div>
-                    <p className="text-[11px] text-slate-400">단계별 페이로드·브라우저 상태·사용자 시점</p>
+                    <p className="text-[13px] text-slate-400">단계별 페이로드·브라우저 상태·사용자 시점</p>
                   </button>
                   <button onClick={() => setActiveTab('tokens')} className="text-left bg-slate-900 border border-slate-800 hover:border-indigo-500/50 rounded-xl p-4 transition group">
                     <div className="flex items-center gap-2 mb-1">
@@ -620,7 +620,7 @@ export default function App() {
                       <span className="text-sm font-bold text-white">5. 토큰 라이프사이클</span>
                       <ChevronRight size={12} className="ml-auto text-slate-600 group-hover:text-indigo-400 transition" />
                     </div>
-                    <p className="text-[11px] text-slate-400">JWT 분해 · RTR · 저장 위치 · 위협 매핑</p>
+                    <p className="text-[13px] text-slate-400">JWT 분해 · RTR · 저장 위치 · 위협 매핑</p>
                   </button>
                   <button onClick={() => setActiveTab('logout')} className="text-left bg-slate-900 border border-slate-800 hover:border-indigo-500/50 rounded-xl p-4 transition group">
                     <div className="flex items-center gap-2 mb-1">
@@ -628,7 +628,7 @@ export default function App() {
                       <span className="text-sm font-bold text-white">6. 통합 로그아웃 (SLO)</span>
                       <ChevronRight size={12} className="ml-auto text-slate-600 group-hover:text-indigo-400 transition" />
                     </div>
-                    <p className="text-[11px] text-slate-400">하위 포털 + 상위 K-Water 로그아웃 연계</p>
+                    <p className="text-[13px] text-slate-400">하위 포털 + 상위 K-Water 로그아웃 연계</p>
                   </button>
                   <button onClick={() => setActiveTab('code')} className="text-left bg-slate-900 border border-slate-800 hover:border-indigo-500/50 rounded-xl p-4 transition group">
                     <div className="flex items-center gap-2 mb-1">
@@ -636,7 +636,7 @@ export default function App() {
                       <span className="text-sm font-bold text-white">구현 예제 코드</span>
                       <ChevronRight size={12} className="ml-auto text-slate-600 group-hover:text-indigo-400 transition" />
                     </div>
-                    <p className="text-[11px] text-slate-400">React Axios Interceptor + Spring Boot 3 · OAuth2 Resource Server</p>
+                    <p className="text-[13px] text-slate-400">React Axios Interceptor + Spring Boot 3 · OAuth2 Resource Server</p>
                   </button>
                 </div>
               </div>
@@ -663,10 +663,10 @@ export default function App() {
                 {/* Tier 1: K-Water (Upstream IdP) */}
                 <div className="flex flex-col items-center">
                   <div className="w-full max-w-md bg-gradient-to-br from-sky-950/80 to-slate-900 border-2 border-sky-500/60 rounded-2xl p-5 flex flex-col items-center text-center shadow-lg shadow-sky-500/10 relative">
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-sky-500 text-white text-[10px] px-3 py-0.5 rounded-full font-bold tracking-wider uppercase">Upstream IdP</div>
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-sky-500 text-white text-[12px] px-3 py-0.5 rounded-full font-bold tracking-wider uppercase">Upstream IdP</div>
                     <Building2 className="text-sky-400 my-2" size={36} />
                     <h4 className="font-bold text-white text-base">K-Water 통합 인증 시스템</h4>
-                    <span className="text-[11px] text-slate-400 mt-1">별도 상위 인증 도메인</span>
+                    <span className="text-[13px] text-slate-400 mt-1">별도 상위 인증 도메인</span>
                     <div className="w-full h-px bg-slate-800 my-3"></div>
                     <p className="text-xs text-slate-400 leading-relaxed">1차 사용자 인증 후, 암호화 페이로드(JWE/SAML)로 사용자 정보를 디지털플랫폼에 전달합니다.</p>
                   </div>
@@ -675,7 +675,7 @@ export default function App() {
                 {/* Arrow 1 ↓ */}
                 <div className="flex flex-col items-center gap-2 py-4">
                   <ArrowDown className="text-sky-400" size={26} strokeWidth={2.5} />
-                  <span className="text-[11px] font-mono text-sky-200 bg-sky-950/90 border border-sky-500/40 px-3 py-1 rounded-full shadow-md">
+                  <span className="text-[13px] font-mono text-sky-200 bg-sky-950/90 border border-sky-500/40 px-3 py-1 rounded-full shadow-md">
                     암호화 페이로드 전달 (kwater_enc_payload)
                   </span>
                 </div>
@@ -683,19 +683,19 @@ export default function App() {
                 {/* Tier 2: Inogrid Auth Server (Hub) */}
                 <div className="flex flex-col items-center">
                   <div className="w-full max-w-md bg-gradient-to-br from-indigo-950/80 to-slate-900 border-2 border-indigo-500 rounded-2xl p-5 flex flex-col items-center text-center shadow-xl shadow-indigo-500/10 relative">
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-500 text-white text-[10px] px-3 py-0.5 rounded-full font-bold tracking-wider uppercase">SSO IdP Hub</div>
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-500 text-white text-[12px] px-3 py-0.5 rounded-full font-bold tracking-wider uppercase">SSO IdP Hub</div>
                     <Server className="text-indigo-400 my-2" size={36} />
                     <h4 className="font-bold text-white text-base">디지털플랫폼 통합인증 서버</h4>
-                    <span className="text-[11px] text-emerald-400 font-mono mt-1">auth.kwater.com</span>
+                    <span className="text-[13px] text-emerald-400 font-mono mt-1">auth.kwater.com</span>
                     <div className="w-full h-px bg-slate-800 my-3"></div>
-                    <span className="text-[11px] text-indigo-300 font-bold bg-indigo-950/80 px-2.5 py-1 rounded border border-indigo-800">디지털플랫폼 SSO Session Cookie</span>
+                    <span className="text-[13px] text-indigo-300 font-bold bg-indigo-950/80 px-2.5 py-1 rounded border border-indigo-800">디지털플랫폼 SSO Session Cookie</span>
                   </div>
                 </div>
 
                 {/* Arrow 2 ↓ */}
                 <div className="flex flex-col items-center gap-2 py-4">
                   <ArrowDown className="text-indigo-400" size={26} strokeWidth={2.5} />
-                  <span className="text-[11px] font-mono text-indigo-200 bg-indigo-950/90 border border-indigo-500/40 px-3 py-1 rounded-full shadow-md">
+                  <span className="text-[13px] font-mono text-indigo-200 bg-indigo-950/90 border border-indigo-500/40 px-3 py-1 rounded-full shadow-md">
                     Silent SSO (prompt=none) + OIDC 인가 코드 전파
                   </span>
                 </div>
@@ -703,39 +703,39 @@ export default function App() {
                 {/* Tier 3: 4 Client Portals (master + 3 sub) */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="bg-slate-900 border border-indigo-500/40 rounded-2xl p-4 flex flex-col items-center text-center shadow-lg relative">
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-indigo-300 text-[10px] px-2.5 py-0.5 rounded-full font-bold tracking-wider uppercase border border-indigo-500/40 whitespace-nowrap">Master Client</div>
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-indigo-300 text-[12px] px-2.5 py-0.5 rounded-full font-bold tracking-wider uppercase border border-indigo-500/40 whitespace-nowrap">Master Client</div>
                     <Laptop className="text-indigo-400 my-2" size={26} />
                     <h4 className="font-bold text-white text-[13px]">클라우드 관리 포털 (CMP)</h4>
-                    <span className="text-[10px] text-slate-500 mt-1 font-mono">cmp.kwater.com</span>
+                    <span className="text-[12px] text-slate-500 mt-1 font-mono">cmp.kwater.com</span>
                     <div className="w-full h-px bg-slate-800 my-2.5"></div>
-                    <p className="text-[10px] text-slate-400 leading-relaxed">K-Water 페이로드 복호화 결과로 최초 로그인을 완료합니다.</p>
+                    <p className="text-[12px] text-slate-400 leading-relaxed">K-Water 페이로드 복호화 결과로 최초 로그인을 완료합니다.</p>
                   </div>
 
                   <div className="bg-slate-900 border border-emerald-500/40 rounded-2xl p-4 flex flex-col items-center text-center shadow-lg relative">
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-emerald-300 text-[10px] px-2.5 py-0.5 rounded-full font-bold tracking-wider uppercase border border-emerald-500/40 whitespace-nowrap">Sub Client</div>
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-emerald-300 text-[12px] px-2.5 py-0.5 rounded-full font-bold tracking-wider uppercase border border-emerald-500/40 whitespace-nowrap">Sub Client</div>
                     <Database className="text-emerald-400 my-2" size={26} />
                     <h4 className="font-bold text-white text-[13px]">데이터허브 포털</h4>
-                    <span className="text-[10px] text-slate-500 mt-1 font-mono">datahub.kwater.com</span>
+                    <span className="text-[12px] text-slate-500 mt-1 font-mono">datahub.kwater.com</span>
                     <div className="w-full h-px bg-slate-800 my-2.5"></div>
-                    <p className="text-[10px] text-slate-400 leading-relaxed">전용 client_id로 데이터허브 API 권한 토큰 발급</p>
+                    <p className="text-[12px] text-slate-400 leading-relaxed">전용 client_id로 데이터허브 API 권한 토큰 발급</p>
                   </div>
 
                   <div className="bg-slate-900 border border-purple-500/40 rounded-2xl p-4 flex flex-col items-center text-center shadow-lg relative">
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-purple-300 text-[10px] px-2.5 py-0.5 rounded-full font-bold tracking-wider uppercase border border-purple-500/40 whitespace-nowrap">Sub Client</div>
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-purple-300 text-[12px] px-2.5 py-0.5 rounded-full font-bold tracking-wider uppercase border border-purple-500/40 whitespace-nowrap">Sub Client</div>
                     <Sparkles className="text-purple-400 my-2" size={26} />
                     <h4 className="font-bold text-white text-[13px]">생성형 AI 포털</h4>
-                    <span className="text-[10px] text-slate-500 mt-1 font-mono">genai.kwater.com</span>
+                    <span className="text-[12px] text-slate-500 mt-1 font-mono">genai.kwater.com</span>
                     <div className="w-full h-px bg-slate-800 my-2.5"></div>
-                    <p className="text-[10px] text-slate-400 leading-relaxed">LLM/AI 서비스 전용 Scope 부여 및 무중단 로그인</p>
+                    <p className="text-[12px] text-slate-400 leading-relaxed">LLM/AI 서비스 전용 Scope 부여 및 무중단 로그인</p>
                   </div>
 
                   <div className="bg-slate-900 border border-amber-500/40 rounded-2xl p-4 flex flex-col items-center text-center shadow-lg relative">
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-amber-300 text-[10px] px-2.5 py-0.5 rounded-full font-bold tracking-wider uppercase border border-amber-500/40 whitespace-nowrap">Sub Client</div>
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-amber-300 text-[12px] px-2.5 py-0.5 rounded-full font-bold tracking-wider uppercase border border-amber-500/40 whitespace-nowrap">Sub Client</div>
                     <Boxes className="text-amber-400 my-2" size={26} />
                     <h4 className="font-bold text-white text-[13px]">SaaS 포털</h4>
-                    <span className="text-[10px] text-slate-500 mt-1 font-mono">saas.kwater.com</span>
+                    <span className="text-[12px] text-slate-500 mt-1 font-mono">saas.kwater.com</span>
                     <div className="w-full h-px bg-slate-800 my-2.5"></div>
-                    <p className="text-[10px] text-slate-400 leading-relaxed">SaaS 카탈로그 및 라이선스 관리용 토큰 자동 발급</p>
+                    <p className="text-[12px] text-slate-400 leading-relaxed">SaaS 카탈로그 및 라이선스 관리용 토큰 자동 발급</p>
                   </div>
                 </div>
 
@@ -754,7 +754,7 @@ export default function App() {
                     {/* 5-Step Flow */}
                     <div>
                       <h5 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                        <span className="bg-indigo-500/20 text-indigo-300 text-[10px] font-mono px-2 py-0.5 rounded">FLOW</span>
+                        <span className="bg-indigo-500/20 text-indigo-300 text-[12px] font-mono px-2 py-0.5 rounded">FLOW</span>
                         무중단 인증 5단계
                       </h5>
                       <ol className="space-y-3 text-sm text-slate-300">
@@ -794,7 +794,7 @@ export default function App() {
                     {/* Request example */}
                     <div>
                       <h5 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
-                        <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-mono px-2 py-0.5 rounded">REQUEST</span>
+                        <span className="bg-emerald-500/20 text-emerald-300 text-[12px] font-mono px-2 py-0.5 rounded">REQUEST</span>
                         Silent Authorize 요청 예시
                       </h5>
                       <pre className="text-xs bg-slate-950 border border-slate-800 rounded-lg p-4 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`GET https://auth.kwater.com/oauth2/v1/authorize
@@ -817,7 +817,7 @@ export default function App() {
                     {/* Error codes table */}
                     <div>
                       <h5 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                        <span className="bg-rose-500/20 text-rose-300 text-[10px] font-mono px-2 py-0.5 rounded">ERROR</span>
+                        <span className="bg-rose-500/20 text-rose-300 text-[12px] font-mono px-2 py-0.5 rounded">ERROR</span>
                         실패 시 응답 (Error Codes)
                       </h5>
                       <div className="overflow-x-auto">
@@ -858,26 +858,26 @@ export default function App() {
                     {/* Implementation patterns */}
                     <div>
                       <h5 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                        <span className="bg-purple-500/20 text-purple-300 text-[10px] font-mono px-2 py-0.5 rounded">PATTERN</span>
+                        <span className="bg-purple-500/20 text-purple-300 text-[12px] font-mono px-2 py-0.5 rounded">PATTERN</span>
                         구현 패턴 두 가지
                       </h5>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div className="bg-slate-950/60 border border-emerald-500/30 rounded-xl p-4">
                           <div className="flex items-center gap-2 mb-2">
-                            <span className="text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">(A) Top-level redirect</span>
-                            <span className="text-[10px] text-emerald-400 font-semibold">권장</span>
+                            <span className="text-[12px] font-mono font-bold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">(A) Top-level redirect</span>
+                            <span className="text-[12px] text-emerald-400 font-semibold">권장</span>
                           </div>
-                          <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-2 font-mono text-slate-300 overflow-x-auto whitespace-pre mb-2">{`window.location.href =
+                          <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-2 font-mono text-slate-300 overflow-x-auto whitespace-pre mb-2">{`window.location.href =
   'https://auth.kwater.com/oauth2/v1/authorize?...&prompt=none'`}</pre>
-                          <p className="text-[11px] text-slate-400 leading-relaxed">짧은 깜빡임은 있지만 안전. 가이드의 React 예제(구현 예제 코드 탭)가 이 방식입니다.</p>
+                          <p className="text-[13px] text-slate-400 leading-relaxed">짧은 깜빡임은 있지만 안전. 가이드의 React 예제(구현 예제 코드 탭)가 이 방식입니다.</p>
                         </div>
                         <div className="bg-slate-950/60 border border-amber-500/30 rounded-xl p-4">
                           <div className="flex items-center gap-2 mb-2">
-                            <span className="text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded">(B) Hidden iframe</span>
+                            <span className="text-[12px] font-mono font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded">(B) Hidden iframe</span>
                           </div>
-                          <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-2 font-mono text-slate-300 overflow-x-auto whitespace-pre mb-2">{`<iframe src=
+                          <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-2 font-mono text-slate-300 overflow-x-auto whitespace-pre mb-2">{`<iframe src=
   'https://auth.kwater.com/oauth2/v1/authorize?...&prompt=none' />`}</pre>
-                          <p className="text-[11px] text-slate-400 leading-relaxed">깜빡임 없음. 단, IdP가 <code className="text-amber-300">frame-ancestors</code> 화이트리스트에 sub-portal 도메인을 허용해야 함. <code className="text-amber-300">postMessage</code>로 부모 윈도우에 code 전달.</p>
+                          <p className="text-[13px] text-slate-400 leading-relaxed">깜빡임 없음. 단, IdP가 <code className="text-amber-300">frame-ancestors</code> 화이트리스트에 sub-portal 도메인을 허용해야 함. <code className="text-amber-300">postMessage</code>로 부모 윈도우에 code 전달.</p>
                         </div>
                       </div>
                     </div>
@@ -885,7 +885,7 @@ export default function App() {
                     {/* Security checklist */}
                     <div>
                       <h5 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                        <span className="bg-rose-500/20 text-rose-300 text-[10px] font-mono px-2 py-0.5 rounded">SECURITY</span>
+                        <span className="bg-rose-500/20 text-rose-300 text-[12px] font-mono px-2 py-0.5 rounded">SECURITY</span>
                         보안 체크리스트
                       </h5>
                       <ul className="space-y-2 text-xs text-slate-300">
@@ -942,8 +942,8 @@ export default function App() {
                           : 'bg-slate-900/40 border-slate-800 text-slate-500 hover:border-slate-700 hover:bg-slate-900/80'
                       }`}
                     >
-                      <span className="text-[10px] font-bold tracking-wider uppercase mb-1.5">Step {idx + 1}</span>
-                      <span className="text-[11px] font-semibold line-clamp-2 leading-relaxed text-slate-300">{step.title}</span>
+                      <span className="text-[12px] font-bold tracking-wider uppercase mb-1.5">Step {idx + 1}</span>
+                      <span className="text-[13px] font-semibold line-clamp-2 leading-relaxed text-slate-300">{step.title}</span>
                     </button>
                   ))}
                 </div>
@@ -978,7 +978,7 @@ export default function App() {
                   <div className="lg:col-span-7 space-y-6">
                     <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
                       <div className="flex flex-col md:flex-row md:items-center gap-3">
-                        <span className="self-start md:self-auto text-[10px] font-mono font-bold uppercase tracking-widest px-2.5 py-1.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shadow-sm">
+                        <span className="self-start md:self-auto text-[12px] font-mono font-bold uppercase tracking-widest px-2.5 py-1.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shadow-sm">
                           {simulationSteps[simStep].phase}
                         </span>
                         <div className="flex flex-wrap items-center gap-2 text-xs font-mono bg-slate-950/80 px-3 py-1.5 rounded-lg border border-slate-800 shadow-inner">
@@ -1001,7 +1001,7 @@ export default function App() {
                       <div className="bg-slate-900 border border-emerald-500/30 rounded-xl p-5 space-y-2">
                         <div className="flex items-center gap-2">
                           <Eye className="text-emerald-400" size={16} />
-                          <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-300">User View · 사용자가 보는 화면</span>
+                          <span className="text-[12px] font-mono font-bold uppercase tracking-widest text-emerald-300">User View · 사용자가 보는 화면</span>
                         </div>
                         <p className="text-sm text-slate-300 leading-relaxed">{simulationSteps[simStep].userView}</p>
                       </div>
@@ -1011,7 +1011,7 @@ export default function App() {
                       <div className="bg-slate-900 border border-indigo-500/30 rounded-xl p-5 space-y-2">
                         <div className="flex items-center gap-2">
                           <Info className="text-indigo-400" size={16} />
-                          <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-indigo-300">Why · 이 단계가 필요한 이유</span>
+                          <span className="text-[12px] font-mono font-bold uppercase tracking-widest text-indigo-300">Why · 이 단계가 필요한 이유</span>
                         </div>
                         <p className="text-sm text-slate-300 leading-relaxed">{simulationSteps[simStep].purpose}</p>
                       </div>
@@ -1021,7 +1021,7 @@ export default function App() {
                       <div className="bg-slate-900 border border-amber-500/30 rounded-xl p-5 space-y-2">
                         <div className="flex items-center gap-2">
                           <AlertTriangle className="text-amber-400" size={16} />
-                          <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-amber-300">Pitfall · 자주 빠지는 함정</span>
+                          <span className="text-[12px] font-mono font-bold uppercase tracking-widest text-amber-300">Pitfall · 자주 빠지는 함정</span>
                         </div>
                         <p className="text-sm text-slate-300 leading-relaxed">{simulationSteps[simStep].warning}</p>
                       </div>
@@ -1060,7 +1060,7 @@ export default function App() {
                         <div className="p-4 space-y-4 text-xs">
                           {/* session storage */}
                           <div>
-                            <div className="text-[10px] font-mono font-semibold text-slate-500 uppercase mb-1.5 tracking-wider">sessionStorage (OIDC State / CSRF 방지)</div>
+                            <div className="text-[12px] font-mono font-semibold text-slate-500 uppercase mb-1.5 tracking-wider">sessionStorage (OIDC State / CSRF 방지)</div>
                             <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-lg font-mono space-y-1">
                               {Object.entries(simulationSteps[simStep].browserState.sessionStorage).map(([key, val]) => (
                                 <div key={key} className="flex justify-between gap-2">
@@ -1076,7 +1076,7 @@ export default function App() {
 
                           {/* Memory Access Token */}
                           <div>
-                            <div className="text-[10px] font-mono font-semibold text-slate-500 uppercase mb-1.5 tracking-wider">JS In-Memory State (Access Token)</div>
+                            <div className="text-[12px] font-mono font-semibold text-slate-500 uppercase mb-1.5 tracking-wider">JS In-Memory State (Access Token)</div>
                             <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-lg font-mono flex justify-between gap-2">
                               <span className="text-emerald-400">accessToken:</span>
                               <span className="text-slate-400 truncate max-w-[200px]" title={simulationSteps[simStep].browserState.memory.accessToken}>
@@ -1087,7 +1087,7 @@ export default function App() {
 
                           {/* HttpOnly Cookies */}
                           <div>
-                            <div className="text-[10px] font-mono font-semibold text-slate-500 uppercase mb-1.5 tracking-wider">HttpOnly Cookies (IdP SSO Session)</div>
+                            <div className="text-[12px] font-mono font-semibold text-slate-500 uppercase mb-1.5 tracking-wider">HttpOnly Cookies (IdP SSO Session)</div>
                             <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-lg font-mono space-y-1">
                               {Object.entries(simulationSteps[simStep].browserState.cookies).map(([key, val]) => (
                                 <div key={key} className="flex justify-between gap-2">
@@ -1149,10 +1149,10 @@ export default function App() {
                     { name: 'K-Water 인증 서버', role: 'Upstream IdP', accent: 'border-sky-500/60 text-sky-200', roleBg: 'bg-sky-500/10 text-sky-300' },
                   ].map((lane, i) => (
                     <div key={i} className="flex flex-col items-center w-1/4 gap-1.5">
-                      <div className={`bg-slate-900 border px-3 md:px-4 py-2 rounded-xl text-[11px] md:text-xs font-bold shadow-lg relative z-20 whitespace-nowrap ${lane.accent}`}>
+                      <div className={`bg-slate-900 border px-3 md:px-4 py-2 rounded-xl text-[13px] md:text-xs font-bold shadow-lg relative z-20 whitespace-nowrap ${lane.accent}`}>
                         {lane.name}
                       </div>
-                      <span className={`text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded ${lane.roleBg}`}>
+                      <span className={`text-[11px] md:text-[12px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded ${lane.roleBg}`}>
                         {lane.role}
                       </span>
                     </div>
@@ -1222,12 +1222,12 @@ export default function App() {
                         {/* Phase Header Banner */}
                         <div className={`relative z-20 mb-20 md:mb-24 rounded-xl border ${phase.phaseColor} px-4 md:px-5 py-3 backdrop-blur-md shadow-lg`}>
                           <div className="flex items-center gap-3">
-                            <span className={`text-[10px] font-mono font-bold uppercase tracking-widest px-2 py-0.5 rounded border ${phase.phaseColor}`}>
+                            <span className={`text-[12px] font-mono font-bold uppercase tracking-widest px-2 py-0.5 rounded border ${phase.phaseColor}`}>
                               {phase.phaseBadge}
                             </span>
                             <h4 className="text-sm md:text-base font-bold text-white">{phase.title}</h4>
                           </div>
-                          <p className="text-[11px] md:text-xs text-slate-400 mt-1.5 leading-relaxed">{phase.subtitle}</p>
+                          <p className="text-[13px] md:text-xs text-slate-400 mt-1.5 leading-relaxed">{phase.subtitle}</p>
                         </div>
 
                         {/* Steps inside this phase */}
@@ -1242,7 +1242,7 @@ export default function App() {
                             return (
                               <div key={idx} className="relative w-full group">
                                 {/* Step Number Dot */}
-                                <div className={`absolute top-0 w-7 h-7 rounded-full bg-slate-900 border-2 flex items-center justify-center text-[11px] font-bold z-20 shadow-lg ${s.dotClass}`}
+                                <div className={`absolute top-0 w-7 h-7 rounded-full bg-slate-900 border-2 flex items-center justify-center text-[13px] font-bold z-20 shadow-lg ${s.dotClass}`}
                                      style={{ left: `${startPercent}%`, transform: 'translate(-50%, -50%)' }}>
                                   {s.step}
                                 </div>
@@ -1326,7 +1326,7 @@ export default function App() {
               {/* Access vs Refresh Matrix */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-slate-950/40 p-6 rounded-2xl border border-indigo-500/20 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 bg-indigo-500/10 text-indigo-400 text-[10px] font-mono px-3 py-1 rounded-bl-xl border-l border-b border-indigo-500/10">Access Token</div>
+                  <div className="absolute top-0 right-0 bg-indigo-500/10 text-indigo-400 text-[12px] font-mono px-3 py-1 rounded-bl-xl border-l border-b border-indigo-500/10">Access Token</div>
                   <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
                     <Key className="text-indigo-400" size={18} />
                     Access Token (액세스 토큰)
@@ -1340,7 +1340,7 @@ export default function App() {
                 </div>
 
                 <div className="bg-slate-950/40 p-6 rounded-2xl border border-emerald-500/20 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 bg-emerald-500/10 text-emerald-400 text-[10px] font-mono px-3 py-1 rounded-bl-xl border-l border-b border-emerald-500/10">Refresh Token</div>
+                  <div className="absolute top-0 right-0 bg-emerald-500/10 text-emerald-400 text-[12px] font-mono px-3 py-1 rounded-bl-xl border-l border-b border-emerald-500/10">Refresh Token</div>
                   <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
                     <RefreshCw className="text-emerald-400 animate-spin-slow" size={18} />
                     Refresh Token (리프레시 토큰)
@@ -1364,21 +1364,21 @@ export default function App() {
                   <p className="text-sm text-slate-300 leading-relaxed">
                     JWT는 점(.)으로 구분된 3부분의 Base64URL 문자열입니다. 디코딩하면 사람이 읽을 수 있는 JSON이지만, 마지막 서명 덕분에 위·변조가 불가능합니다.
                   </p>
-                  <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded-lg p-4 font-mono overflow-x-auto whitespace-pre leading-relaxed">
+                  <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded-lg p-4 font-mono overflow-x-auto whitespace-pre leading-relaxed">
 <span className="text-indigo-300">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjEyMyJ9</span>.<span className="text-emerald-300">eyJpc3MiOiJodHRwczovL2F1dGgua3dhdGVyLmNvbSIsInN1YiI6Imt3YXRlcl91c2VyXzEyMzQiLCJhdWQiOiJjbXAtcG9ydGFsIiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSIsImV4cCI6MTcxNjk4NTU5MywiaWF0IjoxNzE2OTgxOTkzfQ</span>.<span className="text-rose-300">[RSA Signature]</span></pre>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div className="bg-slate-950/60 border border-indigo-500/30 rounded-xl p-4">
-                      <div className="text-indigo-300 text-[10px] font-mono font-bold uppercase mb-2">Header (헤더)</div>
-                      <pre className="text-[11px] font-mono text-slate-300 whitespace-pre">{`{
+                      <div className="text-indigo-300 text-[12px] font-mono font-bold uppercase mb-2">Header (헤더)</div>
+                      <pre className="text-[13px] font-mono text-slate-300 whitespace-pre">{`{
   "alg": "RS256",
   "typ": "JWT",
   "kid": "123"
 }`}</pre>
-                      <p className="text-[11px] text-slate-400 mt-2">서명 알고리즘과 키 ID. 리소스 서버가 JWKS에서 어떤 공개키로 검증할지 식별.</p>
+                      <p className="text-[13px] text-slate-400 mt-2">서명 알고리즘과 키 ID. 리소스 서버가 JWKS에서 어떤 공개키로 검증할지 식별.</p>
                     </div>
                     <div className="bg-slate-950/60 border border-emerald-500/30 rounded-xl p-4">
-                      <div className="text-emerald-300 text-[10px] font-mono font-bold uppercase mb-2">Payload (페이로드)</div>
-                      <pre className="text-[11px] font-mono text-slate-300 whitespace-pre">{`{
+                      <div className="text-emerald-300 text-[12px] font-mono font-bold uppercase mb-2">Payload (페이로드)</div>
+                      <pre className="text-[13px] font-mono text-slate-300 whitespace-pre">{`{
   "iss": "auth.kwater.com",
   "sub": "kwater_user_1234",
   "aud": "cmp-portal",
@@ -1386,16 +1386,16 @@ export default function App() {
   "exp": 1716985593,
   "iat": 1716981993
 }`}</pre>
-                      <p className="text-[11px] text-slate-400 mt-2">사용자 정보·권한·만료시각. <strong className="text-emerald-300">암호화되지 않음</strong> — 비밀번호 절대 금지.</p>
+                      <p className="text-[13px] text-slate-400 mt-2">사용자 정보·권한·만료시각. <strong className="text-emerald-300">암호화되지 않음</strong> — 비밀번호 절대 금지.</p>
                     </div>
                     <div className="bg-slate-950/60 border border-rose-500/30 rounded-xl p-4">
-                      <div className="text-rose-300 text-[10px] font-mono font-bold uppercase mb-2">Signature (서명)</div>
-                      <pre className="text-[11px] font-mono text-slate-300 whitespace-pre">{`RSA-SHA256(
+                      <div className="text-rose-300 text-[12px] font-mono font-bold uppercase mb-2">Signature (서명)</div>
+                      <pre className="text-[13px] font-mono text-slate-300 whitespace-pre">{`RSA-SHA256(
   Base64(header) + "." +
   Base64(payload),
   IdP_PrivateKey
 )`}</pre>
-                      <p className="text-[11px] text-slate-400 mt-2">IdP의 비공개키로 서명. 페이로드를 1바이트만 바꿔도 서명 검증 실패.</p>
+                      <p className="text-[13px] text-slate-400 mt-2">IdP의 비공개키로 서명. 페이로드를 1바이트만 바꿔도 서명 검증 실패.</p>
                     </div>
                   </div>
                 </div>
@@ -1414,59 +1414,59 @@ export default function App() {
 
                   {/* Storage layer diagram */}
                   <div className="bg-slate-950 border border-slate-800 rounded-xl p-5">
-                    <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-slate-500 mb-4 text-center">BFF 패턴 권장 저장 구조</div>
+                    <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-slate-500 mb-4 text-center">BFF 패턴 권장 저장 구조</div>
                     <div className="grid grid-cols-3 gap-4">
                       {/* Browser layer */}
                       <div className="bg-slate-900 border border-slate-700 rounded-xl p-4 relative">
-                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-slate-300 text-[10px] px-3 py-0.5 rounded-full font-bold tracking-wider uppercase border border-slate-700 whitespace-nowrap">사용자 브라우저</div>
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-slate-300 text-[12px] px-3 py-0.5 rounded-full font-bold tracking-wider uppercase border border-slate-700 whitespace-nowrap">사용자 브라우저</div>
                         <Laptop className="text-slate-400 my-2 mx-auto" size={28} />
                         <div className="space-y-2 mt-3">
                           <div className="bg-emerald-500/10 border border-emerald-500/30 rounded p-2">
-                            <div className="text-[10px] text-emerald-300 font-bold">✓ HttpOnly Session Cookie</div>
-                            <div className="text-[9px] text-slate-400 mt-0.5 font-mono">portal_sid=abc...</div>
+                            <div className="text-[12px] text-emerald-300 font-bold">✓ HttpOnly Session Cookie</div>
+                            <div className="text-[11px] text-slate-400 mt-0.5 font-mono">portal_sid=abc...</div>
                           </div>
                           <div className="bg-rose-500/10 border border-rose-500/30 rounded p-2">
-                            <div className="text-[10px] text-rose-300 font-bold">✗ Access Token · Refresh Token 저장 안 함</div>
-                            <div className="text-[9px] text-slate-400 mt-0.5">XSS 탈취 위험 차단</div>
+                            <div className="text-[12px] text-rose-300 font-bold">✗ Access Token · Refresh Token 저장 안 함</div>
+                            <div className="text-[11px] text-slate-400 mt-0.5">XSS 탈취 위험 차단</div>
                           </div>
                         </div>
                       </div>
 
                       {/* Portal backend layer */}
                       <div className="bg-slate-900 border border-purple-500/40 rounded-xl p-4 relative">
-                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-purple-300 text-[10px] px-3 py-0.5 rounded-full font-bold tracking-wider uppercase border border-purple-500/40 whitespace-nowrap">포털 백엔드</div>
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-purple-300 text-[12px] px-3 py-0.5 rounded-full font-bold tracking-wider uppercase border border-purple-500/40 whitespace-nowrap">포털 백엔드</div>
                         <Server className="text-purple-400 my-2 mx-auto" size={28} />
                         <div className="space-y-2 mt-3">
                           <div className="bg-indigo-500/10 border border-indigo-500/30 rounded p-2">
-                            <div className="text-[10px] text-indigo-300 font-bold">Access Token (메모리)</div>
-                            <div className="text-[9px] text-slate-400 mt-0.5 font-mono">15분 TTL · 세션 캐시</div>
+                            <div className="text-[12px] text-indigo-300 font-bold">Access Token (메모리)</div>
+                            <div className="text-[11px] text-slate-400 mt-0.5 font-mono">15분 TTL · 세션 캐시</div>
                           </div>
                           <div className="bg-emerald-500/10 border border-emerald-500/30 rounded p-2">
-                            <div className="text-[10px] text-emerald-300 font-bold">Refresh Token (Redis)</div>
-                            <div className="text-[9px] text-slate-400 mt-0.5 font-mono">7~30일 · 세션 스토어</div>
+                            <div className="text-[12px] text-emerald-300 font-bold">Refresh Token (Redis)</div>
+                            <div className="text-[11px] text-slate-400 mt-0.5 font-mono">7~30일 · 세션 스토어</div>
                           </div>
                         </div>
                       </div>
 
                       {/* IdP layer */}
                       <div className="bg-slate-900 border border-indigo-500/40 rounded-xl p-4 relative">
-                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-indigo-300 text-[10px] px-3 py-0.5 rounded-full font-bold tracking-wider uppercase border border-indigo-500/40 whitespace-nowrap">IdP 인증 서버</div>
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-indigo-300 text-[12px] px-3 py-0.5 rounded-full font-bold tracking-wider uppercase border border-indigo-500/40 whitespace-nowrap">IdP 인증 서버</div>
                         <ShieldCheck className="text-indigo-400 my-2 mx-auto" size={28} />
                         <div className="space-y-2 mt-3">
                           <div className="bg-amber-500/10 border border-amber-500/30 rounded p-2">
-                            <div className="text-[10px] text-amber-300 font-bold">RT 해시 (DB)</div>
-                            <div className="text-[9px] text-slate-400 mt-0.5 font-mono">SHA-256(rt) + used flag</div>
+                            <div className="text-[12px] text-amber-300 font-bold">RT 해시 (DB)</div>
+                            <div className="text-[11px] text-slate-400 mt-0.5 font-mono">SHA-256(rt) + used flag</div>
                           </div>
                           <div className="bg-sky-500/10 border border-sky-500/30 rounded p-2">
-                            <div className="text-[10px] text-sky-300 font-bold">JWT 서명 키 (KMS)</div>
-                            <div className="text-[9px] text-slate-400 mt-0.5 font-mono">RSA private key</div>
+                            <div className="text-[12px] text-sky-300 font-bold">JWT 서명 키 (KMS)</div>
+                            <div className="text-[11px] text-slate-400 mt-0.5 font-mono">RSA private key</div>
                           </div>
                         </div>
                       </div>
                     </div>
 
                     {/* Flow arrows */}
-                    <div className="mt-5 grid grid-cols-3 gap-4 text-[10px] font-mono">
+                    <div className="mt-5 grid grid-cols-3 gap-4 text-[12px] font-mono">
                       <div className="text-center text-slate-500">↑ 세션 쿠키만 노출</div>
                       <div className="text-center text-slate-500">↔ 백채널 토큰 교환</div>
                       <div className="text-center text-slate-500">↑ 발급/검증</div>
@@ -1540,7 +1540,7 @@ export default function App() {
                   {/* Horizontal timeline diagram */}
                   <div className="bg-slate-950 border border-slate-800 rounded-xl p-5">
                     {/* Time axis labels */}
-                    <div className="flex justify-between text-[10px] font-mono text-slate-500 mb-2 px-1">
+                    <div className="flex justify-between text-[12px] font-mono text-slate-500 mb-2 px-1">
                       <span>t=0 (로그인)</span>
                       <span>15분</span>
                       <span>30분</span>
@@ -1554,15 +1554,15 @@ export default function App() {
                     <div className="mb-2">
                       <div className="flex items-center gap-1 mb-1">
                         <Key size={11} className="text-indigo-400" />
-                        <span className="text-[10px] font-bold text-indigo-300 uppercase tracking-wider">Access Token · 15분마다 교체</span>
+                        <span className="text-[12px] font-bold text-indigo-300 uppercase tracking-wider">Access Token · 15분마다 교체</span>
                       </div>
                       <div className="flex h-6 gap-px relative">
-                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 rounded-l border border-indigo-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#1</div>
-                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 border border-indigo-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#2</div>
-                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 border border-indigo-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#3</div>
-                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 border border-indigo-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#4</div>
-                        <div className="flex-[6] bg-gradient-to-r from-indigo-500/40 via-indigo-500/20 to-indigo-500/10 border border-indigo-500/30 border-dashed flex items-center justify-center text-[9px] font-mono text-slate-400">... 매 15분 자동 회전 ...</div>
-                        <div className="flex-1 bg-rose-500/30 rounded-r border border-rose-500/40 flex items-center justify-center text-[9px] font-mono text-rose-200">만료</div>
+                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 rounded-l border border-indigo-500/50 flex items-center justify-center text-[11px] font-mono text-white font-bold">#1</div>
+                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 border border-indigo-500/50 flex items-center justify-center text-[11px] font-mono text-white font-bold">#2</div>
+                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 border border-indigo-500/50 flex items-center justify-center text-[11px] font-mono text-white font-bold">#3</div>
+                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 border border-indigo-500/50 flex items-center justify-center text-[11px] font-mono text-white font-bold">#4</div>
+                        <div className="flex-[6] bg-gradient-to-r from-indigo-500/40 via-indigo-500/20 to-indigo-500/10 border border-indigo-500/30 border-dashed flex items-center justify-center text-[11px] font-mono text-slate-400">... 매 15분 자동 회전 ...</div>
+                        <div className="flex-1 bg-rose-500/30 rounded-r border border-rose-500/40 flex items-center justify-center text-[11px] font-mono text-rose-200">만료</div>
                       </div>
                     </div>
 
@@ -1570,20 +1570,20 @@ export default function App() {
                     <div className="mt-3">
                       <div className="flex items-center gap-1 mb-1">
                         <RefreshCw size={11} className="text-emerald-400" />
-                        <span className="text-[10px] font-bold text-emerald-300 uppercase tracking-wider">Refresh Token · 7일 + 사용마다 회전(RTR)</span>
+                        <span className="text-[12px] font-bold text-emerald-300 uppercase tracking-wider">Refresh Token · 7일 + 사용마다 회전(RTR)</span>
                       </div>
                       <div className="flex h-6 gap-px relative">
-                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 rounded-l border border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#1</div>
-                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 border border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#2</div>
-                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 border border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#3</div>
-                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 border border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#4</div>
-                        <div className="flex-[6] bg-gradient-to-r from-emerald-500/60 via-emerald-500/40 to-emerald-500/20 border border-emerald-500/30 border-dashed flex items-center justify-center text-[9px] font-mono text-slate-300">... 갱신마다 회전 ...</div>
-                        <div className="flex-1 bg-rose-500/30 rounded-r border border-rose-500/40 flex items-center justify-center text-[9px] font-mono text-rose-200">재로그인</div>
+                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 rounded-l border border-emerald-500/50 flex items-center justify-center text-[11px] font-mono text-white font-bold">#1</div>
+                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 border border-emerald-500/50 flex items-center justify-center text-[11px] font-mono text-white font-bold">#2</div>
+                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 border border-emerald-500/50 flex items-center justify-center text-[11px] font-mono text-white font-bold">#3</div>
+                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 border border-emerald-500/50 flex items-center justify-center text-[11px] font-mono text-white font-bold">#4</div>
+                        <div className="flex-[6] bg-gradient-to-r from-emerald-500/60 via-emerald-500/40 to-emerald-500/20 border border-emerald-500/30 border-dashed flex items-center justify-center text-[11px] font-mono text-slate-300">... 갱신마다 회전 ...</div>
+                        <div className="flex-1 bg-rose-500/30 rounded-r border border-rose-500/40 flex items-center justify-center text-[11px] font-mono text-rose-200">재로그인</div>
                       </div>
                     </div>
 
                     {/* Event markers */}
-                    <div className="mt-4 grid grid-cols-2 gap-3 text-[10px]">
+                    <div className="mt-4 grid grid-cols-2 gap-3 text-[12px]">
                       <div className="flex items-center gap-2 text-slate-400">
                         <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
                         <span>각 Access Token 만료 시점마다 Refresh Token으로 자동 갱신 (사용자 모름)</span>
@@ -1598,19 +1598,19 @@ export default function App() {
                   {/* 4-step cards (kept) */}
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
                     <div className="bg-slate-950/60 border border-emerald-500/30 rounded-xl p-4 relative">
-                      <div className="absolute -top-2 left-3 bg-emerald-500 text-white text-[9px] font-bold px-2 py-0.5 rounded">1. 발급</div>
+                      <div className="absolute -top-2 left-3 bg-emerald-500 text-white text-[11px] font-bold px-2 py-0.5 rounded">1. 발급</div>
                       <p className="text-slate-300 mt-2 leading-relaxed">로그인 또는 Silent SSO 완료 시점에 <strong className="text-white">Access + Refresh</strong>가 함께 발급. 포털 백엔드 세션에 저장.</p>
                     </div>
                     <div className="bg-slate-950/60 border border-indigo-500/30 rounded-xl p-4 relative">
-                      <div className="absolute -top-2 left-3 bg-indigo-500 text-white text-[9px] font-bold px-2 py-0.5 rounded">2. 사용</div>
+                      <div className="absolute -top-2 left-3 bg-indigo-500 text-white text-[11px] font-bold px-2 py-0.5 rounded">2. 사용</div>
                       <p className="text-slate-300 mt-2 leading-relaxed">API 호출마다 <code className="text-indigo-300">Authorization: Bearer AT</code> 헤더 첨부. Refresh Token은 절대 노출하지 않음.</p>
                     </div>
                     <div className="bg-slate-950/60 border border-amber-500/30 rounded-xl p-4 relative">
-                      <div className="absolute -top-2 left-3 bg-amber-500 text-white text-[9px] font-bold px-2 py-0.5 rounded">3. 갱신</div>
+                      <div className="absolute -top-2 left-3 bg-amber-500 text-white text-[11px] font-bold px-2 py-0.5 rounded">3. 갱신</div>
                       <p className="text-slate-300 mt-2 leading-relaxed">Access Token 만료 임박/401 응답 감지 → Refresh Token으로 <code className="text-amber-300">/token</code> 호출 → 새 Access Token + 새 Refresh Token 받기 (RTR).</p>
                     </div>
                     <div className="bg-slate-950/60 border border-rose-500/30 rounded-xl p-4 relative">
-                      <div className="absolute -top-2 left-3 bg-rose-500 text-white text-[9px] font-bold px-2 py-0.5 rounded">4. 폐기</div>
+                      <div className="absolute -top-2 left-3 bg-rose-500 text-white text-[11px] font-bold px-2 py-0.5 rounded">4. 폐기</div>
                       <p className="text-slate-300 mt-2 leading-relaxed">로그아웃 / Refresh Token 만료 / 도난 감지 시 즉시 무효화. 백채널로 모든 포털에 푸시.</p>
                     </div>
                   </div>
@@ -1632,29 +1632,29 @@ export default function App() {
                   <div className="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-5">
                     {/* Normal chain */}
                     <div>
-                      <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-300 mb-3">정상 회전 (Token Family Chain)</div>
+                      <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-emerald-300 mb-3">정상 회전 (Token Family Chain)</div>
                       <div className="flex items-center gap-2 overflow-x-auto">
                         <div className="shrink-0 bg-emerald-500/15 border border-emerald-500/40 rounded-lg px-3 py-2 text-center min-w-[80px]">
-                          <div className="text-[10px] font-mono font-bold text-emerald-300">#1</div>
-                          <div className="text-[9px] text-slate-400 mt-0.5">used</div>
+                          <div className="text-[12px] font-mono font-bold text-emerald-300">#1</div>
+                          <div className="text-[11px] text-slate-400 mt-0.5">used</div>
                         </div>
                         <ChevronRight className="shrink-0 text-emerald-400" size={18} />
                         <div className="shrink-0 bg-emerald-500/15 border border-emerald-500/40 rounded-lg px-3 py-2 text-center min-w-[80px]">
-                          <div className="text-[10px] font-mono font-bold text-emerald-300">#2</div>
-                          <div className="text-[9px] text-slate-400 mt-0.5">used</div>
+                          <div className="text-[12px] font-mono font-bold text-emerald-300">#2</div>
+                          <div className="text-[11px] text-slate-400 mt-0.5">used</div>
                         </div>
                         <ChevronRight className="shrink-0 text-emerald-400" size={18} />
                         <div className="shrink-0 bg-emerald-500/15 border border-emerald-500/40 rounded-lg px-3 py-2 text-center min-w-[80px]">
-                          <div className="text-[10px] font-mono font-bold text-emerald-300">#3</div>
-                          <div className="text-[9px] text-slate-400 mt-0.5">used</div>
+                          <div className="text-[12px] font-mono font-bold text-emerald-300">#3</div>
+                          <div className="text-[11px] text-slate-400 mt-0.5">used</div>
                         </div>
                         <ChevronRight className="shrink-0 text-emerald-400" size={18} />
                         <div className="shrink-0 bg-emerald-500/25 border-2 border-emerald-500 rounded-lg px-3 py-2 text-center min-w-[80px] shadow-lg shadow-emerald-500/20">
-                          <div className="text-[10px] font-mono font-bold text-emerald-200">#4</div>
-                          <div className="text-[9px] text-emerald-300 mt-0.5 font-bold">active</div>
+                          <div className="text-[12px] font-mono font-bold text-emerald-200">#4</div>
+                          <div className="text-[11px] text-emerald-300 mt-0.5 font-bold">active</div>
                         </div>
                       </div>
-                      <p className="text-[11px] text-slate-400 mt-2">매 갱신마다 한 단계씩 회전. 이전 Refresh Token은 즉시 used 표시되고 DB에서 사용 불가.</p>
+                      <p className="text-[13px] text-slate-400 mt-2">매 갱신마다 한 단계씩 회전. 이전 Refresh Token은 즉시 used 표시되고 DB에서 사용 불가.</p>
                     </div>
 
                     {/* Divider */}
@@ -1662,42 +1662,42 @@ export default function App() {
 
                     {/* Theft detection scenario */}
                     <div>
-                      <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-rose-300 mb-3">도난 감지 시나리오 — 공격자가 Refresh Token #2 탈취 후 사용 시도</div>
+                      <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-rose-300 mb-3">도난 감지 시나리오 — 공격자가 Refresh Token #2 탈취 후 사용 시도</div>
                       <div className="space-y-2.5">
-                        <div className="flex items-center gap-2 text-[11px]">
-                          <span className="shrink-0 w-5 h-5 rounded-full bg-slate-700 text-slate-200 font-bold flex items-center justify-center text-[9px]">1</span>
+                        <div className="flex items-center gap-2 text-[13px]">
+                          <span className="shrink-0 w-5 h-5 rounded-full bg-slate-700 text-slate-200 font-bold flex items-center justify-center text-[11px]">1</span>
                           <div className="flex items-center gap-2 flex-wrap">
                             <span className="text-slate-300">정상 사용자:</span>
-                            <span className="bg-emerald-500/15 border border-emerald-500/40 rounded px-2 py-0.5 font-mono text-[10px] text-emerald-300">Refresh Token #2</span>
+                            <span className="bg-emerald-500/15 border border-emerald-500/40 rounded px-2 py-0.5 font-mono text-[12px] text-emerald-300">Refresh Token #2</span>
                             <ChevronRight className="text-emerald-400" size={12} />
-                            <span className="bg-emerald-500/15 border border-emerald-500/40 rounded px-2 py-0.5 font-mono text-[10px] text-emerald-300">Refresh Token #3 발급</span>
+                            <span className="bg-emerald-500/15 border border-emerald-500/40 rounded px-2 py-0.5 font-mono text-[12px] text-emerald-300">Refresh Token #3 발급</span>
                             <span className="text-emerald-400">✓ OK</span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2 text-[11px]">
-                          <span className="shrink-0 w-5 h-5 rounded-full bg-rose-500/30 text-rose-200 font-bold flex items-center justify-center text-[9px]">2</span>
+                        <div className="flex items-center gap-2 text-[13px]">
+                          <span className="shrink-0 w-5 h-5 rounded-full bg-rose-500/30 text-rose-200 font-bold flex items-center justify-center text-[11px]">2</span>
                           <div className="flex items-center gap-2 flex-wrap">
                             <span className="text-rose-300">공격자(뒤늦게):</span>
-                            <span className="bg-rose-500/15 border border-rose-500/40 rounded px-2 py-0.5 font-mono text-[10px] text-rose-300 line-through">Refresh Token #2</span>
+                            <span className="bg-rose-500/15 border border-rose-500/40 rounded px-2 py-0.5 font-mono text-[12px] text-rose-300 line-through">Refresh Token #2</span>
                             <ChevronRight className="text-rose-400" size={12} />
                             <span className="text-rose-300 font-bold">⚠ 재사용 탐지!</span>
                           </div>
                         </div>
-                        <div className="flex items-start gap-2 text-[11px]">
-                          <span className="shrink-0 w-5 h-5 rounded-full bg-amber-500/30 text-amber-200 font-bold flex items-center justify-center text-[9px]">3</span>
+                        <div className="flex items-start gap-2 text-[13px]">
+                          <span className="shrink-0 w-5 h-5 rounded-full bg-amber-500/30 text-amber-200 font-bold flex items-center justify-center text-[11px]">3</span>
                           <div className="text-amber-200">서버 자동 대응 → <strong className="text-white">family 전체 폐기</strong>:</div>
                         </div>
                         <div className="ml-7 flex items-center gap-2 overflow-x-auto">
                           <div className="shrink-0 bg-rose-500/10 border border-rose-500/40 rounded-lg px-3 py-1.5 text-center min-w-[70px] opacity-60">
-                            <div className="text-[10px] font-mono font-bold text-rose-300 line-through">#1</div>
+                            <div className="text-[12px] font-mono font-bold text-rose-300 line-through">#1</div>
                           </div>
                           <div className="shrink-0 bg-rose-500/10 border border-rose-500/40 rounded-lg px-3 py-1.5 text-center min-w-[70px] opacity-60">
-                            <div className="text-[10px] font-mono font-bold text-rose-300 line-through">#2</div>
+                            <div className="text-[12px] font-mono font-bold text-rose-300 line-through">#2</div>
                           </div>
                           <div className="shrink-0 bg-rose-500/10 border border-rose-500/40 rounded-lg px-3 py-1.5 text-center min-w-[70px] opacity-60">
-                            <div className="text-[10px] font-mono font-bold text-rose-300 line-through">#3</div>
+                            <div className="text-[12px] font-mono font-bold text-rose-300 line-through">#3</div>
                           </div>
-                          <span className="text-[10px] text-rose-300 font-bold ml-2">+ 사용자 강제 로그아웃 + 보안 알림</span>
+                          <span className="text-[12px] text-rose-300 font-bold ml-2">+ 사용자 강제 로그아웃 + 보안 알림</span>
                         </div>
                       </div>
                     </div>
@@ -1706,7 +1706,7 @@ export default function App() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="bg-slate-950 border border-emerald-500/30 rounded-xl p-4">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-mono font-bold px-2 py-0.5 rounded">정상 흐름</span>
+                        <span className="bg-emerald-500/20 text-emerald-300 text-[12px] font-mono font-bold px-2 py-0.5 rounded">정상 흐름</span>
                       </div>
                       <ol className="space-y-1.5 text-xs text-slate-300 list-decimal list-inside">
                         <li>클라이언트가 <code className="text-emerald-300">Refresh Token #1</code>로 갱신 요청</li>
@@ -1717,7 +1717,7 @@ export default function App() {
                     </div>
                     <div className="bg-slate-950 border border-rose-500/40 rounded-xl p-4">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="bg-rose-500/20 text-rose-300 text-[10px] font-mono font-bold px-2 py-0.5 rounded">도난 감지 시나리오</span>
+                        <span className="bg-rose-500/20 text-rose-300 text-[12px] font-mono font-bold px-2 py-0.5 rounded">도난 감지 시나리오</span>
                       </div>
                       <ol className="space-y-1.5 text-xs text-slate-300 list-decimal list-inside">
                         <li>공격자가 <code className="text-rose-300">Refresh Token #1</code>을 탈취했다고 가정</li>
@@ -1929,14 +1929,14 @@ export default function App() {
                   {/* Back-channel example */}
                   <div>
                     <h4 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
-                      <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-mono px-2 py-0.5 rounded">RECOMMENDED</span>
+                      <span className="bg-emerald-500/20 text-emerald-300 text-[12px] font-mono px-2 py-0.5 rounded">RECOMMENDED</span>
                       Back-Channel Logout 수신 엔드포인트 예시
                     </h4>
                     <pre className="text-xs bg-slate-950 border border-slate-800 rounded-lg p-4 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`POST https://auth.kwater.com/oauth2/v1/kwater/backchannel-logout
 Content-Type: application/x-www-form-urlencoded
 
 logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-Water>`}</pre>
-                    <p className="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                    <p className="text-[13px] text-slate-400 mt-2 leading-relaxed">
                       <code className="text-emerald-300">logout_token</code> 검증 필수 항목: <code className="text-slate-300">iss</code>=K-Water issuer · <code className="text-slate-300">aud</code>=우리 client_id · <code className="text-slate-300">iat</code> 신선도 · <code className="text-slate-300">jti</code> 재사용 차단 · <code className="text-slate-300">events</code>에 <code className="text-slate-300">http://schemas.openid.net/event/backchannel-logout</code> 포함 · <code className="text-slate-300">nonce</code> 부재 · <code className="text-slate-300">sub</code> 또는 <code className="text-slate-300">sid</code>로 세션 식별 (RFC 8417 §2.6).
                     </p>
                   </div>
@@ -1944,7 +1944,7 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-Water>`}</pre>
                   {/* K-Water request checklist */}
                   <div className="bg-sky-950/30 border border-sky-500/30 rounded-xl p-4">
                     <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                      <span className="bg-sky-500/20 text-sky-300 text-[10px] font-mono px-2 py-0.5 rounded">CHECKLIST</span>
+                      <span className="bg-sky-500/20 text-sky-300 text-[12px] font-mono px-2 py-0.5 rounded">CHECKLIST</span>
                       K-Water에 정식 요청할 항목
                     </h4>
                     <ul className="space-y-1.5 text-xs text-slate-300">
@@ -2003,17 +2003,17 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-Water>`}</pre>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800/40">
-                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">GET</span></td><td className="py-2 px-5 font-mono">/.well-known/openid-configuration</td><td className="py-2 px-5 text-slate-400">Discovery</td><td className="py-2 px-5 text-slate-400">메타데이터·엔드포인트·지원 알고리즘 자동 노출</td></tr>
-                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/jwks</td><td className="py-2 px-5 text-slate-400">Discovery</td><td className="py-2 px-5 text-slate-400">JWT 서명 검증용 공개 키 집합</td></tr>
-                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/authorize</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">사용자 인가 요청 (front-channel)</td></tr>
-                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/token</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">인가 코드 ↔ 토큰 교환 · Refresh Token 갱신</td></tr>
-                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/userinfo</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">Access Token으로 사용자 프로필 조회</td></tr>
-                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/logout</td><td className="py-2 px-5 text-slate-400">RP-Initiated Logout</td><td className="py-2 px-5 text-slate-400">사용자 발화 통합 로그아웃 시작점</td></tr>
-                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/introspect</td><td className="py-2 px-5 text-slate-400">RFC 7662</td><td className="py-2 px-5 text-slate-400">토큰 유효성/메타 정보 조회 (서버 간)</td></tr>
-                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/revoke</td><td className="py-2 px-5 text-slate-400">RFC 7009</td><td className="py-2 px-5 text-slate-400">개별 토큰 즉시 폐기</td></tr>
-                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/kwater/callback</td><td className="py-2 px-5 text-slate-400">K-Water 연동</td><td className="py-2 px-5 text-slate-400">K-Water 암호화 페이로드 수신·복호화·SSO 발급</td></tr>
-                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/kwater/backchannel-logout</td><td className="py-2 px-5 text-slate-400">RFC 8417 (수신)</td><td className="py-2 px-5 text-slate-400">K-Water가 호출 — 상위 SLO 수신</td></tr>
-                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">POST</span></td><td className="py-2 px-5 font-mono">{`{portal}/oauth2/v1/backchannel-logout`}</td><td className="py-2 px-5 text-slate-400">RFC 8417 (송신)</td><td className="py-2 px-5 text-slate-400">IdP가 각 포털 백엔드로 호출 — 하위 SLO 전파</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/.well-known/openid-configuration</td><td className="py-2 px-5 text-slate-400">Discovery</td><td className="py-2 px-5 text-slate-400">메타데이터·엔드포인트·지원 알고리즘 자동 노출</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/jwks</td><td className="py-2 px-5 text-slate-400">Discovery</td><td className="py-2 px-5 text-slate-400">JWT 서명 검증용 공개 키 집합</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/authorize</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">사용자 인가 요청 (front-channel)</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/token</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">인가 코드 ↔ 토큰 교환 · Refresh Token 갱신</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/userinfo</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">Access Token으로 사용자 프로필 조회</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/logout</td><td className="py-2 px-5 text-slate-400">RP-Initiated Logout</td><td className="py-2 px-5 text-slate-400">사용자 발화 통합 로그아웃 시작점</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/introspect</td><td className="py-2 px-5 text-slate-400">RFC 7662</td><td className="py-2 px-5 text-slate-400">토큰 유효성/메타 정보 조회 (서버 간)</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/revoke</td><td className="py-2 px-5 text-slate-400">RFC 7009</td><td className="py-2 px-5 text-slate-400">개별 토큰 즉시 폐기</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/kwater/callback</td><td className="py-2 px-5 text-slate-400">K-Water 연동</td><td className="py-2 px-5 text-slate-400">K-Water 암호화 페이로드 수신·복호화·SSO 발급</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/kwater/backchannel-logout</td><td className="py-2 px-5 text-slate-400">RFC 8417 (수신)</td><td className="py-2 px-5 text-slate-400">K-Water가 호출 — 상위 SLO 수신</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">{`{portal}/oauth2/v1/backchannel-logout`}</td><td className="py-2 px-5 text-slate-400">RFC 8417 (송신)</td><td className="py-2 px-5 text-slate-400">IdP가 각 포털 백엔드로 호출 — 하위 SLO 전파</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -2034,7 +2034,7 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-Water>`}</pre>
                   <div className="p-6 space-y-3 text-sm">
                     <p className="text-slate-400">OIDC Discovery 표준 문서. 클라이언트·리소스 서버가 모든 엔드포인트·지원 알고리즘·JWKS URI를 자동 발견하도록 합니다.</p>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK · 일부 발췌)</div>
-                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
   "issuer": "https://auth.kwater.com/oauth2/v1",
   "authorization_endpoint": "https://auth.kwater.com/oauth2/v1/authorize",
   "token_endpoint": "https://auth.kwater.com/oauth2/v1/token",
@@ -2065,25 +2065,25 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-Water>`}</pre>
                     {/* Three-part friendly explanation */}
                     <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4 space-y-3">
                       <div>
-                        <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-300 mb-1">① 공개 키란?</div>
+                        <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-emerald-300 mb-1">① 공개 키란?</div>
                         <p className="text-xs text-slate-400 leading-relaxed">
                           JWT(Access Token)는 IdP의 <strong className="text-slate-200">비공개 키(private key)</strong>로 서명되어 있습니다. 리소스 서버가 그 서명이 진짜인지 확인하려면 짝이 되는 <strong className="text-slate-200">공개 키(public key)</strong>가 필요한데, 그 공개 키들을 모아놓은 게 JWKS(JSON Web Key Set)입니다.
                         </p>
                       </div>
 
                       <div>
-                        <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-indigo-300 mb-1">② TTL 1시간 캐싱</div>
+                        <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-indigo-300 mb-1">② TTL 1시간 캐싱</div>
                         <p className="text-xs text-slate-400 leading-relaxed">
                           매 API 호출마다 JWKS를 IdP에 묻으면 트래픽이 폭주합니다. 그래서 한 번 받은 키들을 메모리(또는 Redis)에 1시간 정도 저장해두고 재사용합니다. 1시간 후 새로 가져오면 그동안 회전된 키도 자연스럽게 반영됩니다.
                         </p>
                       </div>
 
                       <div>
-                        <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-amber-300 mb-1">③ <code className="text-amber-300">kid</code> = key ID (어느 키로 서명했는지 표시)</div>
+                        <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-amber-300 mb-1">③ <code className="text-amber-300">kid</code> = key ID (어느 키로 서명했는지 표시)</div>
                         <p className="text-xs text-slate-400 leading-relaxed mb-2">
                           IdP는 보안을 위해 서명용 키를 주기적으로 교체(<strong className="text-slate-200">key rotation</strong>)합니다. 단, 바꾸자마자 기존 토큰을 무효화하면 사용자들이 갑자기 로그아웃되므로 <strong className="text-slate-200">옛 키 + 새 키를 잠시 같이</strong> JWKS에 둡니다. 어느 키로 서명한 토큰인지 알려주는 게 JWT 헤더의 <code className="text-amber-300">kid</code> 값입니다.
                         </p>
-                        <pre className="text-[10px] bg-slate-950 border border-slate-800 rounded p-2.5 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`JWT Header:  { "alg": "RS256", "kid": "key-2026-q2" }
+                        <pre className="text-[12px] bg-slate-950 border border-slate-800 rounded p-2.5 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`JWT Header:  { "alg": "RS256", "kid": "key-2026-q2" }
                                        ↑ "이 토큰은 이 키로 서명함"
 
 JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
@@ -2091,7 +2091,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                     </div>
 
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK)</div>
-                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
   "keys": [
     {
       "kty": "RSA",
@@ -2184,7 +2184,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                       </table>
                     </div>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK)</div>
-                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
   "access_token": "eyJhbGciOiJSUzI1NiIs...",
   "refresh_token": "rfr_771239ab8c19ef",
   "id_token": "eyJhbGciOiJSUzI1NiIs...",
@@ -2203,7 +2203,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                   <div className="p-6 space-y-3 text-sm">
                     <p className="text-slate-400">Access Token으로 인증된 사용자의 프로필 정보를 반환합니다. <code className="text-emerald-300">Authorization: Bearer ...</code> 헤더 필수.</p>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK)</div>
-                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
   "sub": "kwater_user_1234",
   "name": "홍길동",
   "email": "hong@kwater.or.kr",
@@ -2256,8 +2256,8 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                   <div className="p-6 space-y-3 text-sm">
                     <p className="text-slate-400">K-Water에서 사용자가 로그아웃하면 호출되는 엔드포인트. <code className="text-sky-300">logout_token</code> JWT 검증 후 디지털플랫폼 SSO 세션을 만료시키고 모든 하위 포털로 백채널 로그아웃을 전파합니다.</p>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Request Body (application/x-www-form-urlencoded)</div>
-                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`logout_token=<JWT signed by K-Water, RFC 8417 §2.6>`}</pre>
-                    <p className="text-[11px] text-slate-400 leading-relaxed">검증: iss=K-Water · aud=우리 client_id · iat 신선도 · jti 재사용 차단 · events에 backchannel-logout 포함 · nonce 부재 · sub 또는 sid 식별.</p>
+                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`logout_token=<JWT signed by K-Water, RFC 8417 §2.6>`}</pre>
+                    <p className="text-[13px] text-slate-400 leading-relaxed">검증: iss=K-Water · aud=우리 client_id · iat 신선도 · jti 재사용 차단 · events에 backchannel-logout 포함 · nonce 부재 · sub 또는 sid 식별.</p>
                   </div>
                 </div>
               </div>
@@ -2297,7 +2297,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                   <div className="p-6 space-y-3 text-sm">
                     <p className="text-slate-400">리소스 서버가 Access Token의 유효성과 메타 정보를 IdP에 직접 묻는 엔드포인트. JWT 자체검증을 못 하거나 폐기 여부까지 확인하고 싶을 때 사용. <strong className="text-white">Confidential client만 호출 가능</strong>.</p>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK)</div>
-                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
   "active": true,
   "scope": "openid profile datahub:read",
   "client_id": "datahub-portal-id",
@@ -2306,7 +2306,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
   "iat": 1716981993,
   "sub": "kwater_user_1234"
 }`}</pre>
-                    <p className="text-[11px] text-slate-400">폐기/만료된 토큰은 <code className="text-rose-300">{`{ "active": false }`}</code>만 반환.</p>
+                    <p className="text-[13px] text-slate-400">폐기/만료된 토큰은 <code className="text-rose-300">{`{ "active": false }`}</code>만 반환.</p>
                   </div>
                 </div>
 
@@ -2318,11 +2318,11 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                   <div className="p-6 space-y-3 text-sm">
                     <p className="text-slate-400">특정 Access Token 또는 Refresh Token을 즉시 무효화합니다. 사용자가 명시적으로 "이 기기에서 로그아웃"을 누르거나, 도난 감지 시 사용.</p>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Request Body</div>
-                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`token=<폐기할 토큰>
+                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`token=<폐기할 토큰>
 token_type_hint=refresh_token   # 또는 access_token
 client_id=cmp-portal
 client_secret=<...>`}</pre>
-                    <p className="text-[11px] text-slate-400">성공/실패 모두 <code className="text-slate-300">200 OK</code> (스펙상 동일) — 응답 본문 없음.</p>
+                    <p className="text-[13px] text-slate-400">성공/실패 모두 <code className="text-slate-300">200 OK</code> (스펙상 동일) — 응답 본문 없음.</p>
                   </div>
                 </div>
               </div>
@@ -2342,8 +2342,8 @@ client_secret=<...>`}</pre>
                   <div className="p-6 space-y-3 text-sm">
                     <p className="text-slate-400">디지털플랫폼 통합인증 서버가 SLO 시 각 하위 포털 백엔드로 호출하는 엔드포인트입니다. <strong className="text-white">각 포털이 구현하여 IdP에 등록</strong>합니다 (예: <code className="text-purple-300">https://api.datahub.kwater.com/oauth2/v1/backchannel-logout</code>).</p>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Request Body</div>
-                    <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`logout_token=<JWT signed by IdP, RFC 8417>`}</pre>
-                    <p className="text-[11px] text-slate-400 leading-relaxed">검증 후 해당 sub/sid에 해당하는 자체 세션·Refresh Token을 폐기. <code className="text-purple-300">200 OK</code>(빈 본문) 반환. 실패 시 IdP가 재시도 큐에 적재.</p>
+                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`logout_token=<JWT signed by IdP, RFC 8417>`}</pre>
+                    <p className="text-[13px] text-slate-400 leading-relaxed">검증 후 해당 sub/sid에 해당하는 자체 세션·Refresh Token을 폐기. <code className="text-purple-300">200 OK</code>(빈 본문) 반환. 실패 시 IdP가 재시도 큐에 적재.</p>
                   </div>
                 </div>
               </div>
@@ -2356,75 +2356,87 @@ client_secret=<...>`}</pre>
               <div>
                 <h2 className="text-3xl font-extrabold text-white tracking-tight mb-2">프레임워크 연동 구현 가이드</h2>
                 <p className="text-slate-400 text-lg leading-relaxed">
-                  인증 서버와 상호작용하는 프론트엔드(React) 및 백엔드 리소스 서버(Spring Boot 3)의 연동 패턴 구현체입니다.
+                  프론트엔드(React)와 백엔드(Spring Boot 3)에서 자주 쓰는 연동 패턴을 단계별 스니펫으로 정리했습니다. 각 스니펫은 복사해 바로 적용할 수 있는 골격 코드입니다.
                 </p>
               </div>
 
               {/* Language Selector Tabs */}
               <div className="flex border-b border-slate-800">
-                <button 
+                <button
                   onClick={() => setCodeLang('react')}
                   className={`px-5 py-3 text-sm font-semibold border-b-2 transition-all ${codeLang === 'react' ? 'border-indigo-500 text-white' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
                 >
-                  Frontend (React Axios Interceptor & Guard)
+                  Frontend · React
                 </button>
-                <button 
+                <button
                   onClick={() => setCodeLang('spring')}
                   className={`px-5 py-3 text-sm font-semibold border-b-2 transition-all ${codeLang === 'spring' ? 'border-indigo-500 text-white' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
                 >
-                  Backend (Spring Boot 3 + Spring Security)
+                  Backend · Spring Boot 3
                 </button>
               </div>
 
-              {/* React Implementation */}
+              {/* React Snippets */}
               {codeLang === 'react' && (
                 <div className="space-y-6">
-                  <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-                    <div className="bg-slate-950 px-6 py-4 border-b border-slate-800 flex items-center justify-between">
-                      <span className="text-sm font-bold text-slate-300 flex items-center gap-2">
-                        <Code2 className="text-indigo-400" size={16} />
-                        Axios 토큰 자동 갱신 및 무중단 SSO 인증 가드 패턴
-                      </span>
-                      <button 
-                        onClick={() => handleCopy(reactCode, 'react-code')}
-                        className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5"
-                      >
-                        {copiedId === 'react-code' ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
-                        <span>코드 복사</span>
-                      </button>
+                  {[
+                    { id: 'react-login', title: '1) 로그인 시작 — /authorize 리다이렉트', desc: '사용자가 "로그인" 버튼을 누르면 IdP /authorize로 보내는 헬퍼. state는 sessionStorage에 저장 후 콜백에서 검증.', code: reactLoginCode },
+                    { id: 'react-callback', title: '2) 콜백 처리 — code → 백엔드 교환', desc: 'OAuth 콜백 URL(/callback)에서 code를 추출하고 포털 백엔드에 전달. 백엔드가 IdP /token과 교환 후 세션 쿠키 설정.', code: reactCallbackCode },
+                    { id: 'react-axios', title: '3) Axios 인터셉터 — 401 자동 갱신', desc: 'API 호출 시 401 응답이 오면 자동으로 토큰 갱신 후 원 요청 재시도. 중복 갱신 방지 로직 포함.', code: reactCode },
+                    { id: 'react-logout', title: '4) 로그아웃 — RP-Initiated Logout', desc: 'IdP /logout 으로 리다이렉트. 백채널을 통해 모든 포털 세션이 일괄 종료됨.', code: reactLogoutCode },
+                  ].map(s => (
+                    <div key={s.id} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                      <div className="bg-slate-950 px-6 py-4 border-b border-slate-800 flex items-center justify-between gap-3">
+                        <div>
+                          <div className="text-sm font-bold text-slate-200 flex items-center gap-2">
+                            <Code2 className="text-indigo-400" size={16} />
+                            {s.title}
+                          </div>
+                          <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{s.desc}</p>
+                        </div>
+                        <button
+                          onClick={() => handleCopy(s.code, s.id)}
+                          className="shrink-0 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5"
+                        >
+                          {copiedId === s.id ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+                          <span>복사</span>
+                        </button>
+                      </div>
+                      <pre className="text-xs p-6 bg-slate-950/60 font-mono text-indigo-200 overflow-x-auto whitespace-pre leading-relaxed max-h-[500px]">{s.code}</pre>
                     </div>
-                    <div className="p-0">
-                      <pre className="text-xs p-6 bg-slate-950/60 font-mono text-indigo-200 overflow-x-auto whitespace-pre leading-relaxed max-h-[500px]">
-                        {reactCode}
-                      </pre>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               )}
 
-              {/* Spring Boot Implementation */}
+              {/* Spring Snippets */}
               {codeLang === 'spring' && (
                 <div className="space-y-6">
-                  <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-                    <div className="bg-slate-950 px-6 py-4 border-b border-slate-800 flex items-center justify-between">
-                      <span className="text-sm font-bold text-slate-300 flex items-center gap-2">
-                        <Code2 className="text-indigo-400" size={16} />
-                        Spring Security Oauth2 Resource Server 설정
-                      </span>
-                      <button 
-                        onClick={() => handleCopy(springCode, 'spring-code')}
-                        className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5"
-                      >
-                        {copiedId === 'spring-code' ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
-                        <span>코드 복사</span>
-                      </button>
+                  {[
+                    { id: 'spring-security', title: '1) Security 설정 — JWT Resource Server', desc: 'IdP JWKS로 Bearer 토큰을 자동 검증. K-Water 페이로드 복호화 필터를 체인에 등록.', code: springCode },
+                    { id: 'spring-kwater-filter', title: '2) K-Water 페이로드 복호화 필터', desc: '/oauth2/kwater/callback에서 K-Water가 보낸 암호화 페이로드를 복호화 → 디지털플랫폼 SSO 세션 발급.', code: springKwaterFilterCode },
+                    { id: 'spring-bff-callback', title: '3) BFF 콜백 컨트롤러 — code↔token 교환', desc: '프론트가 받은 code를 백엔드가 받아 IdP /token과 교환. 토큰을 서버 세션에 저장하고 브라우저엔 세션 쿠키만 발급.', code: springBffCallbackCode },
+                    { id: 'spring-backchannel', title: '4) 백채널 로그아웃 수신 엔드포인트', desc: 'IdP가 SLO 시 호출하는 엔드포인트. logout_token JWT 검증 → 사용자 세션·Refresh Token 즉시 폐기.', code: springBackchannelCode },
+                  ].map(s => (
+                    <div key={s.id} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                      <div className="bg-slate-950 px-6 py-4 border-b border-slate-800 flex items-center justify-between gap-3">
+                        <div>
+                          <div className="text-sm font-bold text-slate-200 flex items-center gap-2">
+                            <Code2 className="text-indigo-400" size={16} />
+                            {s.title}
+                          </div>
+                          <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{s.desc}</p>
+                        </div>
+                        <button
+                          onClick={() => handleCopy(s.code, s.id)}
+                          className="shrink-0 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5"
+                        >
+                          {copiedId === s.id ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+                          <span>복사</span>
+                        </button>
+                      </div>
+                      <pre className="text-xs p-6 bg-slate-950/60 font-mono text-indigo-200 overflow-x-auto whitespace-pre leading-relaxed max-h-[500px]">{s.code}</pre>
                     </div>
-                    <div className="p-0">
-                      <pre className="text-xs p-6 bg-slate-950/60 font-mono text-indigo-200 overflow-x-auto whitespace-pre leading-relaxed max-h-[500px]">
-                        {springCode}
-                      </pre>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               )}
             </div>
@@ -2582,4 +2594,261 @@ public class SecurityConfig {
 
         return http.build();
     }
+}`;
+
+// React: 1) Login - /authorize 리다이렉트
+const reactLoginCode = `// auth.js — 로그인 시작 헬퍼
+const IDP_AUTHORIZE = 'https://auth.kwater.com/oauth2/v1/authorize';
+const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;          // 예: 'datahub-portal-id'
+const REDIRECT_URI = window.location.origin + '/callback';
+
+function randomState() {
+  return crypto.getRandomValues(new Uint32Array(4)).join('-');
+}
+
+export function startLogin({ scope = 'openid profile', silent = false } = {}) {
+  const state = randomState();
+  sessionStorage.setItem('oidc_state', state);
+
+  const params = new URLSearchParams({
+    response_type: 'code',
+    client_id: CLIENT_ID,
+    redirect_uri: REDIRECT_URI,
+    scope,
+    state,
+  });
+  if (silent) params.append('prompt', 'none');  // 하위 포털의 Silent SSO
+
+  window.location.href = \`\${IDP_AUTHORIZE}?\${params}\`;
+}
+
+// 사용 예:
+//   <button onClick={() => startLogin()}>로그인</button>
+//   <button onClick={() => startLogin({ silent: true })}>무중단 로그인 시도</button>`;
+
+// React: 2) Callback - code → 백엔드 교환
+const reactCallbackCode = `// CallbackPage.jsx — IdP가 리다이렉트로 보낸 code를 처리
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+export function CallbackPage() {
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const state = params.get('state');
+    const err = params.get('error');
+
+    // Silent SSO 실패는 정상 폴백
+    if (err === 'login_required') {
+      window.location.href = '/login';
+      return;
+    }
+    if (err) { setError(err); return; }
+
+    // state 일치 검증 (CSRF 방어)
+    const saved = sessionStorage.getItem('oidc_state');
+    sessionStorage.removeItem('oidc_state');
+    if (!saved || saved !== state) {
+      setError('state mismatch — possible CSRF attack');
+      return;
+    }
+
+    // BFF 패턴: 백엔드가 code↔token 교환하고 세션 쿠키 발급
+    axios.post('/api/auth/exchange', { code }, { withCredentials: true })
+      .then(() => navigate('/dashboard'))
+      .catch(e => setError(e.message));
+  }, [navigate]);
+
+  if (error) return <div>로그인 실패: {error}</div>;
+  return <div>로그인 처리 중...</div>;
+}`;
+
+// React: 4) Logout - RP-Initiated
+const reactLogoutCode = `// LogoutButton.jsx — 디지털플랫폼 SLO 시작
+const IDP_LOGOUT = 'https://auth.kwater.com/oauth2/v1/logout';
+
+export function logout() {
+  // 1) BFF 백엔드에 알려 서버 세션·토큰 정리
+  fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
+    .finally(() => {
+      // 2) IdP /logout으로 이동 → 중앙 SSO 쿠키 만료 + 모든 포털에 백채널 푸시
+      const params = new URLSearchParams({
+        post_logout_redirect_uri: window.location.origin + '/login',
+        state: crypto.randomUUID(),
+      });
+      // id_token_hint가 있으면 추가
+      const idToken = sessionStorage.getItem('id_token_hint');
+      if (idToken) params.append('id_token_hint', idToken);
+
+      window.location.href = \`\${IDP_LOGOUT}?\${params}\`;
+    });
+}
+
+// 사용: <button onClick={logout}>로그아웃</button>`;
+
+// Spring: 2) K-Water 페이로드 복호화 필터
+const springKwaterFilterCode = `package com.example.auth.filter;
+
+import org.springframework.web.filter.OncePerRequestFilter;
+import jakarta.servlet.http.*;
+import com.nimbusds.jwt.*;
+import com.nimbusds.jose.crypto.RSADecrypter;
+
+// /oauth2/kwater/callback 진입 시 K-Water 페이로드를 복호화하여
+// 디지털플랫폼 자체 SSO 세션을 발급한다.
+public class KWaterPayloadDecryptionFilter extends OncePerRequestFilter {
+
+    private final RSADecrypter decrypter;       // K-Water가 우리 공개키로 암호화 → 우리 비공개키로 복호화
+    private final SsoSessionService ssoSessions;
+
+    public KWaterPayloadDecryptionFilter(RSADecrypter d, SsoSessionService s) {
+        this.decrypter = d; this.ssoSessions = s;
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res,
+                                    jakarta.servlet.FilterChain chain) throws Exception {
+        if (!"/oauth2/kwater/callback".equals(req.getRequestURI())) {
+            chain.doFilter(req, res); return;
+        }
+
+        String encPayload = req.getParameter("kwater_enc_payload");
+        String state = req.getParameter("state");
+
+        // 1) state 검증 (앞서 우리가 K-Water로 보낼 때 저장해둔 값)
+        String savedState = (String) req.getSession().getAttribute("kwater_state");
+        if (savedState == null || !savedState.equals(state)) {
+            res.sendError(400, "Invalid state"); return;
+        }
+
+        // 2) JWE 복호화 — K-Water가 우리 공개키로 암호화한 사용자 정보
+        EncryptedJWT jwt = EncryptedJWT.parse(encPayload);
+        jwt.decrypt(decrypter);
+        JWTClaimsSet claims = jwt.getJWTClaimsSet();
+
+        String userId = claims.getStringClaim("user_id");
+        String dept = claims.getStringClaim("department");
+        String role = claims.getStringClaim("role");
+
+        // 3) 디지털플랫폼 자체 SSO 세션 생성 + HttpOnly 쿠키 발급
+        String sessionId = ssoSessions.create(userId, dept, role);
+        Cookie cookie = new Cookie("innogrid_sso_session", sessionId);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(3600);
+        res.addCookie(cookie);
+
+        // 4) CMP 콜백으로 리다이렉트
+        res.sendRedirect("https://cmp.kwater.com/callback?code=" + ssoSessions.issueAuthCode(sessionId));
+    }
+}`;
+
+// Spring: 3) BFF 콜백 - code↔token 교환
+const springBffCallbackCode = `package com.example.portal.auth;
+
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClient;
+import jakarta.servlet.http.HttpServletResponse;
+
+// 프론트가 받은 인가 코드를 백엔드가 받아 IdP /token과 교환하는 BFF 패턴.
+// 발급된 Access/Refresh Token은 서버 세션 스토어(Redis 등)에 저장하고,
+// 브라우저엔 세션 ID만 HttpOnly 쿠키로 발급한다 → XSS 토큰 탈취 차단.
+@RestController
+@RequestMapping("/api/auth")
+public class AuthExchangeController {
+
+    private final RestClient idp = RestClient.create("https://auth.kwater.com");
+    private final TokenSessionStore store;
+    private final String clientId = System.getenv("CLIENT_ID");
+    private final String clientSecret = System.getenv("CLIENT_SECRET");   // 환경변수에서만 주입
+    private final String redirectUri = "https://datahub.kwater.com/callback";
+
+    public AuthExchangeController(TokenSessionStore s) { this.store = s; }
+
+    @PostMapping("/exchange")
+    public void exchange(@RequestBody ExchangeReq req, HttpServletResponse res) {
+        // 1) 인가 코드를 토큰으로 교환 (백채널)
+        TokenRes token = idp.post()
+            .uri("/oauth2/v1/token")
+            .header("Content-Type", "application/x-www-form-urlencoded")
+            .body("grant_type=authorization_code"
+                + "&code=" + req.code()
+                + "&redirect_uri=" + redirectUri
+                + "&client_id=" + clientId
+                + "&client_secret=" + clientSecret)
+            .retrieve()
+            .body(TokenRes.class);
+
+        // 2) 토큰을 서버 세션에 저장 — 브라우저엔 노출 안 함
+        String sessionId = store.save(token.access_token(), token.refresh_token(),
+                                       token.expires_in());
+
+        // 3) HttpOnly 세션 쿠키만 응답
+        res.addHeader("Set-Cookie",
+            "portal_sid=" + sessionId + "; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=86400");
+    }
+
+    record ExchangeReq(String code) {}
+    record TokenRes(String access_token, String refresh_token, int expires_in) {}
+}`;
+
+// Spring: 4) Back-channel logout endpoint
+const springBackchannelCode = `package com.example.portal.auth;
+
+import com.nimbusds.jwt.*;
+import com.nimbusds.jose.jwk.source.*;
+import com.nimbusds.jose.proc.*;
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+// IdP가 SLO 시 호출하는 엔드포인트.
+// logout_token(JWT)을 RFC 8417 §2.6 규칙대로 검증하고,
+// 해당 sub/sid의 세션과 Refresh Token을 폐기한다.
+@RestController
+public class BackchannelLogoutController {
+
+    private final JWTProcessor<SecurityContext> jwtProcessor;   // JWKS 자동 캐싱
+    private final TokenSessionStore store;
+    private final Set<String> processedJti = Collections.newSetFromMap(new WeakHashMap<>());
+
+    @PostMapping(value="/oauth2/v1/backchannel-logout",
+                 consumes="application/x-www-form-urlencoded")
+    public ResponseEntity<Void> handle(@RequestParam("logout_token") String token) throws Exception {
+        JWTClaimsSet claims = jwtProcessor.process(token, null);
+
+        // 1) 필수 claim 검증
+        if (!"https://auth.kwater.com/oauth2/v1".equals(claims.getIssuer())) return badRequest();
+        if (!claims.getAudience().contains(System.getenv("CLIENT_ID")))    return badRequest();
+
+        // 2) 신선도 (5분 이내)
+        long iat = claims.getIssueTime().getTime() / 1000;
+        if (System.currentTimeMillis()/1000 - iat > 300) return badRequest();
+
+        // 3) jti 재사용 차단
+        String jti = claims.getJWTID();
+        if (!processedJti.add(jti)) return badRequest();
+
+        // 4) events 검증
+        Map<String,Object> events = (Map) claims.getClaim("events");
+        if (!events.containsKey("http://schemas.openid.net/event/backchannel-logout"))
+            return badRequest();
+
+        // 5) nonce 부재 검증 (RFC 8417 §2.6 명시)
+        if (claims.getClaim("nonce") != null) return badRequest();
+
+        // 6) 세션 폐기 — sub 또는 sid 기준
+        String sub = claims.getSubject();
+        String sid = claims.getStringClaim("sid");
+        if (sid != null)      store.revokeBySid(sid);
+        else if (sub != null) store.revokeBySub(sub);
+
+        return ResponseEntity.ok().build();
+    }
+
+    private ResponseEntity<Void> badRequest() { return ResponseEntity.badRequest().build(); }
 }`;

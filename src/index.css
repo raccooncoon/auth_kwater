@@ -2,7 +2,7 @@
 
 /* 전체 글자 크기 확대 — Tailwind의 rem 기반 사이즈가 비례 확대됨 */
 html {
-  font-size: 17.5px;
+  font-size: 19px;
 }
 
 @keyframes spin-slow {
