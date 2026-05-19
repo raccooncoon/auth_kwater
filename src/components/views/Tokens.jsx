@@ -262,7 +262,7 @@ export default function Tokens() {
             <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-amber-300 mb-4 text-center">의사결정 트리</div>
             <div className="space-y-3 text-sm">
               <div className="bg-slate-900 border border-slate-700 rounded-lg p-3 text-center text-slate-200 font-semibold">
-                백엔드를 둘 수 있는가?
+                Q1. 백엔드를 둘 수 있는가?
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 ml-0 md:ml-6">
                 <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
@@ -271,20 +271,47 @@ export default function Tokens() {
                 </div>
                 <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
                   <div className="text-amber-300 font-bold text-[13px] mb-1">NO — SPA 환경 ↓</div>
-                  <p className="text-[12px] text-slate-400 leading-relaxed">아래 추가 결정 필요.</p>
+                  <p className="text-[12px] text-slate-400 leading-relaxed">Q2로 진행.</p>
                 </div>
               </div>
+
               <div className="bg-slate-900 border border-slate-700 rounded-lg p-3 text-center text-slate-200 font-semibold ml-0 md:ml-6">
-                IdP가 Silent SSO를 잘 지원하는가? (같은 도메인 + <code className="text-indigo-300">prompt=none</code>)
+                Q2. IdP가 Silent SSO를 잘 지원하는가? (같은 사이트 + <code className="text-indigo-300">prompt=none</code> + iframe 허용)
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 ml-0 md:ml-12">
+                <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
+                  <div className="text-emerald-300 font-bold text-[13px] mb-1">YES — 🥉 Silent SSO 의존</div>
+                  <p className="text-[12px] text-slate-400 leading-relaxed">SPA에 토큰 저장 자체를 안 함. 매 페이지 로드 시 IdP에서 새로 받음.</p>
+                </div>
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+                  <div className="text-amber-300 font-bold text-[13px] mb-1">NO — 토큰을 저장해야 함 ↓</div>
+                  <p className="text-[12px] text-slate-400 leading-relaxed">Q3로 진행.</p>
+                </div>
+              </div>
+
+              <div className="bg-slate-900 border border-slate-700 rounded-lg p-3 text-center text-slate-200 font-semibold ml-0 md:ml-12">
+                Q3. XSS 방어를 한 단계 더 강화하고 싶은가? (Service Worker 사용 가능 환경)
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 ml-0 md:ml-16">
                 <div className="bg-indigo-500/10 border border-indigo-500/30 rounded-lg p-3">
-                  <div className="text-indigo-300 font-bold text-[13px] mb-1">YES — Silent SSO 의존 🥉</div>
-                  <p className="text-[12px] text-slate-400 leading-relaxed">토큰 저장 안 함. 매번 IdP에서 새로 받음.</p>
+                  <div className="text-indigo-300 font-bold text-[13px] mb-1">YES — 🥈 Service Worker 격리</div>
+                  <p className="text-[12px] text-slate-400 leading-relaxed">토큰을 SW 스코프에 격리. 메인 JS는 토큰 접근 불가 → 브라우저 안의 BFF.</p>
                 </div>
                 <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3">
-                  <div className="text-purple-300 font-bold text-[13px] mb-1">NO — 메모리 + HttpOnly RT 쿠키 🥇</div>
-                  <p className="text-[12px] text-slate-400 leading-relaxed">+ RTR + CSP. 가능하면 Service Worker 격리 / DPoP 추가.</p>
+                  <div className="text-purple-300 font-bold text-[13px] mb-1">NO — 🥇 메모리 + HttpOnly RT 쿠키</div>
+                  <p className="text-[12px] text-slate-400 leading-relaxed">표준 SPA 패턴. AT는 JS 메모리, RT는 HttpOnly 쿠키. + RTR + CSP 필수.</p>
+                </div>
+              </div>
+
+              {/* DPoP는 별도 레이어 — 위 어느 것에든 결합 */}
+              <div className="mt-5 pt-4 border-t border-slate-800">
+                <div className="bg-sky-500/10 border border-sky-500/30 rounded-lg p-3 flex items-start gap-3">
+                  <span className="shrink-0 text-sky-300 font-bold text-[13px]">💎 DPoP (가산 옵션)</span>
+                  <p className="text-[12px] text-slate-400 leading-relaxed">
+                    <strong className="text-slate-200">위 4가지(BFF · 🥇 · 🥈 · 🥉) 어느 것에든 결합 가능한 별도 레이어.</strong>
+                    토큰을 클라이언트 키쌍에 묶어 <strong className="text-sky-300">탈취해도 비공개키 없이는 사용 불가</strong>하게 만듦 (RFC 9449).
+                    IdP·리소스 서버·SPA가 모두 DPoP를 구현해야 적용 가능.
+                  </p>
                 </div>
               </div>
             </div>
