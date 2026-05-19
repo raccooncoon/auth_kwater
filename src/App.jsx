@@ -20,7 +20,6 @@ import {
   Database,
   Eye,
   Settings,
-  ExternalLink,
   Activity,
   Building2,
   Sparkles,
@@ -198,7 +197,7 @@ export default function App() {
       desc: "디지털플랫폼 통합인증 서버는 전송된 SSO 쿠키를 확인하여 K-Water 사용자임을 승인하고, 폼 로그인 없이 데이터허브 콜백으로 인가 코드를 보냅니다. 데이터허브 백엔드는 이를 교환해 데이터허브 전용 토큰을 획득합니다.",
       userView: "데이터허브 화면이 완전히 로드되고, 사용자는 자기 권한 범위 내의 데이터셋·테이블만 목록에서 볼 수 있습니다. CMP 토큰과는 완전히 분리되어 있으므로, CMP에서 만료가 일어나도 데이터허브 세션은 독립적으로 유지됩니다.",
       purpose: "각 포털별로 토큰을 따로 발급하면 (1) 한 포털 토큰이 유출되어도 다른 포털은 안전하고, (2) 포털마다 서로 다른 scope/role을 분리 관리할 수 있고, (3) 로그·감사·과금을 포털 단위로 정확히 집계할 수 있습니다. 같은 사용자라도 \"누가 어느 포털에서 무엇을 했는지\"가 명확해집니다.",
-      warning: "여러 포털 탭이 동시에 열리면 토큰 발급 요청이 병렬로 발생할 수 있습니다. 인증 서버는 각 client_id별로 독립 세션 카운터·rate limit을 둬야 하며, 데이터허브 백엔드도 발급된 RT를 자기 세션 스토어에 저장할 때 동시성 충돌을 막아야 합니다.",
+      warning: "여러 포털 탭이 동시에 열리면 토큰 발급 요청이 병렬로 발생할 수 있습니다. 인증 서버는 각 client_id별로 독립 세션 카운터·rate limit을 둬야 하며, 데이터허브 백엔드도 발급된 Refresh Token을 자기 세션 스토어에 저장할 때 동시성 충돌을 막아야 합니다.",
       payload: {
         redirect: "REDIRECT https://datahub.kwater.com/callback?code=datahub_code_9918",
         token_request_body: {
@@ -269,15 +268,6 @@ export default function App() {
             </h1>
             <p className="text-xs text-slate-400 font-medium">클라우드 관리 포털 (CMP) & 하위 독립 포털 상세 연동 시뮬레이터</p>
           </div>
-        </div>
-        <div className="flex items-center space-x-3">
-          <button 
-            onClick={() => handleCopy('https://auth.kwater.com/.well-known/openid-configuration', 'discovery')}
-            className="hidden md:flex items-center space-x-2 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition"
-          >
-            <span>OIDC Discovery Document</span>
-            <ExternalLink size={12} />
-          </button>
         </div>
       </header>
 
@@ -1461,7 +1451,8 @@ export default function App() {
                             <div className="text-[9px] text-slate-400 mt-0.5 font-mono">portal_sid=abc...</div>
                           </div>
                           <div className="bg-rose-500/10 border border-rose-500/30 rounded p-2">
-                            <div className="text-[10px] text-rose-300 font-bold">✗ AT / RT 절대 없음</div>
+                            <div className="text-[10px] text-rose-300 font-bold">✗ Access Token · Refresh Token 저장 안 함</div>
+                            <div className="text-[9px] text-slate-400 mt-0.5">XSS 탈취 위험 차단</div>
                           </div>
                         </div>
                       </div>
@@ -1544,7 +1535,7 @@ export default function App() {
                           <td className="py-2 px-3 font-mono text-emerald-300">HttpOnly Cookie</td>
                           <td className="py-2 px-3 text-emerald-400">안전</td>
                           <td className="py-2 px-3 text-amber-400">중간*</td>
-                          <td className="py-2 px-3 text-emerald-400 font-semibold">✓ RT 표준</td>
+                          <td className="py-2 px-3 text-emerald-400 font-semibold">✓ Refresh Token 표준</td>
                           <td className="py-2 px-3 text-slate-400">JS 접근 불가. CSRF는 SameSite=Lax/Strict로 차단</td>
                         </tr>
                         <tr>
@@ -1581,7 +1572,7 @@ export default function App() {
                       <span>45분</span>
                       <span>60분</span>
                       <span>...</span>
-                      <span>7일 (RT 만료)</span>
+                      <span>7일 (Refresh Token 만료)</span>
                     </div>
 
                     {/* Access Token bars (multiple short segments) */}
@@ -1591,10 +1582,10 @@ export default function App() {
                         <span className="text-[10px] font-bold text-indigo-300 uppercase tracking-wider">Access Token · 15분마다 교체</span>
                       </div>
                       <div className="flex h-6 gap-px relative">
-                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 rounded-l border border-indigo-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">AT_v1</div>
-                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 border border-indigo-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">AT_v2</div>
-                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 border border-indigo-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">AT_v3</div>
-                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 border border-indigo-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">AT_v4</div>
+                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 rounded-l border border-indigo-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#1</div>
+                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 border border-indigo-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#2</div>
+                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 border border-indigo-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#3</div>
+                        <div className="flex-1 bg-gradient-to-r from-indigo-500/80 to-indigo-500/40 border border-indigo-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#4</div>
                         <div className="flex-[6] bg-gradient-to-r from-indigo-500/40 via-indigo-500/20 to-indigo-500/10 border border-indigo-500/30 border-dashed flex items-center justify-center text-[9px] font-mono text-slate-400">... 매 15분 자동 회전 ...</div>
                         <div className="flex-1 bg-rose-500/30 rounded-r border border-rose-500/40 flex items-center justify-center text-[9px] font-mono text-rose-200">만료</div>
                       </div>
@@ -1607,10 +1598,10 @@ export default function App() {
                         <span className="text-[10px] font-bold text-emerald-300 uppercase tracking-wider">Refresh Token · 7일 + 사용마다 회전(RTR)</span>
                       </div>
                       <div className="flex h-6 gap-px relative">
-                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 rounded-l border border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">RT_v1</div>
-                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 border border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">RT_v2</div>
-                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 border border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">RT_v3</div>
-                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 border border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">RT_v4</div>
+                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 rounded-l border border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#1</div>
+                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 border border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#2</div>
+                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 border border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#3</div>
+                        <div className="flex-1 bg-gradient-to-r from-emerald-500/80 to-emerald-500/60 border border-emerald-500/50 flex items-center justify-center text-[9px] font-mono text-white font-bold">#4</div>
                         <div className="flex-[6] bg-gradient-to-r from-emerald-500/60 via-emerald-500/40 to-emerald-500/20 border border-emerald-500/30 border-dashed flex items-center justify-center text-[9px] font-mono text-slate-300">... 갱신마다 회전 ...</div>
                         <div className="flex-1 bg-rose-500/30 rounded-r border border-rose-500/40 flex items-center justify-center text-[9px] font-mono text-rose-200">재로그인</div>
                       </div>
@@ -1620,7 +1611,7 @@ export default function App() {
                     <div className="mt-4 grid grid-cols-2 gap-3 text-[10px]">
                       <div className="flex items-center gap-2 text-slate-400">
                         <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
-                        <span>각 AT 만료 시점마다 RT로 자동 갱신 (사용자 모름)</span>
+                        <span>각 Access Token 만료 시점마다 Refresh Token으로 자동 갱신 (사용자 모름)</span>
                       </div>
                       <div className="flex items-center gap-2 text-slate-400">
                         <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -1641,11 +1632,11 @@ export default function App() {
                     </div>
                     <div className="bg-slate-950/60 border border-amber-500/30 rounded-xl p-4 relative">
                       <div className="absolute -top-2 left-3 bg-amber-500 text-white text-[9px] font-bold px-2 py-0.5 rounded">3. 갱신</div>
-                      <p className="text-slate-300 mt-2 leading-relaxed">AT 만료 임박/401 응답 감지 → RT로 <code className="text-amber-300">/token</code> 호출 → 새 AT + 새 RT 받기 (RTR).</p>
+                      <p className="text-slate-300 mt-2 leading-relaxed">Access Token 만료 임박/401 응답 감지 → Refresh Token으로 <code className="text-amber-300">/token</code> 호출 → 새 Access Token + 새 Refresh Token 받기 (RTR).</p>
                     </div>
                     <div className="bg-slate-950/60 border border-rose-500/30 rounded-xl p-4 relative">
                       <div className="absolute -top-2 left-3 bg-rose-500 text-white text-[9px] font-bold px-2 py-0.5 rounded">4. 폐기</div>
-                      <p className="text-slate-300 mt-2 leading-relaxed">로그아웃 / RT 만료 / 도난 감지 시 즉시 무효화. 백채널로 모든 포털에 푸시.</p>
+                      <p className="text-slate-300 mt-2 leading-relaxed">로그아웃 / Refresh Token 만료 / 도난 감지 시 즉시 무효화. 백채널로 모든 포털에 푸시.</p>
                     </div>
                   </div>
                 </div>
@@ -1669,26 +1660,26 @@ export default function App() {
                       <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-300 mb-3">정상 회전 (Token Family Chain)</div>
                       <div className="flex items-center gap-2 overflow-x-auto">
                         <div className="shrink-0 bg-emerald-500/15 border border-emerald-500/40 rounded-lg px-3 py-2 text-center min-w-[80px]">
-                          <div className="text-[10px] font-mono font-bold text-emerald-300">RT_v1</div>
+                          <div className="text-[10px] font-mono font-bold text-emerald-300">#1</div>
                           <div className="text-[9px] text-slate-400 mt-0.5">used</div>
                         </div>
                         <ChevronRight className="shrink-0 text-emerald-400" size={18} />
                         <div className="shrink-0 bg-emerald-500/15 border border-emerald-500/40 rounded-lg px-3 py-2 text-center min-w-[80px]">
-                          <div className="text-[10px] font-mono font-bold text-emerald-300">RT_v2</div>
+                          <div className="text-[10px] font-mono font-bold text-emerald-300">#2</div>
                           <div className="text-[9px] text-slate-400 mt-0.5">used</div>
                         </div>
                         <ChevronRight className="shrink-0 text-emerald-400" size={18} />
                         <div className="shrink-0 bg-emerald-500/15 border border-emerald-500/40 rounded-lg px-3 py-2 text-center min-w-[80px]">
-                          <div className="text-[10px] font-mono font-bold text-emerald-300">RT_v3</div>
+                          <div className="text-[10px] font-mono font-bold text-emerald-300">#3</div>
                           <div className="text-[9px] text-slate-400 mt-0.5">used</div>
                         </div>
                         <ChevronRight className="shrink-0 text-emerald-400" size={18} />
                         <div className="shrink-0 bg-emerald-500/25 border-2 border-emerald-500 rounded-lg px-3 py-2 text-center min-w-[80px] shadow-lg shadow-emerald-500/20">
-                          <div className="text-[10px] font-mono font-bold text-emerald-200">RT_v4</div>
+                          <div className="text-[10px] font-mono font-bold text-emerald-200">#4</div>
                           <div className="text-[9px] text-emerald-300 mt-0.5 font-bold">active</div>
                         </div>
                       </div>
-                      <p className="text-[11px] text-slate-400 mt-2">매 갱신마다 한 단계씩 회전. 이전 RT는 즉시 used 표시되고 DB에서 사용 불가.</p>
+                      <p className="text-[11px] text-slate-400 mt-2">매 갱신마다 한 단계씩 회전. 이전 Refresh Token은 즉시 used 표시되고 DB에서 사용 불가.</p>
                     </div>
 
                     {/* Divider */}
@@ -1696,15 +1687,15 @@ export default function App() {
 
                     {/* Theft detection scenario */}
                     <div>
-                      <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-rose-300 mb-3">도난 감지 시나리오 — 공격자가 RT_v2 탈취 후 사용 시도</div>
+                      <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-rose-300 mb-3">도난 감지 시나리오 — 공격자가 Refresh Token #2 탈취 후 사용 시도</div>
                       <div className="space-y-2.5">
                         <div className="flex items-center gap-2 text-[11px]">
                           <span className="shrink-0 w-5 h-5 rounded-full bg-slate-700 text-slate-200 font-bold flex items-center justify-center text-[9px]">1</span>
                           <div className="flex items-center gap-2 flex-wrap">
                             <span className="text-slate-300">정상 사용자:</span>
-                            <span className="bg-emerald-500/15 border border-emerald-500/40 rounded px-2 py-0.5 font-mono text-[10px] text-emerald-300">RT_v2</span>
+                            <span className="bg-emerald-500/15 border border-emerald-500/40 rounded px-2 py-0.5 font-mono text-[10px] text-emerald-300">Refresh Token #2</span>
                             <ChevronRight className="text-emerald-400" size={12} />
-                            <span className="bg-emerald-500/15 border border-emerald-500/40 rounded px-2 py-0.5 font-mono text-[10px] text-emerald-300">RT_v3 발급</span>
+                            <span className="bg-emerald-500/15 border border-emerald-500/40 rounded px-2 py-0.5 font-mono text-[10px] text-emerald-300">Refresh Token #3 발급</span>
                             <span className="text-emerald-400">✓ OK</span>
                           </div>
                         </div>
@@ -1712,7 +1703,7 @@ export default function App() {
                           <span className="shrink-0 w-5 h-5 rounded-full bg-rose-500/30 text-rose-200 font-bold flex items-center justify-center text-[9px]">2</span>
                           <div className="flex items-center gap-2 flex-wrap">
                             <span className="text-rose-300">공격자(뒤늦게):</span>
-                            <span className="bg-rose-500/15 border border-rose-500/40 rounded px-2 py-0.5 font-mono text-[10px] text-rose-300 line-through">RT_v2</span>
+                            <span className="bg-rose-500/15 border border-rose-500/40 rounded px-2 py-0.5 font-mono text-[10px] text-rose-300 line-through">Refresh Token #2</span>
                             <ChevronRight className="text-rose-400" size={12} />
                             <span className="text-rose-300 font-bold">⚠ 재사용 탐지!</span>
                           </div>
@@ -1723,13 +1714,13 @@ export default function App() {
                         </div>
                         <div className="ml-7 flex items-center gap-2 overflow-x-auto">
                           <div className="shrink-0 bg-rose-500/10 border border-rose-500/40 rounded-lg px-3 py-1.5 text-center min-w-[70px] opacity-60">
-                            <div className="text-[10px] font-mono font-bold text-rose-300 line-through">RT_v1</div>
+                            <div className="text-[10px] font-mono font-bold text-rose-300 line-through">#1</div>
                           </div>
                           <div className="shrink-0 bg-rose-500/10 border border-rose-500/40 rounded-lg px-3 py-1.5 text-center min-w-[70px] opacity-60">
-                            <div className="text-[10px] font-mono font-bold text-rose-300 line-through">RT_v2</div>
+                            <div className="text-[10px] font-mono font-bold text-rose-300 line-through">#2</div>
                           </div>
                           <div className="shrink-0 bg-rose-500/10 border border-rose-500/40 rounded-lg px-3 py-1.5 text-center min-w-[70px] opacity-60">
-                            <div className="text-[10px] font-mono font-bold text-rose-300 line-through">RT_v3</div>
+                            <div className="text-[10px] font-mono font-bold text-rose-300 line-through">#3</div>
                           </div>
                           <span className="text-[10px] text-rose-300 font-bold ml-2">+ 사용자 강제 로그아웃 + 보안 알림</span>
                         </div>
@@ -1743,10 +1734,10 @@ export default function App() {
                         <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-mono font-bold px-2 py-0.5 rounded">정상 흐름</span>
                       </div>
                       <ol className="space-y-1.5 text-xs text-slate-300 list-decimal list-inside">
-                        <li>클라이언트가 <code className="text-emerald-300">RT_v1</code>으로 갱신 요청</li>
-                        <li>서버 검증 OK → <code className="text-emerald-300">AT_v2 + RT_v2</code> 발급</li>
-                        <li><code className="text-emerald-300">RT_v1</code> 즉시 무효화 (DB에 used=true 표시)</li>
-                        <li>다음 갱신 때는 <code className="text-emerald-300">RT_v2</code> 사용</li>
+                        <li>클라이언트가 <code className="text-emerald-300">Refresh Token #1</code>로 갱신 요청</li>
+                        <li>서버 검증 OK → <code className="text-emerald-300">새 Access Token + Refresh Token #2</code> 발급</li>
+                        <li><code className="text-emerald-300">Refresh Token #1</code> 즉시 무효화 (DB에 used=true 표시)</li>
+                        <li>다음 갱신 때는 <code className="text-emerald-300">Refresh Token #2</code> 사용</li>
                       </ol>
                     </div>
                     <div className="bg-slate-950 border border-rose-500/40 rounded-xl p-4">
@@ -1754,10 +1745,10 @@ export default function App() {
                         <span className="bg-rose-500/20 text-rose-300 text-[10px] font-mono font-bold px-2 py-0.5 rounded">도난 감지 시나리오</span>
                       </div>
                       <ol className="space-y-1.5 text-xs text-slate-300 list-decimal list-inside">
-                        <li>공격자가 <code className="text-rose-300">RT_v1</code>을 탈취했다고 가정</li>
-                        <li>정상 사용자가 먼저 갱신 → <code className="text-rose-300">RT_v1</code> 무효화됨</li>
-                        <li>공격자가 뒤늦게 <code className="text-rose-300">RT_v1</code>로 시도 → <strong className="text-rose-300">사용 흔적 발견!</strong></li>
-                        <li>서버가 <strong className="text-white">해당 사용자의 모든 RT 일괄 폐기</strong> + 알림</li>
+                        <li>공격자가 <code className="text-rose-300">Refresh Token #1</code>을 탈취했다고 가정</li>
+                        <li>정상 사용자가 먼저 갱신 → <code className="text-rose-300">Refresh Token #1</code> 무효화됨</li>
+                        <li>공격자가 뒤늦게 <code className="text-rose-300">Refresh Token #1</code>로 시도 → <strong className="text-rose-300">사용 흔적 발견!</strong></li>
+                        <li>서버가 <strong className="text-white">해당 사용자의 모든 Refresh Token 일괄 폐기</strong> + 알림</li>
                       </ol>
                     </div>
                   </div>
@@ -1768,9 +1759,9 @@ export default function App() {
                       구현 시 핵심 포인트
                     </h4>
                     <ul className="space-y-1 text-xs text-slate-300">
-                      <li>· RT를 DB에 저장할 때는 <strong className="text-white">해시</strong>해서 보관 (SHA-256). 원본 보관 금지</li>
+                      <li>· Refresh Token을 DB에 저장할 때는 <strong className="text-white">해시</strong>해서 보관 (SHA-256). 원본 보관 금지</li>
                       <li>· 사용 이력(used_at, replaced_by)을 함께 기록해 도난 추적 가능하게</li>
-                      <li>· "이미 사용된 RT 재사용 시도" → 자동으로 해당 사용자 family 전체 폐기</li>
+                      <li>· "이미 사용된 Refresh Token 재사용 시도" → 자동으로 해당 사용자 family 전체 폐기</li>
                       <li>· 동시 요청(브라우저 탭 2개에서 갱신 동시 시도) 대비 grace period(~5초) 허용</li>
                     </ul>
                   </div>
@@ -1807,7 +1798,7 @@ export default function App() {
                         <tr>
                           <td className="py-2 px-3 font-mono text-rose-300">Token 탈취</td>
                           <td className="py-2 px-3 text-slate-400">네트워크 또는 로그에서 토큰 유출</td>
-                          <td className="py-2 px-3 text-slate-300">HTTPS 강제 + 짧은 AT 만료 + RTR 도난 감지</td>
+                          <td className="py-2 px-3 text-slate-300">HTTPS 강제 + 짧은 Access Token 만료 + RTR 도난 감지</td>
                         </tr>
                         <tr>
                           <td className="py-2 px-3 font-mono text-rose-300">Replay</td>
@@ -1840,15 +1831,15 @@ export default function App() {
                   <ul className="space-y-1.5 text-xs text-slate-300">
                     <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Access Token 만료 15분~1시간</span></li>
                     <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Refresh Token 만료 7~30일</span></li>
-                    <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>RT는 HttpOnly + Secure + SameSite 쿠키</span></li>
+                    <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Refresh Token은 HttpOnly + Secure + SameSite 쿠키</span></li>
                     <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>localStorage에 어떤 토큰도 저장 금지</span></li>
-                    <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>RT 발급 시 RTR 활성화 (한 번 쓰면 회전)</span></li>
-                    <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>RT는 DB에 해시(SHA-256)로 저장</span></li>
+                    <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Refresh Token 발급 시 RTR 활성화 (한 번 쓰면 회전)</span></li>
+                    <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Refresh Token은 DB에 해시(SHA-256)로 저장</span></li>
                   </ul>
                   <ul className="space-y-1.5 text-xs text-slate-300">
                     <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>JWT 검증 시 iss · aud · exp · nbf · signature 모두 확인</span></li>
                     <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>리소스 서버는 JWKS 캐싱(TTL 1시간) + 키 회전 대응</span></li>
-                    <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>도난 감지 시 사용자 family 전체 RT 폐기 로직</span></li>
+                    <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>도난 감지 시 사용자 family 전체 Refresh Token 폐기 로직</span></li>
                     <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>토큰 payload에 비밀번호·개인정보 절대 금지</span></li>
                     <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>HTTPS 미사용 환경 운영 금지 (Secure 쿠키 전제)</span></li>
                     <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>로그에 토큰 원본 절대 남기지 않기 (앞 8자만 마스킹)</span></li>
