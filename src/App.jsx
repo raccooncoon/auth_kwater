@@ -141,7 +141,7 @@ export default function App() {
           client_secret: "[Confidential Client 시크릿, 백엔드 환경 변수에서만 주입]"
         },
         responseBody: {
-          access_token: "eyJhbGciOiJSUzI1NiIsInR5cCI... [디지털플랫폼 통합 포털용 토큰]",
+          access_token: "eyJhbGciOiJSUzI1NiIsInR5cCI... [CMP용 Access Token]",
           refresh_token: "rfr_master_771239ab8c19ef",
           token_type: "Bearer",
           expires_in: 3600
@@ -891,7 +891,7 @@ export default function App() {
                       <ul className="space-y-2 text-xs text-slate-300">
                         <li className="flex gap-2">
                           <Check className="shrink-0 text-emerald-400 mt-0.5" size={14} />
-                          <span><strong className="text-white">state 필수</strong> — CSRF 방지. sessionStorage 저장값과 콜백 시 동일해야 함 (Step 6의 <code className="text-indigo-300">sub_random_state_4410</code>이 예시)</span>
+                          <span><strong className="text-white">state 필수</strong> — CSRF 방지. sessionStorage 저장값과 콜백 시 동일해야 함 (시퀀스 Step 6 · 시뮬레이터 Step 4의 <code className="text-indigo-300">sub_random_state_4410</code>이 예시)</span>
                         </li>
                         <li className="flex gap-2">
                           <Check className="shrink-0 text-emerald-400 mt-0.5" size={14} />
@@ -920,6 +920,13 @@ export default function App() {
                 <h2 className="text-3xl font-extrabold text-white tracking-tight mb-2">통합 & 하위 포털 연동 상세 추적</h2>
                 <p className="text-slate-400 text-lg leading-relaxed">
                   브라우저 로컬 데이터, 토큰 상태 및 백그라운드 교환 처리를 각 단계별 데이터 스냅샷을 통해 입체적으로 분석합니다.
+                </p>
+              </div>
+
+              <div className="bg-indigo-500/5 border border-indigo-500/30 rounded-xl px-4 py-3 flex items-start gap-2">
+                <Info className="text-indigo-400 shrink-0 mt-0.5" size={16} />
+                <p className="text-[13px] text-slate-300 leading-relaxed">
+                  본 시뮬레이터는 핵심 흐름만 <strong className="text-white">6개 단계</strong>로 단순화하여 페이로드·상태 변화를 추적합니다. 토큰 갱신(RTR)·사용자 로그아웃 트리거 등을 포함한 <strong className="text-white">전체 12단계 흐름</strong>은 <button onClick={() => setActiveTab('sequence')} className="text-indigo-300 hover:text-indigo-200 underline underline-offset-2">3. 데이터 흐름 애니메이션</button> 탭의 시퀀스 다이어그램을 참고하세요.
                 </p>
               </div>
 
@@ -1106,14 +1113,14 @@ export default function App() {
                           <Database className="text-emerald-400" size={16} />
                           <span className="text-xs font-bold text-slate-300">중앙 및 리소스 서버 상태</span>
                         </div>
-                        <div className="p-4 space-y-3 text-xs">
-                          <div className="flex justify-between items-center py-1.5 border-b border-slate-800/50">
-                            <span className="text-slate-400">SSO 통합 인증 세션 (IdP)</span>
-                            <span className="font-mono text-indigo-400 font-bold">{simulationSteps[simStep].serverState.authServer}</span>
+                        <div className="p-4 space-y-4 text-xs">
+                          <div className="space-y-1.5 pb-3 border-b border-slate-800/50">
+                            <div className="text-[11px] font-mono font-semibold text-slate-500 uppercase tracking-wider">SSO 통합 인증 세션 (IdP)</div>
+                            <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-lg font-mono text-indigo-300 text-[12px] leading-relaxed break-all">{simulationSteps[simStep].serverState.authServer}</div>
                           </div>
-                          <div className="flex justify-between items-center py-1.5">
-                            <span className="text-slate-400">백엔드 API 리소스 서버 인가</span>
-                            <span className="font-mono text-emerald-400 font-bold">{simulationSteps[simStep].serverState.resourceServer}</span>
+                          <div className="space-y-1.5">
+                            <div className="text-[11px] font-mono font-semibold text-slate-500 uppercase tracking-wider">백엔드 API 리소스 서버 인가</div>
+                            <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-lg font-mono text-emerald-300 text-[12px] leading-relaxed break-all">{simulationSteps[simStep].serverState.resourceServer}</div>
                           </div>
                         </div>
                       </div>
@@ -1183,7 +1190,7 @@ export default function App() {
                           { step: 2, from: 3, to: 0, label: "2. 인증 완료 + 암호화 페이로드 발급", lineColor: "bg-sky-500/80 group-hover:bg-sky-400 shadow-[0_0_15px_1px] shadow-sky-500/40", arrowColor: "text-sky-400", dotClass: "border-sky-500 text-sky-300", labelClass: "text-sky-300 border-sky-500/30", desc: "K-Water가 사용자 정보를 암호화한 페이로드(JWE/SAML)를 응답으로 발급하고, 디지털플랫폼 콜백 URL로 브라우저를 리다이렉트합니다." },
                           { step: 3, from: 0, to: 2, label: "3. 페이로드 전달", lineColor: "bg-indigo-500/80 group-hover:bg-indigo-400 shadow-[0_0_15px_1px] shadow-indigo-500/40", arrowColor: "text-indigo-400", dotClass: "border-indigo-500 text-indigo-300", labelClass: "text-indigo-300 border-indigo-500/30", desc: "브라우저는 K-Water가 발급한 암호화 페이로드를 디지털플랫폼 통합인증 서버의 /oauth2/kwater/callback 엔드포인트로 전달합니다." },
                           { step: 4, from: 2, to: 0, label: "4. 복호화 및 통합 SSO 쿠키 발급", lineColor: "bg-emerald-500/80 group-hover:bg-emerald-400 shadow-[0_0_15px_1px] shadow-emerald-500/40", arrowColor: "text-emerald-400", dotClass: "border-emerald-500 text-emerald-300", labelClass: "text-emerald-300 border-emerald-500/30", desc: "디지털플랫폼 통합인증 서버가 K-Water 페이로드를 복호화하여 디지털플랫폼 생태계 전용 통합 SSO 세션 쿠키를 브라우저에 발급합니다." },
-                          { step: 5, from: 1, to: 2, label: "5. 디지털플랫폼 포털 토큰 교환", lineColor: "bg-purple-500/80 group-hover:bg-purple-400 shadow-[0_0_15px_1px] shadow-purple-500/40", arrowColor: "text-purple-400", dotClass: "border-purple-500 text-purple-300", labelClass: "text-purple-300 border-purple-500/30", desc: "클라우드 관리 포털 (CMP) 백엔드가 디지털플랫폼 통합인증 서버와 백채널(Back-channel)로 통신하여 전용 토큰을 획득합니다." },
+                          { step: 5, from: 1, to: 2, label: "5. CMP 토큰 교환", lineColor: "bg-purple-500/80 group-hover:bg-purple-400 shadow-[0_0_15px_1px] shadow-purple-500/40", arrowColor: "text-purple-400", dotClass: "border-purple-500 text-purple-300", labelClass: "text-purple-300 border-purple-500/30", desc: "클라우드 관리 포털 (CMP) 백엔드가 디지털플랫폼 통합인증 서버와 백채널(Back-channel)로 통신하여 전용 토큰을 획득합니다." },
                         ],
                       },
                       {
@@ -1454,7 +1461,7 @@ export default function App() {
                         <ShieldCheck className="text-indigo-400 my-2 mx-auto" size={28} />
                         <div className="space-y-2 mt-3">
                           <div className="bg-amber-500/10 border border-amber-500/30 rounded p-2">
-                            <div className="text-[12px] text-amber-300 font-bold">RT 해시 (DB)</div>
+                            <div className="text-[12px] text-amber-300 font-bold">Refresh Token 해시 (DB)</div>
                             <div className="text-[11px] text-slate-400 mt-0.5 font-mono">SHA-256(rt) + used flag</div>
                           </div>
                           <div className="bg-sky-500/10 border border-sky-500/30 rounded p-2">
@@ -1590,7 +1597,7 @@ export default function App() {
                       </div>
                       <div className="flex items-center gap-2 text-slate-400">
                         <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                        <span>RT는 한 번 쓰일 때마다 새것으로 교체 (RTR)</span>
+                        <span>Refresh Token은 한 번 쓰일 때마다 새것으로 교체 (RTR)</span>
                       </div>
                     </div>
                   </div>
@@ -1603,7 +1610,7 @@ export default function App() {
                     </div>
                     <div className="bg-slate-950/60 border border-indigo-500/30 rounded-xl p-4 relative">
                       <div className="absolute -top-2 left-3 bg-indigo-500 text-white text-[11px] font-bold px-2 py-0.5 rounded">2. 사용</div>
-                      <p className="text-slate-300 mt-2 leading-relaxed">API 호출마다 <code className="text-indigo-300">Authorization: Bearer AT</code> 헤더 첨부. Refresh Token은 절대 노출하지 않음.</p>
+                      <p className="text-slate-300 mt-2 leading-relaxed">API 호출마다 <code className="text-indigo-300">Authorization: Bearer &lt;Access Token&gt;</code> 헤더 첨부. Refresh Token은 절대 노출하지 않음.</p>
                     </div>
                     <div className="bg-slate-950/60 border border-amber-500/30 rounded-xl p-4 relative">
                       <div className="absolute -top-2 left-3 bg-amber-500 text-white text-[11px] font-bold px-2 py-0.5 rounded">3. 갱신</div>
@@ -2206,7 +2213,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                     <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
   "sub": "kwater_user_1234",
   "name": "홍길동",
-  "email": "hong@kwater.or.kr",
+  "email": "hong@example.com",
   "department": "수자원관리본부",
   "role": "ADMIN",
   "kwater_employee_id": "K012345"
@@ -2455,11 +2462,11 @@ client_secret=<...>`}</pre>
 // React Example Source Code String
 const reactCode = `import axios from 'axios';
 
-// 엑세스 토큰을 클라이언트 내 메모리 영역에만 안전하게 적재
+// 액세스 토큰을 클라이언트 내 메모리 영역에만 안전하게 적재
 let memoryAccessToken = ""; 
 
 export const api = axios.create({
-  baseURL: 'https://api.kwater.com/v1',
+  baseURL: 'https://api.datahub.kwater.com/v1',  // 포털별 자체 API 도메인
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true // HttpOnly Refresh Token 쿠키 및 SSO 세션 관리를 위한 설정
 });
@@ -2485,7 +2492,7 @@ const onRefreshed = (token) => {
   refreshSubscribers = [];
 };
 
-// 2. 응답 인터셉터: 401 Unauthorized 발생 시 자동으로 토큰 리프레쉬 트리거
+// 2. 응답 인터셉터: 401 Unauthorized 발생 시 자동으로 토큰 리프레시 트리거
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -2512,7 +2519,7 @@ api.interceptors.response.use(
           'https://auth.kwater.com/oauth2/v1/token',
           new URLSearchParams({
             grant_type: 'refresh_token',
-            client_id: 'sub-portal-01-id'
+            client_id: 'datahub-portal-id'
           }),
           {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -2536,7 +2543,7 @@ api.interceptors.response.use(
         
         // 3. Silent SSO 시도 (인증 서버의 SSO 활성 세션을 통한 자동 원격 로그인 유도)
         // prompt=none을 전달하여 백그라운드 연동을 우선 시도하거나 IDP 로그인 페이지로 일탈시킵니다.
-        const clientId = 'sub-portal-01-id';
+        const clientId = 'datahub-portal-id';
         const redirectUri = encodeURIComponent(window.location.origin + '/callback');
         window.location.href = \`https://auth.kwater.com/oauth2/v1/authorize?response_type=code&client_id=\${clientId}&redirect_uri=\${redirectUri}&scope=openid%20profile&prompt=none\`;
         
