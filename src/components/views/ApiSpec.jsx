@@ -30,7 +30,7 @@ export default function ApiSpec() {
             </thead>
             <tbody className="divide-y divide-slate-800/40">
               <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/.well-known/openid-configuration</td><td className="py-2 px-5 text-slate-400">Discovery</td><td className="py-2 px-5 text-slate-400">메타데이터·엔드포인트·지원 알고리즘 자동 노출</td></tr>
-              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/jwks</td><td className="py-2 px-5 text-slate-400">Discovery</td><td className="py-2 px-5 text-slate-400">JWT 서명 검증용 공개 키 집합</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/.well-known/jwks.json</td><td className="py-2 px-5 text-slate-400">Discovery</td><td className="py-2 px-5 text-slate-400">JWT 서명 검증용 공개 키 집합</td></tr>
               <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/authorize</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">사용자 인가 요청 (front-channel)</td></tr>
               <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/token</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">인가 코드 ↔ 토큰 교환 · Refresh Token 갱신</td></tr>
               <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/userinfo</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">Access Token으로 사용자 프로필 조회</td></tr>
@@ -38,8 +38,8 @@ export default function ApiSpec() {
               <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/introspect</td><td className="py-2 px-5 text-slate-400">RFC 7662</td><td className="py-2 px-5 text-slate-400">토큰 유효성/메타 정보 조회 (서버 간)</td></tr>
               <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/revoke</td><td className="py-2 px-5 text-slate-400">RFC 7009</td><td className="py-2 px-5 text-slate-400">개별 토큰 즉시 폐기</td></tr>
               <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/kwater/callback</td><td className="py-2 px-5 text-slate-400">K-water 연동</td><td className="py-2 px-5 text-slate-400">K-water 암호화 페이로드 수신·복호화·SSO 발급</td></tr>
-              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/kwater/backchannel-logout</td><td className="py-2 px-5 text-slate-400">RFC 8417 (수신)</td><td className="py-2 px-5 text-slate-400">K-water가 호출 — 상위 SLO 수신</td></tr>
-              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">{`{portal}/oauth2/v1/backchannel-logout`}</td><td className="py-2 px-5 text-slate-400">RFC 8417 (송신)</td><td className="py-2 px-5 text-slate-400">IdP가 각 포털 백엔드로 호출 — 하위 SLO 전파</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/kwater/backchannel-logout</td><td className="py-2 px-5 text-slate-400">OIDC BCL 1.0 (수신)</td><td className="py-2 px-5 text-slate-400">K-water가 호출 — 상위 SLO 수신</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">{`{portal}/oauth2/v1/backchannel-logout`}</td><td className="py-2 px-5 text-slate-400">OIDC BCL 1.0 (송신)</td><td className="py-2 px-5 text-slate-400">IdP가 각 포털 백엔드로 호출 — 하위 SLO 전파</td></tr>
             </tbody>
           </table>
         </div>
@@ -61,11 +61,11 @@ export default function ApiSpec() {
             <p className="text-slate-400">OIDC Discovery 표준 문서. 클라이언트·리소스 서버가 모든 엔드포인트·지원 알고리즘·JWKS URI를 자동 발견하도록 합니다.</p>
             <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK · 일부 발췌)</div>
             <CodeBlock language="json" code={`{
-  "issuer": "https://auth.kwater.com/oauth2/v1",
+  "issuer": "https://auth.kwater.com",
   "authorization_endpoint": "https://auth.kwater.com/oauth2/v1/authorize",
   "token_endpoint": "https://auth.kwater.com/oauth2/v1/token",
   "userinfo_endpoint": "https://auth.kwater.com/oauth2/v1/userinfo",
-  "jwks_uri": "https://auth.kwater.com/oauth2/v1/jwks",
+  "jwks_uri": "https://auth.kwater.com/.well-known/jwks.json",
   "end_session_endpoint": "https://auth.kwater.com/oauth2/v1/logout",
   "introspection_endpoint": "https://auth.kwater.com/oauth2/v1/introspect",
   "revocation_endpoint": "https://auth.kwater.com/oauth2/v1/revoke",
@@ -81,7 +81,7 @@ export default function ApiSpec() {
         <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
           <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
             <span className="bg-emerald-600/10 text-emerald-400 font-mono text-xs font-bold px-2 py-1 rounded border border-emerald-500/20">GET</span>
-            <h4 className="font-bold text-white text-sm">/oauth2/v1/jwks (서명 검증용 공개 키 목록)</h4>
+            <h4 className="font-bold text-white text-sm">/.well-known/jwks.json (서명 검증용 공개 키 목록)</h4>
           </div>
           <div className="p-6 space-y-4 text-sm">
             <p className="text-slate-300 leading-relaxed">
@@ -288,11 +288,11 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`} />
 
             <div>
               <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mb-1">Request Body (application/x-www-form-urlencoded)</div>
-              <CodeBlock language="bash" code={`logout_token=<JWT signed by K-water, RFC 8417 §2.6>`} />
+              <CodeBlock language="bash" code={`logout_token=<JWT signed by K-water, OIDC BCL 1.0 §2.4 (RFC 8417 SET)>`} />
             </div>
 
             <div className="bg-slate-950/60 border border-sky-500/30 rounded-xl p-4">
-              <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-sky-300 mb-2">logout_token 검증 항목 (RFC 8417 §2.6)</div>
+              <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-sky-300 mb-2">logout_token 검증 항목 (OIDC BCL 1.0 §2.4 (RFC 8417 SET))</div>
               <p className="text-[13px] text-slate-400 leading-relaxed mb-3">
                 K-water가 보낸 JWT 안의 클레임들을 한 줄 한 줄 확인하여 — <strong className="text-white">정말 K-water가 보낸 것인지 + 우리에게 보낸 것인지 + 변조·재사용·위장이 없는지</strong>를 검증합니다.
               </p>
@@ -323,7 +323,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`} />
                 </li>
                 <li className="flex gap-2">
                   <code className="shrink-0 text-rose-300 font-mono line-through">nonce</code>
-                  <span><strong className="text-rose-300">절대 있어선 안 됨</strong> — RFC 8417 §2.6 명시. nonce가 있으면 ID Token 위장 공격이므로 거부</span>
+                  <span><strong className="text-rose-300">절대 있어선 안 됨</strong> — OIDC BCL 1.0 §2.4 (RFC 8417 SET) 명시. nonce가 있으면 ID Token 위장 공격이므로 거부</span>
                 </li>
                 <li className="flex gap-2">
                   <code className="shrink-0 text-sky-300 font-mono">sub / sid</code>
@@ -444,15 +444,15 @@ client_secret=<...>`} />
             <h4 className="font-bold text-white text-sm">{`{portal}/oauth2/v1/backchannel-logout`}</h4>
           </div>
           <div className="p-6 space-y-4 text-sm">
-            <p className="text-slate-400 leading-relaxed">디지털플랫폼 통합인증 서버가 SLO 시 각 하위 포털 백엔드로 호출하는 엔드포인트입니다. <strong className="text-white">각 포털이 구현하여 IdP에 등록</strong>합니다 (예: <code className="text-purple-300">https://api.datahub.kwater.com/oauth2/v1/backchannel-logout</code>).</p>
+            <p className="text-slate-400 leading-relaxed">디지털플랫폼 통합인증 서버가 SLO 시 각 하위 포털 백엔드로 호출하는 엔드포인트입니다. <strong className="text-white">각 포털이 구현하여 IdP에 등록</strong>합니다 (예: <code className="text-purple-300">https://datahub.kwater.com/oauth2/v1/backchannel-logout</code>).</p>
 
             <div>
               <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mb-1">Request Body</div>
-              <CodeBlock language="bash" code={`logout_token=<JWT signed by IdP, RFC 8417>`} />
+              <CodeBlock language="bash" code={`logout_token=<JWT signed by IdP per OIDC Back-Channel Logout 1.0 §2.4 (RFC 8417 SET 위에 정의)>`} />
             </div>
 
             <div className="bg-slate-950/60 border border-purple-500/30 rounded-xl p-4">
-              <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-purple-300 mb-2">logout_token 검증 항목 (RFC 8417 §2.6)</div>
+              <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-purple-300 mb-2">logout_token 검증 항목 (OIDC BCL 1.0 §2.4 (RFC 8417 SET))</div>
               <p className="text-[13px] text-slate-400 leading-relaxed mb-3">
                 IdP가 보낸 JWT 안의 클레임들을 한 줄 한 줄 확인하여 — <strong className="text-white">정말 우리 IdP가 보낸 것인지 + 우리 포털에게 보낸 것인지 + 변조·재사용·위장이 없는지</strong>를 검증합니다.
               </p>
@@ -467,7 +467,7 @@ client_secret=<...>`} />
                 </li>
                 <li className="flex gap-2">
                   <code className="shrink-0 text-purple-300 font-mono">iss</code>
-                  <span><strong className="text-white">발행자가 IdP issuer URL과 정확히 일치</strong> (예: <code className="text-slate-300">https://auth.kwater.com/oauth2/v1</code>) — 가짜 IdP 위조 차단</span>
+                  <span><strong className="text-white">발행자가 IdP issuer URL과 정확히 일치</strong> (예: <code className="text-slate-300">https://auth.kwater.com</code>) — 가짜 IdP 위조 차단</span>
                 </li>
                 <li className="flex gap-2">
                   <code className="shrink-0 text-purple-300 font-mono">aud</code>
@@ -487,7 +487,7 @@ client_secret=<...>`} />
                 </li>
                 <li className="flex gap-2">
                   <code className="shrink-0 text-rose-300 font-mono line-through">nonce</code>
-                  <span><strong className="text-rose-300">절대 있어선 안 됨</strong> — RFC 8417 §2.6 명시. nonce가 있으면 ID Token 위장 공격이므로 거부</span>
+                  <span><strong className="text-rose-300">절대 있어선 안 됨</strong> — OIDC BCL 1.0 §2.4 (RFC 8417 SET) 명시. nonce가 있으면 ID Token 위장 공격이므로 거부</span>
                 </li>
                 <li className="flex gap-2">
                   <code className="shrink-0 text-purple-300 font-mono">sub / sid</code>
@@ -498,7 +498,7 @@ client_secret=<...>`} />
 
             <div className="text-[12px] text-slate-400 leading-relaxed">
               <strong className="text-slate-200">응답:</strong>
-              <span className="text-emerald-300 ml-1">200 OK</span> + <code className="text-purple-300">Cache-Control: no-store</code> 헤더 (RFC 8417 §2.7) · 빈 본문 ·
+              <span className="text-emerald-300 ml-1">200 OK</span> + <code className="text-purple-300">Cache-Control: no-store</code> 헤더 (OIDC BCL 1.0 §2.8 (Cache-Control)) · 빈 본문 ·
               검증 실패 시 <span className="text-rose-300">400 Bad Request</span> → IdP가 재시도 큐에 적재.
             </div>
           </div>

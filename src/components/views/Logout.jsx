@@ -118,7 +118,7 @@ Content-Type: application/x-www-form-urlencoded
 
 logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-water>`} />
             <p className="text-[13px] text-slate-400 mt-2 leading-relaxed">
-              <code className="text-emerald-300">logout_token</code> 검증 필수 항목: <code className="text-slate-300">iss</code>=K-water issuer · <code className="text-slate-300">aud</code>=우리 client_id · <code className="text-slate-300">iat</code> 신선도 · <code className="text-slate-300">jti</code> 재사용 차단 · <code className="text-slate-300">events</code>에 <code className="text-slate-300">http://schemas.openid.net/event/backchannel-logout</code> 포함 · <code className="text-slate-300">nonce</code> 부재 · <code className="text-slate-300">sub</code> 또는 <code className="text-slate-300">sid</code>로 세션 식별 (RFC 8417 §2.6).
+              <code className="text-emerald-300">logout_token</code> 검증 필수 항목: <code className="text-slate-300">iss</code>=K-water issuer · <code className="text-slate-300">aud</code>=우리 client_id · <code className="text-slate-300">iat</code> 신선도 · <code className="text-slate-300">jti</code> 재사용 차단 · <code className="text-slate-300">events</code>에 <code className="text-slate-300">http://schemas.openid.net/event/backchannel-logout</code> 포함 · <code className="text-slate-300">nonce</code> 부재 · <code className="text-slate-300">sub</code> 또는 <code className="text-slate-300">sid</code>로 세션 식별 (OIDC BCL 1.0 §2.4 (RFC 8417 SET)).
             </p>
           </div>
 

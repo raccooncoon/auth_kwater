@@ -46,7 +46,7 @@ export default function Sequence() {
             ))}
           </div>
 
-          {/* Sequence Steps Grouped by Phase — lanes: 0=Browser, 1=Portal, 2=Inogrid IdP, 3=K-water */}
+          {/* Sequence Steps Grouped by Phase — lanes: 0=Browser, 1=Portal, 2=Digital Platform IdP, 3=K-water */}
           <div className="relative z-10 flex flex-col pt-6">
             {[
               {

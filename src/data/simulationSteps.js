@@ -46,8 +46,8 @@ export const simulationSteps = [
         role: "ADMIN"
       },
       responseHeaders: {
-        "Set-Cookie": "innogrid_sso_session=inno_sess_892347a8f; Domain=auth.kwater.com; Secure; HttpOnly; SameSite=Lax",
-        "Location": "https://cmp.kwater.com/callback?code=inno_auth_code_7718&state=..."
+        "Set-Cookie": "dp_sso_session=dp_sess_892347a8f; Domain=auth.kwater.com; Secure; HttpOnly; SameSite=Lax",
+        "Location": "https://cmp.kwater.com/callback?code=dp_auth_code_7718&state=..."
       }
     },
     browserState: {
@@ -55,10 +55,10 @@ export const simulationSteps = [
         kwater_auth_state: "Consumed (Cleared)"
       },
       memory: { accessToken: "Null" },
-      cookies: { "auth.kwater.com": "innogrid_sso_session=inno_sess_892347a8f (HttpOnly)" }
+      cookies: { "auth.kwater.com": "dp_sso_session=dp_sess_892347a8f (HttpOnly)" }
     },
     serverState: {
-      authServer: "Active (Session: inno_sess_892347a8f, User: kwater_user_1234)",
+      authServer: "Active (Session: dp_sess_892347a8f, User: kwater_user_1234)",
       resourceServer: "토큰 인증 필요"
     }
   },
@@ -73,11 +73,11 @@ export const simulationSteps = [
     purpose: "BFF 패턴의 핵심: Access/Refresh Token은 백엔드 메모리에만 머무르고, 브라우저는 의미를 알 수 없는 불투명(opaque) 세션 ID만 보유합니다. 이렇게 분리하면 XSS가 발생해도 JS는 토큰에 접근할 수 없으며, 모든 API 호출은 백엔드 프록시를 통해 토큰이 자동 첨부되어 나갑니다.",
     warning: "client_secret이 프론트엔드 JS 번들에 노출되면 토큰 위조가 가능해집니다. 반드시 백엔드 환경변수(또는 KMS/Vault)에서만 주입하세요. cmp_session 쿠키는 HttpOnly · Secure · SameSite=Lax 필수이며, IdP의 SSO 쿠키와는 도메인·발급자·용도가 완전히 분리된 별개 쿠키입니다.",
     payload: {
-      step1_browser_to_backend: "POST https://cmp.kwater.com/api/auth/exchange  body: { code: 'inno_auth_code_7718', state: '...' }",
+      step1_browser_to_backend: "POST https://cmp.kwater.com/api/auth/exchange  body: { code: 'dp_auth_code_7718', state: '...' }",
       step2_backend_to_idp_request: "POST https://auth.kwater.com/oauth2/v1/token",
       step2_request_body: {
         grant_type: "authorization_code",
-        code: "inno_auth_code_7718",
+        code: "dp_auth_code_7718",
         redirect_uri: "https://cmp.kwater.com/callback",
         client_id: "cmp-portal",
         client_secret: "[Confidential Client 시크릿, 백엔드 환경 변수에서만 주입]",
@@ -101,7 +101,7 @@ export const simulationSteps = [
       sessionStorage: {},
       memory: { accessToken: "Null (BFF: 토큰은 백엔드 세션 스토어에만 보관)" },
       cookies: {
-        "auth.kwater.com": "innogrid_sso_session=inno_sess_892347a8f (IdP SSO 쿠키)",
+        "auth.kwater.com": "dp_sso_session=dp_sess_892347a8f (IdP SSO 쿠키)",
         "cmp.kwater.com": "cmp_session=opaque_sess_abc123 (BFF 세션 쿠키 · HttpOnly)"
       }
     },
@@ -121,8 +121,8 @@ export const simulationSteps = [
     purpose: "각 하위 포털은 독립 client_id를 갖고 자기만의 토큰을 받아야 합니다 (포털별 스코프 분리). 하지만 \"또 로그인하세요\"는 SSO 경험을 깨므로, OIDC 표준의 prompt=none 옵션으로 \"UI 없이 백그라운드에서만 인증해줘\"라고 인증 서버에 요청합니다. SSO 쿠키가 유효하면 인증 서버가 즉시 인가 코드만 발급합니다.",
     warning: "prompt=none 요청에 state가 빠지면 CSRF로 다른 사용자의 토큰을 갈취당할 수 있습니다. 또한 SSO 쿠키가 만료된 상태라면 login_required 에러가 돌아오는데, 이 경우 즉시 일반 로그인 흐름(prompt 없음)으로 폴백하는 처리를 반드시 구현해야 합니다.",
     payload: {
-      endpoint: "GET https://auth.kwater.com/oauth2/v1/authorize",
-      queryParams: {
+      step1_browser_to_idp_request: "GET https://auth.kwater.com/oauth2/v1/authorize",
+      step1_query_params: {
         response_type: "code",
         client_id: "datahub-portal-id",
         redirect_uri: "https://datahub.kwater.com/callback",
@@ -131,7 +131,9 @@ export const simulationSteps = [
         code_challenge: "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM",
         code_challenge_method: "S256",
         prompt: "none"
-      }
+      },
+      step2_idp_to_browser_redirect: "302 REDIRECT https://datahub.kwater.com/callback?code=datahub_code_9918&state=sub_random_state_4410",
+      step3_browser_to_backend: "POST https://datahub.kwater.com/api/auth/exchange  body: { code: 'datahub_code_9918', state: 'sub_random_state_4410' }"
     },
     browserState: {
       sessionStorage: {
@@ -139,12 +141,12 @@ export const simulationSteps = [
       },
       memory: { accessToken: "Null (하위 포털 기준 토큰 부재)" },
       cookies: {
-        "auth.kwater.com": "innogrid_sso_session=inno_sess_892347a8f (이전 로그인 유지 중)",
+        "auth.kwater.com": "dp_sso_session=dp_sess_892347a8f (이전 로그인 유지 중)",
         "cmp.kwater.com": "cmp_session=opaque_sess_abc123 (CMP에서만 유효)"
       }
     },
     serverState: {
-      authServer: "SSO 세션 유효함 확인완료 (ID: inno_sess_892347a8f)",
+      authServer: "SSO 세션 유효함 확인완료 (ID: dp_sess_892347a8f)",
       resourceServer: "토큰 대기"
     }
   },
@@ -186,7 +188,7 @@ export const simulationSteps = [
       sessionStorage: {},
       memory: { accessToken: "Null (BFF: 데이터허브 백엔드에만 보관)" },
       cookies: {
-        "auth.kwater.com": "innogrid_sso_session=inno_sess_892347a8f (IdP SSO 쿠키)",
+        "auth.kwater.com": "dp_sso_session=dp_sess_892347a8f (IdP SSO 쿠키)",
         "cmp.kwater.com": "cmp_session=opaque_sess_abc123",
         "datahub.kwater.com": "datahub_session=opaque_sess_xyz789 (신규 BFF 세션 쿠키)"
       }
@@ -213,14 +215,14 @@ export const simulationSteps = [
       backchannel_push_to_genai:   "POST https://genai.kwater.com/oauth2/v1/backchannel-logout",
       backchannel_push_to_saas:    "POST https://saas.kwater.com/oauth2/v1/backchannel-logout",
       backchannel_payload: {
-        logout_token: "eyJhbGciOiJSUzI1NiJ9.eyJlc3RfZXZlbnRzIjp... [서명된 로그아웃 토큰, RFC 8417]"
+        logout_token: "eyJhbGciOiJSUzI1NiJ9.eyJldmVudHMiOnsiaHR0cDovL3NjaGVtYXMub3BlbmlkLm5ldC9ldmVudC9iYWNrY2hhbm5lbC1sb2dvdXQiOnt9fX0... [서명된 로그아웃 토큰 · OIDC Back-Channel Logout 1.0 (RFC 8417 SET 위)]"
       }
     },
     browserState: {
       sessionStorage: {},
       memory: { accessToken: "Null (메모리 완전 소거)" },
       cookies: {
-        "auth.kwater.com": "Expired (innogrid_sso_session=; Expires=Thu, 01 Jan 1970 00:00:00 GMT)",
+        "auth.kwater.com": "Expired (dp_sso_session=; Expires=Thu, 01 Jan 1970 00:00:00 GMT)",
         "cmp.kwater.com": "Expired (cmp_session=; 백엔드 세션 폐기)",
         "datahub.kwater.com": "Expired (datahub_session=; 백엔드 세션 폐기)"
       }

@@ -57,7 +57,7 @@ const IDP_BASE = import.meta.env.VITE_IDP_BASE;          // 'https://auth.kwater
 let memoryAccessToken = "";
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE,                // 예: 'https://api.datahub.kwater.com/v1'
+  baseURL: import.meta.env.VITE_API_BASE,                // 예: 'https://datahub.kwater.com/api/v1' (BFF) — SPA 패턴은 별도 리소스 서버 도메인
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true,                                 // HttpOnly Refresh Token 쿠키 자동 동봉
 });
@@ -170,7 +170,7 @@ public class SecurityConfig {
     // 커스텀 필터는 Spring이 관리하는 빈으로 주입받는다. (인자 주입 OK)
     private final KWaterPayloadDecryptionFilter kwaterFilter;
 
-    @Value("\${idp.jwks-uri}")               // application.yml — https://auth.kwater.com/oauth2/v1/jwks
+    @Value("\${idp.jwks-uri}")               // application.yml — https://auth.kwater.com/.well-known/jwks.json
     private String jwksUri;
 
     public SecurityConfig(KWaterPayloadDecryptionFilter kwaterFilter) {
@@ -225,7 +225,7 @@ async function pkce() {
     new TextEncoder().encode(verifier),
   );
   const challenge = btoa(String.fromCharCode(...new Uint8Array(digest)))
-    .replace(/\\\\+/g, '-').replace(/\\\\//g, '_').replace(/=+$/, '');  // base64url
+    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');  // base64url
   return { verifier, challenge };
 }
 
@@ -451,7 +451,7 @@ public class KWaterPayloadDecryptionFilter extends OncePerRequestFilter {
 
         // 4) HttpOnly + Secure + SameSite=Lax 쿠키 발급
         //    Servlet 5의 Cookie API엔 setSameSite가 없어 ResponseCookie 사용 (Set-Cookie 헤더 직접 작성)
-        ResponseCookie cookie = ResponseCookie.from("innogrid_sso_session", sessionId)
+        ResponseCookie cookie = ResponseCookie.from("dp_sso_session", sessionId)
             .httpOnly(true)
             .secure(true)
             .sameSite("Lax")              // 외부 사이트 iframe Silent SSO 필요 시 "None"
@@ -564,7 +564,7 @@ import java.time.Duration;
 import java.util.Map;
 
 // IdP가 SLO 시 호출하는 엔드포인트.
-// logout_token(JWT)을 RFC 8417 §2.6 규칙대로 검증하고,
+// logout_token(JWT)을 OIDC BCL 1.0 §2.4 (RFC 8417 SET) 규칙대로 검증하고,
 // 해당 sub/sid의 세션과 Refresh Token을 폐기한다.
 @RestController
 public class BackchannelLogoutController {
@@ -578,10 +578,10 @@ public class BackchannelLogoutController {
         .maximumSize(100_000)
         .build();
 
-    private static final String EXPECTED_TYP = "logout+jwt";          // RFC 8417 §2.6: typ 헤더 필수
+    private static final String EXPECTED_TYP = "logout+jwt";          // OIDC BCL 1.0 §2.4 (RFC 8417 SET): typ 헤더 필수
     private static final long CLOCK_SKEW_SEC = 30;                    // 서버 간 시계 오차 허용
 
-    @Value("\${idp.issuer}")     private String expectedIssuer;       // 'https://auth.kwater.com/oauth2/v1'
+    @Value("\${idp.issuer}")     private String expectedIssuer;       // 'https://auth.kwater.com'
     @Value("\${idp.client-id}")  private String expectedAudience;     // 우리 client_id
 
     public BackchannelLogoutController(JWTProcessor<SecurityContext> p, TokenSessionStore s) {
@@ -623,7 +623,7 @@ public class BackchannelLogoutController {
                 || !events.containsKey("http://schemas.openid.net/event/backchannel-logout"))
                 return bad();
 
-            // 6) nonce 부재 검증 (RFC 8417 §2.6: nonce MUST NOT be present)
+            // 6) nonce 부재 검증 (OIDC BCL 1.0 §2.4 (RFC 8417 SET): nonce MUST NOT be present)
             if (claims.getClaim("nonce") != null) return bad();
 
             // 7) sub 또는 sid로 세션 폐기 (둘 다 없으면 무효)
@@ -633,7 +633,7 @@ public class BackchannelLogoutController {
             else if (sub != null) store.revokeBySub(sub);
             else return bad();
 
-            // 8) Cache-Control: no-store 응답 헤더 (RFC 8417 §2.7)
+            // 8) Cache-Control: no-store 응답 헤더 (OIDC BCL 1.0 §2.8 (Cache-Control))
             return ResponseEntity.ok()
                 .cacheControl(CacheControl.noStore())
                 .build();
@@ -710,7 +710,7 @@ export default function CodeExample({ handleCopy, copiedId }) {
             { id: 'spring-security', title: '1) Security 설정 — JWT Resource Server', desc: 'IdP JWKS로 Bearer 토큰을 자동 검증. K-water 페이로드 복호화 필터를 빈으로 주입, CSRF는 콜백/백채널 경로만 제외.', code: springCode },
             { id: 'spring-kwater-filter', title: '2) K-water 페이로드 복호화 필터', desc: 'JWE 복호화 → SSO 세션 발급. ResponseCookie로 SameSite 명시, CMP 콜백 리다이렉트에 state 동봉.', code: springKwaterFilterCode },
             { id: 'spring-bff-callback', title: '3) BFF 콜백 컨트롤러 — code↔token 교환', desc: 'MultiValueMap으로 form 인코딩, PKCE code_verifier 함께 전달, id_token 포함 응답 매핑, RestClient 에러 처리.', code: springBffCallbackCode },
-            { id: 'spring-backchannel', title: '4) 백채널 로그아웃 수신 엔드포인트', desc: 'RFC 8417 §2.6 전체 검증: typ=logout+jwt · iss · aud · iat(±스큐) · jti(Caffeine TTL) · events · nonce 부재 · sub/sid. Cache-Control: no-store 응답.', code: springBackchannelCode },
+            { id: 'spring-backchannel', title: '4) 백채널 로그아웃 수신 엔드포인트', desc: 'OIDC BCL 1.0 §2.4 (RFC 8417 SET) 전체 검증: typ=logout+jwt · iss · aud · iat(±스큐) · jti(Caffeine TTL) · events · nonce 부재 · sub/sid. Cache-Control: no-store 응답.', code: springBackchannelCode },
           ].map(s => (
             <CodeSnippetCard key={s.id} snippet={s} language="java"
               copiedId={copiedId} onCopy={handleCopy} />

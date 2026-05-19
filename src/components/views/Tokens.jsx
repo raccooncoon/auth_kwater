@@ -140,7 +140,7 @@ export default function Tokens() {
             <div className="bg-slate-950/60 border border-emerald-500/30 rounded-xl p-4">
               <div className="text-emerald-300 text-[12px] font-mono font-bold uppercase mb-2">Payload (페이로드)</div>
               <CodeBlock language="json" fontSize="0.72rem" code={`{
-  "iss": "auth.kwater.com",
+  "iss": "https://auth.kwater.com",
   "sub": "kwater_user_1234",
   "aud": "cmp-portal",
   "scope": "openid profile",
@@ -319,7 +319,7 @@ export default function Tokens() {
                   <tr><td className="py-2 px-3 font-bold text-slate-200">수명</td><td className="py-2 px-3">짧음 (5~15분)</td><td className="py-2 px-3">짧음 (1시간 이내)</td><td className="py-2 px-3">긺 (7~30일)</td></tr>
                   <tr><td className="py-2 px-3 font-bold text-slate-200">사용처</td><td className="py-2 px-3">매 API 호출 Authorization 헤더</td><td className="py-2 px-3">로그인 시 1회 사용자 정보 추출</td><td className="py-2 px-3">IdP /token 엔드포인트만</td></tr>
                   <tr><td className="py-2 px-3 font-bold text-slate-200">저장 위치</td><td className="py-2 px-3">백엔드 세션 메모리 (BFF)</td><td className="py-2 px-3">검증 후 폐기 권장</td><td className="py-2 px-3">백엔드 세션 스토어 (Redis)</td></tr>
-                  <tr><td className="py-2 px-3 font-bold text-slate-200">필수 클레임</td><td className="py-2 px-3">iss, sub, aud, exp, scope</td><td className="py-2 px-3">iss, sub, aud, exp, iat, <strong className="text-emerald-300">nonce</strong></td><td className="py-2 px-3">jti, sub, exp (또는 internal record)</td></tr>
+                  <tr><td className="py-2 px-3 font-bold text-slate-200">필수 클레임</td><td className="py-2 px-3">iss, sub, aud, exp, scope</td><td className="py-2 px-3">iss, sub, aud, exp, iat <span className="text-slate-500">(인가 요청에 nonce가 있었으면 nonce도 필수)</span></td><td className="py-2 px-3">jti, sub, exp (또는 internal record)</td></tr>
                 </tbody>
               </table>
             </div>

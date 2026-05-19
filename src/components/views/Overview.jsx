@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-  ShieldCheck, Network, Building2, Server, Laptop, Database, 
-  Sparkles, Boxes, Layers, Key, LogOut, BookOpen, 
+  ShieldCheck, Network, Building2, Server,
+  Boxes, Layers, Key, LogOut, BookOpen,
   ChevronRight, Activity, ArrowRightLeft, Code2, Copy
 } from 'lucide-react';
 
@@ -219,7 +219,7 @@ export default function Overview({ setActiveTab, handleCopy }) {
         <div className="p-6 divide-y divide-slate-800/60">
           <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <span className="text-sm text-slate-400 font-medium">Issuer (발행처)</span>
-            <code className="text-xs bg-slate-950 text-emerald-400 px-3 py-1 rounded-md border border-slate-800">https://auth.kwater.com/oauth2/v1</code>
+            <code className="text-xs bg-slate-950 text-emerald-400 px-3 py-1 rounded-md border border-slate-800">https://auth.kwater.com</code>
           </div>
           <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <span className="text-sm text-slate-400 font-medium">Authorization Endpoint</span>
@@ -231,7 +231,7 @@ export default function Overview({ setActiveTab, handleCopy }) {
           </div>
           <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <span className="text-sm text-slate-400 font-medium">JWKS URI (공개 키 경로)</span>
-            <code className="text-xs bg-slate-950 text-indigo-300 px-3 py-1 rounded-md border border-slate-800">/oauth2/v1/jwks</code>
+            <code className="text-xs bg-slate-950 text-indigo-300 px-3 py-1 rounded-md border border-slate-800">/.well-known/jwks.json</code>
           </div>
           <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <span className="text-sm text-slate-400 font-medium">K-water 연동 (Payload)</span>

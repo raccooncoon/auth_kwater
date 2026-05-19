@@ -39,7 +39,7 @@ export default function MultiSso() {
           </span>
         </div>
 
-        {/* Tier 2: Inogrid Auth Server (Hub) */}
+        {/* Tier 2: Digital Platform 통합인증 서버 (Hub) */}
         <div className="flex flex-col items-center">
           <div className="w-full max-w-md bg-gradient-to-br from-indigo-950/80 to-slate-900 border-2 border-indigo-500 rounded-2xl p-5 flex flex-col items-center text-center shadow-xl shadow-indigo-500/10 relative">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-500 text-white text-[12px] px-3 py-0.5 rounded-full font-bold tracking-wider uppercase">SSO IdP Hub</div>
@@ -210,7 +210,7 @@ export default function MultiSso() {
                 <li className="flex gap-3">
                   <span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/10 border border-indigo-500/40 text-indigo-300 text-xs font-bold flex items-center justify-center">3</span>
                   <div>
-                    <strong className="text-white">쿠키 자동 전송</strong> — 브라우저가 <code className="text-indigo-300 text-xs">auth.kwater.com</code> 도메인으로 요청하므로 Phase 1에서 발급된 <code className="text-indigo-300 text-xs">innogrid_sso_session</code> HttpOnly 쿠키가 자동 동봉됩니다.
+                    <strong className="text-white">쿠키 자동 전송</strong> — 브라우저가 <code className="text-indigo-300 text-xs">auth.kwater.com</code> 도메인으로 요청하므로 Phase 1에서 발급된 <code className="text-indigo-300 text-xs">dp_sso_session</code> HttpOnly 쿠키가 자동 동봉됩니다.
                   </div>
                 </li>
                 <li className="flex gap-3">

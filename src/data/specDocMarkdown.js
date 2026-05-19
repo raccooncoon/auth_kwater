@@ -151,7 +151,7 @@ K-water 인증 시스템에서 1차 인증을 거친 사용자가 디지털플�
 
 **출력**
 - HTTP 302 리다이렉트 (CMP 콜백 URL + 인가 코드)
-- \`Set-Cookie: sso_session=<opaque_id>; Domain=auth.kwater.com; Path=/; Secure; HttpOnly; SameSite=Lax\`
+- \`Set-Cookie: dp_sso_session=<opaque_id>; Domain=auth.kwater.com; Path=/; Secure; HttpOnly; SameSite=Lax\`
 
 **예외 처리**
 - 페이로드 복호화 실패: 400 Bad Request + 로그
@@ -281,7 +281,7 @@ Location: https://cmp.kwater.com/callback?code=abc123&state=xyz
 
 #### FR-5.2 logout_token 발송 (Back-Channel)
 
-**RFC 8417 (Security Event Token) 준수**
+**OIDC Back-Channel Logout 1.0 준수 (RFC 8417 SET 위에 정의)**
 
 **JWT Claims**
 \`\`\`json
@@ -298,7 +298,7 @@ Location: https://cmp.kwater.com/callback?code=abc123&state=xyz
 }
 \`\`\`
 
-**중요**: \`nonce\` claim은 절대 포함 금지 (RFC 8417 §2.4)
+**중요**: \`nonce\` claim은 절대 포함 금지 (OIDC BCL 1.0 §2.4 (RFC 8417 SET))
 
 **HTTP 요청**
 \`\`\`
@@ -634,7 +634,10 @@ CREATE INDEX idx_audit_created ON audit_logs(created_at);
 | invalid_grant | 400 | code/RT가 유효하지 않음 |
 | unauthorized_client | 400 | client가 이 grant_type 사용 불가 |
 | invalid_scope | 400 | 허용되지 않은 scope |
-| login_required | 400 | prompt=none인데 세션 없음 |
+| login_required | 400 | prompt=none인데 SSO 세션 없음 → 일반 로그인으로 폴백 필요 |
+| interaction_required | 400 | prompt=none인데 사용자 상호작용이 필요한 상태 (예: 약관 동의 미완) |
+| consent_required | 400 | prompt=none인데 사용자 동의가 미수집된 scope 존재 |
+| account_selection_required | 400 | prompt=none인데 여러 계정 중 선택 필요 |
 
 ---
 
