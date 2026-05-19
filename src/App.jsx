@@ -90,7 +90,7 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen bg-slate-900 text-slate-100 font-sans flex flex-col antialiased overflow-hidden">
+    <div className="h-dvh bg-slate-900 text-slate-100 font-sans flex flex-col antialiased overflow-hidden">
       {/* Header */}
       <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-40 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-3">
@@ -118,7 +118,7 @@ export default function App() {
       {/* Main Container */}
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Navigation Sidebar (collapsible on lg+) */}
-        <nav className={`w-full ${sidebarCollapsed ? 'lg:w-16' : 'lg:w-72'} border-b lg:border-b-0 lg:border-r border-slate-800 bg-slate-950/40 p-3 lg:p-4 space-y-1 shrink-0 transition-all duration-200 relative lg:overflow-y-auto`}>
+        <nav className={`hidden lg:block ${sidebarCollapsed ? 'lg:w-16' : 'lg:w-72'} lg:border-r border-slate-800 bg-slate-950/40 p-3 lg:p-4 space-y-1 shrink-0 transition-all duration-200 relative lg:overflow-y-auto`}>
           {/* Collapse toggle (visible on lg+) */}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
