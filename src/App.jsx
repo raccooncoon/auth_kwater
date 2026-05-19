@@ -202,6 +202,11 @@ export default function App() {
           <PageNav activeTab={activeTab} onChange={setActiveTab} />
         </main>
       </div>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-800 bg-slate-950/60 px-6 py-2.5 text-center text-[11px] text-slate-500 shrink-0">
+        <p>© 2026 Enterprise SSO Auth Portal · OAuth 2.1 & OpenID Connect 표준 사양 준수</p>
+      </footer>
     </div>
   );
 }

@@ -159,6 +159,243 @@ export default function Tokens() {
               <p className="text-[13px] text-slate-400 mt-2">IdP의 비공개키로 서명. 페이로드를 1바이트만 바꿔도 서명 검증 실패.</p>
             </div>
           </div>
+
+          {/* === 실전 디코딩 예시 === */}
+          <div className="bg-slate-950 border border-slate-800 rounded-xl p-5 mt-2">
+            <div className="text-sm font-bold text-white mb-3 flex items-center gap-2">
+              <Code2 size={16} className="text-emerald-400" />
+              실전 디코딩 예시 — Base64URL → JSON
+            </div>
+            <p className="text-[13px] text-slate-400 leading-relaxed mb-3">
+              위 토큰의 <strong className="text-indigo-300">Header 부분</strong>(<code className="text-[11px] bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300">eyJhbGc...</code>)을 직접 디코딩해봅시다.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <div className="text-[12px] font-mono text-slate-500 mb-1.5">① 입력 — Base64URL 문자열</div>
+                <pre className="text-[12px] bg-slate-900 border border-slate-800 rounded p-3 text-indigo-300 font-mono overflow-x-auto">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjEyMyJ9</pre>
+              </div>
+              <div>
+                <div className="text-[12px] font-mono text-slate-500 mb-1.5">② 디코딩 결과 — JSON</div>
+                <pre className="text-[12px] bg-slate-900 border border-slate-800 rounded p-3 text-emerald-300 font-mono overflow-x-auto whitespace-pre">{`{
+  "alg":"RS256",
+  "typ":"JWT",
+  "kid":"123"
+}`}</pre>
+              </div>
+            </div>
+            <div className="mt-3 text-[12px] text-slate-500 font-mono">
+              브라우저 콘솔에서 직접 시도: <code className="text-amber-300">atob('eyJhbGc...'.replace(/-/g,'+').replace(/_/g,'/'))</code>
+            </div>
+            <div className="mt-2 text-[12px] text-slate-500">
+              온라인 도구: <a href="https://jwt.io" target="_blank" rel="noreferrer" className="text-indigo-300 hover:underline">jwt.io</a> — 토큰을 붙여넣으면 Header·Payload가 즉시 디코딩되어 보입니다. (절대 운영 토큰을 외부 사이트에 붙여넣지 마세요)
+            </div>
+          </div>
+
+          {/* === 표준 클레임 사전 === */}
+          <div className="bg-slate-950 border border-slate-800 rounded-xl p-5">
+            <div className="text-sm font-bold text-white mb-3 flex items-center gap-2">
+              <Info size={16} className="text-emerald-400" />
+              표준 클레임 사전 — Payload에 자주 나오는 필드
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13px] border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-800 text-slate-500 text-[12px]">
+                    <th className="py-2 px-3 font-semibold uppercase tracking-wider w-24">Claim</th>
+                    <th className="py-2 px-3 font-semibold uppercase tracking-wider">의미</th>
+                    <th className="py-2 px-3 font-semibold uppercase tracking-wider">실제 값 예시</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                  <tr><td className="py-2 px-3 font-mono text-emerald-300">iss</td><td className="py-2 px-3">Issuer — 토큰을 발급한 IdP</td><td className="py-2 px-3 font-mono text-[12px] text-slate-400">"https://auth.kwater.com"</td></tr>
+                  <tr><td className="py-2 px-3 font-mono text-emerald-300">sub</td><td className="py-2 px-3">Subject — 사용자 식별자</td><td className="py-2 px-3 font-mono text-[12px] text-slate-400">"kwater_user_1234"</td></tr>
+                  <tr><td className="py-2 px-3 font-mono text-emerald-300">aud</td><td className="py-2 px-3">Audience — 토큰 수신 대상 (client_id)</td><td className="py-2 px-3 font-mono text-[12px] text-slate-400">"cmp-portal"</td></tr>
+                  <tr><td className="py-2 px-3 font-mono text-emerald-300">exp</td><td className="py-2 px-3">Expiration — UNIX 만료 시각</td><td className="py-2 px-3 font-mono text-[12px] text-slate-400">1716985593 (= 2024-05-29 18:13)</td></tr>
+                  <tr><td className="py-2 px-3 font-mono text-emerald-300">iat</td><td className="py-2 px-3">Issued At — 발급 시각</td><td className="py-2 px-3 font-mono text-[12px] text-slate-400">1716981993</td></tr>
+                  <tr><td className="py-2 px-3 font-mono text-emerald-300">nbf</td><td className="py-2 px-3">Not Before — 이 시각 이전엔 무효</td><td className="py-2 px-3 font-mono text-[12px] text-slate-400">1716981993</td></tr>
+                  <tr><td className="py-2 px-3 font-mono text-emerald-300">jti</td><td className="py-2 px-3">JWT ID — 토큰 고유 식별자 (재사용 차단)</td><td className="py-2 px-3 font-mono text-[12px] text-slate-400">"f47ac10b-58cc-4372"</td></tr>
+                  <tr><td className="py-2 px-3 font-mono text-emerald-300">scope</td><td className="py-2 px-3">권한 범위 (OAuth Scope)</td><td className="py-2 px-3 font-mono text-[12px] text-slate-400">"openid profile email"</td></tr>
+                  <tr><td className="py-2 px-3 font-mono text-emerald-300">nonce</td><td className="py-2 px-3">Replay 방지용 클라이언트 nonce (ID Token만)</td><td className="py-2 px-3 font-mono text-[12px] text-slate-400">"n-0S6_WzA2Mj"</td></tr>
+                  <tr><td className="py-2 px-3 font-mono text-emerald-300">sid</td><td className="py-2 px-3">Session ID — SLO 시 세션 식별용</td><td className="py-2 px-3 font-mono text-[12px] text-slate-400">"sso_sess_892347a8f"</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* === ID Token 깊게 알기 === */}
+          <div className="bg-slate-950 border border-emerald-500/30 rounded-xl p-5">
+            <div className="text-sm font-bold text-white mb-3 flex items-center gap-2">
+              <Info size={16} className="text-emerald-400" />
+              ID Token 깊게 알기 — OIDC가 OAuth에 추가한 신원 증명서
+            </div>
+            <p className="text-[13px] text-slate-300 leading-relaxed mb-4">
+              <strong className="text-white">OAuth 2.0</strong>은 권한 위임(<em>"이 토큰 가진 사람이 API를 호출할 수 있다"</em>)만 다뤘습니다. 그런데 SSO에서는 <em>"그 사람이 누구인가"</em>도 알아야 합니다. <strong className="text-emerald-300">OpenID Connect</strong>가 이 빈자리를 채우려고 만든 게 <strong className="text-emerald-300">ID Token</strong>이에요.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+              <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
+                <div className="text-[12px] font-mono font-bold uppercase tracking-wider text-indigo-300 mb-2">Access Token이 답하는 질문</div>
+                <p className="text-[13px] text-slate-300 leading-relaxed">"이 요청자가 <strong className="text-white">이 API를 호출해도 되는가?</strong>"</p>
+                <p className="text-[12px] text-slate-500 mt-2">→ 권한 (Authorization)</p>
+              </div>
+              <div className="bg-slate-900 border border-emerald-500/30 rounded-lg p-4">
+                <div className="text-[12px] font-mono font-bold uppercase tracking-wider text-emerald-300 mb-2">ID Token이 답하는 질문</div>
+                <p className="text-[13px] text-slate-300 leading-relaxed">"이 사용자는 <strong className="text-white">누구이고 어떻게 인증됐는가?</strong>"</p>
+                <p className="text-[12px] text-slate-500 mt-2">→ 신원 (Authentication)</p>
+              </div>
+            </div>
+
+            <div className="text-[13px] font-bold text-white mb-2">ID Token 페이로드 예시 (디코딩된 JSON)</div>
+            <CodeBlock language="json" fontSize="0.78rem" code={`{
+  "iss": "https://auth.kwater.com",
+  "sub": "kwater_user_1234",
+  "aud": "cmp-portal",
+  "exp": 1716985593,
+  "iat": 1716981993,
+  "auth_time": 1716981990,
+  "nonce": "n-0S6_WzA2Mj",
+  "name": "홍길동",
+  "email": "hong@kwater.or.kr",
+  "preferred_username": "kwater_user_1234",
+  "department": "수자원관리본부"
+}`} />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              <div>
+                <div className="text-[13px] font-bold text-white mb-2">ID Token 처리 순서</div>
+                <ol className="space-y-1.5 text-[13px] text-slate-300">
+                  <li className="flex gap-2"><span className="shrink-0 text-emerald-400 font-bold">1.</span><span>토큰 엔드포인트 응답에서 받음 (Access Token과 함께 1회)</span></li>
+                  <li className="flex gap-2"><span className="shrink-0 text-emerald-400 font-bold">2.</span><span>서명 검증 (JWKS의 공개키 사용)</span></li>
+                  <li className="flex gap-2"><span className="shrink-0 text-emerald-400 font-bold">3.</span><span>클레임 검증 (iss · aud · exp · <strong className="text-amber-300">nonce</strong> 필수)</span></li>
+                  <li className="flex gap-2"><span className="shrink-0 text-emerald-400 font-bold">4.</span><span>사용자 정보 추출 (sub · name · email 등)</span></li>
+                  <li className="flex gap-2"><span className="shrink-0 text-emerald-400 font-bold">5.</span><span>포털 백엔드 세션에 사용자 정보 저장 후 <strong className="text-rose-300">ID Token은 폐기 (보관하지 않음)</strong></span></li>
+                </ol>
+              </div>
+              <div>
+                <div className="text-[13px] font-bold text-white mb-2">왜 별도 토큰인가</div>
+                <ul className="space-y-1.5 text-[13px] text-slate-300">
+                  <li className="flex gap-2"><span className="shrink-0 text-slate-500">·</span><span><strong className="text-white">대상이 다름</strong>: Access는 리소스 서버(API)용, ID는 클라이언트(포털 백엔드)용</span></li>
+                  <li className="flex gap-2"><span className="shrink-0 text-slate-500">·</span><span><strong className="text-white">수명이 다름</strong>: ID는 1회 사용 후 폐기, Access는 매 API마다 사용</span></li>
+                  <li className="flex gap-2"><span className="shrink-0 text-slate-500">·</span><span><strong className="text-white">정보가 다름</strong>: ID는 신원·인증 시각·인증 방법, Access는 권한 범위(scope)</span></li>
+                  <li className="flex gap-2"><span className="shrink-0 text-slate-500">·</span><span><strong className="text-white">nonce 필수</strong>: Replay 공격으로 다른 사용자의 ID Token을 우리 클라이언트에 주입하는 걸 차단</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="bg-rose-500/5 border border-rose-500/30 rounded-lg p-4 mt-4">
+              <div className="text-[13px] font-bold text-rose-200 mb-2 flex items-center gap-2">
+                <AlertTriangle size={14} className="text-rose-400" />
+                ID Token으로 자주 하는 실수
+              </div>
+              <ul className="space-y-1.5 text-[13px] text-slate-300">
+                <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">API 호출에 ID Token을 Authorization 헤더로 보냄</strong> — 리소스 서버는 ID Token을 받아도 거부해야 합니다 (aud가 다름). Access Token만 보내세요.</span></li>
+                <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">ID Token을 세션에 영구 보관</strong> — 사용자 정보 추출 후 폐기. DB에는 sub와 추출된 필드만 저장.</span></li>
+                <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">nonce 검증 생략</strong> — 인가 요청 시 보낸 nonce와 ID Token 클레임이 일치하는지 반드시 확인.</span></li>
+                <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">Refresh Token 갱신 시 받은 ID Token 무시</strong> — RT 갱신 시 ID Token이 같이 오면 sub가 바뀌지 않았는지 확인해야 함.</span></li>
+              </ul>
+            </div>
+          </div>
+
+          {/* === 3가지 토큰 비교 === */}
+          <div className="bg-slate-950 border border-slate-800 rounded-xl p-5">
+            <div className="text-sm font-bold text-white mb-3 flex items-center gap-2">
+              <Key size={16} className="text-amber-400" />
+              3가지 토큰 비교 — Access · ID · Refresh
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13px] border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-800 text-slate-500 text-[12px]">
+                    <th className="py-2 px-3 font-semibold uppercase tracking-wider w-32">항목</th>
+                    <th className="py-2 px-3 font-semibold uppercase tracking-wider text-indigo-300">Access Token</th>
+                    <th className="py-2 px-3 font-semibold uppercase tracking-wider text-emerald-300">ID Token</th>
+                    <th className="py-2 px-3 font-semibold uppercase tracking-wider text-amber-300">Refresh Token</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/60 text-slate-300 text-[12px]">
+                  <tr><td className="py-2 px-3 font-bold text-slate-200">형식</td><td className="py-2 px-3">JWT (서명됨)</td><td className="py-2 px-3">JWT (서명됨)</td><td className="py-2 px-3">불투명 문자열 또는 JWT</td></tr>
+                  <tr><td className="py-2 px-3 font-bold text-slate-200">목적</td><td className="py-2 px-3">API 인가 (리소스 접근)</td><td className="py-2 px-3">사용자 인증 증명</td><td className="py-2 px-3">새 Access Token 발급</td></tr>
+                  <tr><td className="py-2 px-3 font-bold text-slate-200">대상 (aud)</td><td className="py-2 px-3">리소스 서버 (API)</td><td className="py-2 px-3">클라이언트 (포털)</td><td className="py-2 px-3">IdP만</td></tr>
+                  <tr><td className="py-2 px-3 font-bold text-slate-200">수명</td><td className="py-2 px-3">짧음 (5~15분)</td><td className="py-2 px-3">짧음 (1시간 이내)</td><td className="py-2 px-3">긺 (7~30일)</td></tr>
+                  <tr><td className="py-2 px-3 font-bold text-slate-200">사용처</td><td className="py-2 px-3">매 API 호출 Authorization 헤더</td><td className="py-2 px-3">로그인 시 1회 사용자 정보 추출</td><td className="py-2 px-3">IdP /token 엔드포인트만</td></tr>
+                  <tr><td className="py-2 px-3 font-bold text-slate-200">저장 위치</td><td className="py-2 px-3">백엔드 세션 메모리 (BFF)</td><td className="py-2 px-3">검증 후 폐기 권장</td><td className="py-2 px-3">백엔드 세션 스토어 (Redis)</td></tr>
+                  <tr><td className="py-2 px-3 font-bold text-slate-200">필수 클레임</td><td className="py-2 px-3">iss, sub, aud, exp, scope</td><td className="py-2 px-3">iss, sub, aud, exp, iat, <strong className="text-emerald-300">nonce</strong></td><td className="py-2 px-3">jti, sub, exp (또는 internal record)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* === 서명 검증 흐름 === */}
+          <div className="bg-slate-950 border border-slate-800 rounded-xl p-5">
+            <div className="text-sm font-bold text-white mb-3 flex items-center gap-2">
+              <ShieldCheck size={16} className="text-rose-400" />
+              서명 검증 흐름 — 우리 백엔드가 토큰을 신뢰하는 방법
+            </div>
+            <ol className="space-y-2.5 text-[13px] text-slate-300">
+              <li className="flex gap-3">
+                <span className="shrink-0 w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-[11px] font-bold text-rose-300">1</span>
+                <div><strong className="text-white">Header에서 kid 추출</strong> — 어떤 키로 서명됐는지 식별. 예: <code className="text-[11px] bg-slate-900 px-1.5 py-0.5 rounded text-amber-300">{`{"kid":"123"}`}</code></div>
+              </li>
+              <li className="flex gap-3">
+                <span className="shrink-0 w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-[11px] font-bold text-rose-300">2</span>
+                <div><strong className="text-white">JWKS에서 공개키 조회</strong> — <code className="text-[11px] bg-slate-900 px-1.5 py-0.5 rounded text-amber-300">GET https://auth.kwater.com/.well-known/jwks.json</code> (1시간 캐시 권장)</div>
+              </li>
+              <li className="flex gap-3">
+                <span className="shrink-0 w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-[11px] font-bold text-rose-300">3</span>
+                <div><strong className="text-white">서명 검증</strong> — <code className="text-[11px] bg-slate-900 px-1.5 py-0.5 rounded text-amber-300">RSA_verify(header.payload, signature, publicKey)</code> → true여야 함</div>
+              </li>
+              <li className="flex gap-3">
+                <span className="shrink-0 w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-[11px] font-bold text-rose-300">4</span>
+                <div><strong className="text-white">클레임 검증</strong> — <code className="text-[11px] bg-slate-900 px-1.5 py-0.5 rounded text-amber-300">iss</code>=기대 IdP · <code className="text-[11px] bg-slate-900 px-1.5 py-0.5 rounded text-amber-300">aud</code>=내 client_id · <code className="text-[11px] bg-slate-900 px-1.5 py-0.5 rounded text-amber-300">exp</code>{' > '}now (클럭 스큐 ±60초 허용) · <code className="text-[11px] bg-slate-900 px-1.5 py-0.5 rounded text-amber-300">nbf</code>{' ≤ '}now</div>
+              </li>
+              <li className="flex gap-3">
+                <span className="shrink-0 w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-[11px] font-bold text-rose-300">5</span>
+                <div><strong className="text-white">선택: jti 재사용 체크</strong> — Redis에 jti가 이미 있으면 거부 (replay 공격 방어)</div>
+              </li>
+            </ol>
+            <div className="mt-4">
+              <div className="text-[12px] font-bold text-slate-400 mb-2 flex items-center gap-2">
+                <Code2 size={13} className="text-emerald-400" />
+                실제 라이브러리 사용 예 (Node.js · jose)
+              </div>
+              <CodeBlock language="javascript" fontSize="0.78rem" code={`import { createRemoteJWKSet, jwtVerify } from 'jose';
+
+// JWKS 엔드포인트에서 공개키 자동 조회 + 캐시 (1시간)
+const JWKS = createRemoteJWKSet(
+  new URL('https://auth.kwater.com/.well-known/jwks.json')
+);
+
+// 토큰 검증 — 서명·클레임 한 번에 처리
+const { payload } = await jwtVerify(token, JWKS, {
+  issuer: 'https://auth.kwater.com',  // iss 검증
+  audience: 'cmp-portal',             // aud 검증
+  clockTolerance: 60,                 // 클럭 스큐 ±60초 허용
+});
+
+// 추가 검증: jti 재사용 차단 (선택)
+if (await redis.exists(\`jti:\${payload.jti}\`)) {
+  throw new Error('Token reused (replay attack)');
+}
+await redis.setex(\`jti:\${payload.jti}\`, payload.exp - now, '1');`} />
+            </div>
+          </div>
+
+          {/* === 흔한 실수 / 안티패턴 === */}
+          <div className="bg-rose-500/5 border border-rose-500/30 rounded-xl p-5">
+            <div className="text-sm font-bold text-rose-200 mb-3 flex items-center gap-2">
+              <AlertTriangle size={16} className="text-rose-400" />
+              흔한 실수 — 절대 피해야 할 안티패턴
+            </div>
+            <ul className="space-y-2 text-[13px] text-slate-300">
+              <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">Payload에 비밀번호·신용카드 번호 포함</strong> — JWT는 암호화가 아니라 <strong className="text-white">서명</strong>이라서, Base64 디코딩만 하면 누구나 읽을 수 있습니다.</span></li>
+              <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">알고리즘으로 <code className="text-rose-300">none</code> 또는 <code className="text-rose-300">HS256</code> 수용</strong> — <code className="text-emerald-300">RS256</code>만 허용해야 합니다. <code className="text-rose-300">none</code>은 서명 없음, <code className="text-rose-300">HS256</code>은 비밀키를 모든 RP가 공유해야 해서 위험.</span></li>
+              <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">exp 검증 생략</strong> — 1년 전 발급된 토큰도 통과하면 의미 없음.</span></li>
+              <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">aud 검증 생략</strong> — 다른 client_id용 토큰을 우리가 받아도 인정하면 권한 우회 발생.</span></li>
+              <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">JWT를 localStorage에 저장</strong> — XSS 한 번이면 모든 토큰 탈취. <strong className="text-emerald-300">HttpOnly 쿠키 (BFF 세션 ID)</strong>를 사용하세요.</span></li>
+              <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">매 요청마다 JWKS 재조회</strong> — IdP 부하 + 응답 지연. 보통 1시간 캐시, 키 미스 시 1회 재조회.</span></li>
+              <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">자체 JWT 파싱 함수 구현</strong> — 표준 라이브러리(<code className="text-emerald-300">jose</code>, <code className="text-emerald-300">jsonwebtoken</code>, <code className="text-emerald-300">nimbus-jose-jwt</code>) 사용. 직접 구현하면 알고리즘 confusion 등 미묘한 취약점 발생.</span></li>
+            </ul>
+          </div>
         </div>
       </Collapsible>
 
