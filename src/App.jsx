@@ -48,7 +48,7 @@ import CodeExample from './components/views/CodeExample';
 const TAB_ORDER = [
   { id: 'overview',  label: '1. 연동 개요' },
   { id: 'multi-sso', label: '2. 통합 & 하위 포털 SSO' },
-  { id: 'sequence',  label: '3. 데이터 흐름 애니메이션' },
+  { id: 'sequence',  label: '3. 데이터 흐름 시퀀스' },
   { id: 'flow',      label: '4. 상세 연동 시뮬레이터' },
   { id: 'tokens',    label: '5. 토큰 발급 & 갱신 (RTR)' },
   { id: 'logout',    label: '6. 통합 로그아웃 (SLO)' },
@@ -130,7 +130,7 @@ export default function App() {
           {[
             { id: 'overview', icon: BookOpen, label: '1. 연동 개요' },
             { id: 'multi-sso', icon: Layers, label: '2. 통합 & 하위 포털 SSO' },
-            { id: 'sequence', icon: Activity, label: '3. 데이터 흐름 애니메이션' },
+            { id: 'sequence', icon: Activity, label: '3. 데이터 흐름 시퀀스' },
             { id: 'flow', icon: ArrowRightLeft, label: '4. 상세 연동 시뮬레이터' },
             { id: 'tokens', icon: Key, label: '5. 토큰 발급 & 갱신 (RTR)' },
             { id: 'logout', icon: LogOut, label: '6. 통합 로그아웃 (SLO)' },
