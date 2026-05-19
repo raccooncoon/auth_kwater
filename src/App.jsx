@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 class ErrorBoundary extends React.Component {
   state = { err: null };
@@ -66,6 +66,17 @@ export default function App() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  // 탭 변경 시 main을 맨 위로 스크롤 (사이드바·PageNav·기타 탭 이동 공통)
+  useEffect(() => {
+    const main = document.querySelector('main');
+    if (!main) return;
+    // instant + smooth 둘 다 시도 (smooth가 안 먹는 환경 대비)
+    main.scrollTop = 0;
+    try { main.scrollTo({ top: 0, behavior: 'smooth' }); } catch { /* noop */ }
+  }, [activeTab]);
+
+  const goToTab = (id) => setActiveTab(id);
 
   const triggerToast = (msg) => {
     setToastMessage(msg);
@@ -135,7 +146,7 @@ export default function App() {
             return (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id)}
+                onClick={() => goToTab(item.id)}
                 title={sidebarCollapsed ? item.label : undefined}
                 className={`w-full flex items-center ${sidebarCollapsed ? 'lg:justify-center lg:px-2' : 'space-x-3 px-3'} py-2.5 rounded-lg text-sm font-medium transition-all ${active ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
               >
@@ -158,7 +169,7 @@ export default function App() {
             return (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id)}
+                onClick={() => goToTab(item.id)}
                 title={sidebarCollapsed ? item.label : undefined}
                 className={`w-full flex items-center ${sidebarCollapsed ? 'lg:justify-center lg:px-2' : 'space-x-3 px-3'} py-2.5 rounded-lg text-sm font-medium transition-all ${active ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
               >
@@ -200,7 +211,7 @@ export default function App() {
           {activeTab === 'spec-doc' && <ErrorBoundary><SpecDoc /></ErrorBoundary>}
 
           {/* 페이지 하단 이전/다음 네비게이션 — 모든 탭 공통 */}
-          <PageNav activeTab={activeTab} onChange={setActiveTab} />
+          <PageNav activeTab={activeTab} onChange={goToTab} />
 
           </div>
         </main>
@@ -221,11 +232,8 @@ function PageNav({ activeTab, onChange }) {
   const prev = idx > 0 ? TAB_ORDER[idx - 1] : null;
   const next = idx < TAB_ORDER.length - 1 ? TAB_ORDER[idx + 1] : null;
 
-  const go = (id) => {
-    onChange(id);
-    document.querySelector('main')?.scrollTo({ top: 0, behavior: 'smooth' });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  // onChange(goToTab from parent)이 스크롤까지 처리하므로 그대로 위임
+  const go = (id) => onChange(id);
 
   const btn = "group flex items-center gap-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-4 transition w-full";
 
