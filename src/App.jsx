@@ -67,13 +67,16 @@ export default function App() {
   const [toastMessage, setToastMessage] = useState('');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  // 탭 변경 시 main을 맨 위로 스크롤 (사이드바·PageNav·기타 탭 이동 공통)
+  // 탭 변경 시 main을 맨 위로 스무스 스크롤 (사이드바·PageNav 공통)
   useEffect(() => {
     const main = document.querySelector('main');
     if (!main) return;
-    // instant + smooth 둘 다 시도 (smooth가 안 먹는 환경 대비)
-    main.scrollTop = 0;
-    try { main.scrollTo({ top: 0, behavior: 'smooth' }); } catch { /* noop */ }
+    main.scrollTo({ top: 0, behavior: 'smooth' });
+    // smooth가 무시되는 환경(일부 iframe 등) 대비 — 800ms 후에도 위치가 그대로면 instant로 강제
+    const t = setTimeout(() => {
+      if (main.scrollTop > 0) main.scrollTop = 0;
+    }, 800);
+    return () => clearTimeout(t);
   }, [activeTab]);
 
   const goToTab = (id) => setActiveTab(id);
