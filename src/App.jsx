@@ -62,14 +62,14 @@ export default function App() {
   // 6-Step Detailed Simulation Steps
   const simulationSteps = [
     {
-      title: "1단계: K-Water 통합 인증 시스템 연동 및 암호화 데이터 수신",
-      sender: "K-Water System (Browser)",
+      title: "1단계: K-water 통합 인증 시스템 연동 및 암호화 데이터 수신",
+      sender: "K-water System (Browser)",
       receiver: "디지털플랫폼 통합인증 서버",
       phase: "Upstream IdP Login",
-      desc: "사용자가 디지털플랫폼 통합 포털에 접근하기 위해 K-Water 인증 시스템을 거칩니다. 인증이 완료되면 K-Water는 사용자 아이디 등 주요 정보를 암호화한 페이로드(Payload)를 디지털플랫폼 통합인증 서버의 콜백 URL로 전달합니다.",
-      userView: "사용자가 디지털플랫폼 포털 URL을 입력하면 자동으로 K-Water 로그인 화면으로 이동합니다. 익숙한 K-Water 사번과 비밀번호를 입력하면 됩니다 — 별도 회원가입이나 추가 계정이 전혀 없습니다.",
-      purpose: "K-Water는 전사 사용자 마스터 DB의 단일 신원 보증 주체입니다. 디지털플랫폼은 자체 ID/PW 관리 없이 K-Water 신원을 그대로 활용하여 계정 동기화 부담을 0으로 만듭니다.",
-      warning: "Step 0에서 디지털플랫폼이 K-Water로 리다이렉트하기 전 sessionStorage에 미리 저장해둔 state 값을 콜백에서 반드시 검증해야 합니다. 빠지면 CSRF 공격으로 다른 사용자의 페이로드를 주입당할 수 있습니다.",
+      desc: "사용자가 디지털플랫폼 통합 포털에 접근하기 위해 K-water 인증 시스템을 거칩니다. 인증이 완료되면 K-water는 사용자 아이디 등 주요 정보를 암호화한 페이로드(Payload)를 디지털플랫폼 통합인증 서버의 콜백 URL로 전달합니다.",
+      userView: "사용자가 디지털플랫폼 포털 URL을 입력하면 자동으로 K-water 로그인 화면으로 이동합니다. 익숙한 K-water 사번과 비밀번호를 입력하면 됩니다 — 별도 회원가입이나 추가 계정이 전혀 없습니다.",
+      purpose: "K-water는 전사 사용자 마스터 DB의 단일 신원 보증 주체입니다. 디지털플랫폼은 자체 ID/PW 관리 없이 K-water 신원을 그대로 활용하여 계정 동기화 부담을 0으로 만듭니다.",
+      warning: "Step 0에서 디지털플랫폼이 K-water로 리다이렉트하기 전 sessionStorage에 미리 저장해둔 state 값을 콜백에서 반드시 검증해야 합니다. 빠지면 CSRF 공격으로 다른 사용자의 페이로드를 주입당할 수 있습니다.",
       payload: {
         endpoint: "GET https://auth.kwater.com/oauth2/kwater/callback",
         queryParams: {
@@ -85,7 +85,7 @@ export default function App() {
         cookies: { "auth.kwater.com": "No Session" }
       },
       serverState: {
-        authServer: "K-Water 페이로드 수신 및 대기 중",
+        authServer: "K-water 페이로드 수신 및 대기 중",
         resourceServer: "토큰 인증 필요"
       }
     },
@@ -94,9 +94,9 @@ export default function App() {
       sender: "디지털플랫폼 통합인증 서버",
       receiver: "Browser (Set-Cookie)",
       phase: "Decryption & Session Creation",
-      desc: "디지털플랫폼 통합인증 서버는 수신한 K-Water 암호화 데이터를 복호화하여 사용자 아이디와 권한 정보를 추출합니다. 검증 성공 시 디지털플랫폼 생태계 전반에서 유효한 '디지털플랫폼 SSO 통합 세션 쿠키'를 브라우저에 발급합니다.",
+      desc: "디지털플랫폼 통합인증 서버는 수신한 K-water 암호화 데이터를 복호화하여 사용자 아이디와 권한 정보를 추출합니다. 검증 성공 시 디지털플랫폼 생태계 전반에서 유효한 '디지털플랫폼 SSO 통합 세션 쿠키'를 브라우저에 발급합니다.",
       userView: "사용자 입장에서는 잠깐 흰 화면이 깜빡인 뒤 디지털플랫폼 화면이 나타납니다 — 어떤 폼도 추가로 보지 않았는데 이미 로그인이 끝나 있습니다. 이 시점부터 같은 브라우저로 어떤 디지털플랫폼 포털에 접속해도 다시 로그인할 필요가 없습니다.",
-      purpose: "K-Water 페이로드는 일회용 입장권입니다. 이를 디지털플랫폼 내부에서 통용되는 SSO 쿠키로 '교환'해두지 않으면, 사용자가 데이터허브로 이동할 때마다 K-Water 로그인을 다시 거쳐야 합니다. 이 쿠키가 SSO의 출발점이자 단일 진실 근거(source of truth)입니다.",
+      purpose: "K-water 페이로드는 일회용 입장권입니다. 이를 디지털플랫폼 내부에서 통용되는 SSO 쿠키로 '교환'해두지 않으면, 사용자가 데이터허브로 이동할 때마다 K-water 로그인을 다시 거쳐야 합니다. 이 쿠키가 SSO의 출발점이자 단일 진실 근거(source of truth)입니다.",
       warning: "Set-Cookie에 HttpOnly · Secure · SameSite=Lax 중 하나라도 빠지면 XSS/CSRF 위험이 급격히 증가합니다. 특히 SameSite=None을 쓰려면 Secure가 반드시 동반되어야 하며, HTTPS가 아닌 환경은 운영 불가입니다.",
       payload: {
         internal_action: "DECRYPT(kwater_enc_payload)",
@@ -194,7 +194,7 @@ export default function App() {
       sender: "디지털플랫폼 통합인증 서버",
       receiver: "데이터허브 Backend",
       phase: "Silent SSO Completion",
-      desc: "디지털플랫폼 통합인증 서버는 전송된 SSO 쿠키를 확인하여 K-Water 사용자임을 승인하고, 폼 로그인 없이 데이터허브 콜백으로 인가 코드를 보냅니다. 데이터허브 백엔드는 이를 교환해 데이터허브 전용 토큰을 획득합니다.",
+      desc: "디지털플랫폼 통합인증 서버는 전송된 SSO 쿠키를 확인하여 K-water 사용자임을 승인하고, 폼 로그인 없이 데이터허브 콜백으로 인가 코드를 보냅니다. 데이터허브 백엔드는 이를 교환해 데이터허브 전용 토큰을 획득합니다.",
       userView: "데이터허브 화면이 완전히 로드되고, 사용자는 자기 권한 범위 내의 데이터셋·테이블만 목록에서 볼 수 있습니다. CMP 토큰과는 완전히 분리되어 있으므로, CMP에서 만료가 일어나도 데이터허브 세션은 독립적으로 유지됩니다.",
       purpose: "각 포털별로 토큰을 따로 발급하면 (1) 한 포털 토큰이 유출되어도 다른 포털은 안전하고, (2) 포털마다 서로 다른 scope/role을 분리 관리할 수 있고, (3) 로그·감사·과금을 포털 단위로 정확히 집계할 수 있습니다. 같은 사용자라도 \"누가 어느 포털에서 무엇을 했는지\"가 명확해집니다.",
       warning: "여러 포털 탭이 동시에 열리면 토큰 발급 요청이 병렬로 발생할 수 있습니다. 인증 서버는 각 client_id별로 독립 세션 카운터·rate limit을 둬야 하며, 데이터허브 백엔드도 발급된 Refresh Token을 자기 세션 스토어에 저장할 때 동시성 충돌을 막아야 합니다.",
@@ -365,7 +365,7 @@ export default function App() {
                   </div>
                   <h2 className="text-4xl font-extrabold text-white tracking-tight mb-3 leading-tight">디지털플랫폼 통합인증 서버 연동 개요</h2>
                   <p className="text-slate-300 text-lg leading-relaxed max-w-3xl">
-                    K-Water 인증 시스템에서 1차 인증을 거친 후, <strong className="text-white">디지털플랫폼 통합인증 서버</strong>를 매개로 <strong className="text-white">클라우드 관리 포털 (CMP)</strong>과 하위 포털(데이터허브 · 생성형 AI · SaaS)이 <strong className="text-indigo-300">단일 로그인 세션</strong>을 공유하도록 연동하는 표준 규격을 설명합니다.
+                    K-water 인증 시스템에서 1차 인증을 거친 후, <strong className="text-white">디지털플랫폼 통합인증 서버</strong>를 매개로 <strong className="text-white">클라우드 관리 포털 (CMP)</strong>과 하위 포털(데이터허브 · 생성형 AI · SaaS)이 <strong className="text-indigo-300">단일 로그인 세션</strong>을 공유하도록 연동하는 표준 규격을 설명합니다.
                   </p>
                 </div>
 
@@ -432,7 +432,7 @@ export default function App() {
                     <div className="shrink-0 bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[12px] font-mono font-bold uppercase px-3 py-1.5 rounded">Tier 1</div>
                     <div className="flex-1 bg-slate-950 border border-sky-500/40 rounded-lg px-4 py-2.5 relative flex items-center justify-center gap-2">
                       <Building2 size={16} className="text-sky-400" />
-                      <span className="text-sm text-white font-bold">K-Water 통합 인증 시스템</span>
+                      <span className="text-sm text-white font-bold">K-water 통합 인증 시스템</span>
                       <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-slate-500 font-mono">Upstream IdP</span>
                     </div>
                   </div>
@@ -467,7 +467,7 @@ export default function App() {
                       <div className="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center"><Layers className="text-indigo-300" size={16} /></div>
                       <div className="text-indigo-300 font-bold">중앙 허브 SSO</div>
                     </div>
-                    <p className="text-xs text-slate-400 leading-relaxed">K-Water 1차 인증을 통합인증 서버 SSO 세션으로 한 번만 교환. 이후 모든 포털 진입은 자동 무중단 연동.</p>
+                    <p className="text-xs text-slate-400 leading-relaxed">K-water 1차 인증을 통합인증 서버 SSO 세션으로 한 번만 교환. 이후 모든 포털 진입은 자동 무중단 연동.</p>
                   </div>
                   <div className="bg-gradient-to-br from-purple-950/40 to-slate-950 border border-purple-500/30 p-5 rounded-2xl">
                     <div className="flex items-center gap-2 mb-2">
@@ -481,7 +481,7 @@ export default function App() {
                       <div className="w-8 h-8 rounded-lg bg-rose-500/20 border border-rose-500/40 flex items-center justify-center"><LogOut className="text-rose-300" size={16} /></div>
                       <div className="text-rose-300 font-bold">전사 단일 로그아웃</div>
                     </div>
-                    <p className="text-xs text-slate-400 leading-relaxed">임의 포털 로그아웃 → 중앙 SSO 쿠키 파기 + 백채널로 모든 포털 세션 일괄 종료. 상위 K-Water SLO도 연계 가능.</p>
+                    <p className="text-xs text-slate-400 leading-relaxed">임의 포털 로그아웃 → 중앙 SSO 쿠키 파기 + 백채널로 모든 포털 세션 일괄 종료. 상위 K-water SLO도 연계 가능.</p>
                   </div>
                 </div>
               </div>
@@ -505,7 +505,7 @@ export default function App() {
                     </thead>
                     <tbody className="divide-y divide-slate-800/40 text-xs">
                       <tr>
-                        <td className="py-3 px-5"><span className="bg-sky-500/15 text-sky-300 border border-sky-500/30 rounded px-2 py-0.5 text-[12px] font-bold">UPSTREAM</span> <span className="text-white font-semibold ml-2">K-Water 통합 인증 시스템</span></td>
+                        <td className="py-3 px-5"><span className="bg-sky-500/15 text-sky-300 border border-sky-500/30 rounded px-2 py-0.5 text-[12px] font-bold">UPSTREAM</span> <span className="text-white font-semibold ml-2">K-water 통합 인증 시스템</span></td>
                         <td className="py-3 px-5"><code className="text-slate-400 font-mono">(별도)</code></td>
                         <td className="py-3 px-5 text-slate-400">1차 사용자 인증 + 암호화 페이로드 발급</td>
                       </tr>
@@ -517,7 +517,7 @@ export default function App() {
                       <tr>
                         <td className="py-3 px-5"><span className="bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 rounded px-2 py-0.5 text-[12px] font-bold">MASTER</span> <span className="text-white font-semibold ml-2">클라우드 관리 포털 (CMP)</span></td>
                         <td className="py-3 px-5"><code className="text-slate-400 font-mono">cmp.kwater.com</code></td>
-                        <td className="py-3 px-5 text-slate-400">K-Water 페이로드 최초 수신 · 디지털플랫폼 진입점</td>
+                        <td className="py-3 px-5 text-slate-400">K-water 페이로드 최초 수신 · 디지털플랫폼 진입점</td>
                       </tr>
                       <tr>
                         <td className="py-3 px-5"><span className="bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 rounded px-2 py-0.5 text-[12px] font-bold">SUB</span> <span className="text-white font-semibold ml-2">데이터허브 포털</span></td>
@@ -568,7 +568,7 @@ export default function App() {
                     <code className="text-xs bg-slate-950 text-indigo-300 px-3 py-1 rounded-md border border-slate-800">/oauth2/v1/jwks</code>
                   </div>
                   <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <span className="text-sm text-slate-400 font-medium">K-Water 연동 (Payload)</span>
+                    <span className="text-sm text-slate-400 font-medium">K-water 연동 (Payload)</span>
                     <span className="text-xs bg-sky-500/10 text-sky-300 px-3 py-1 rounded-full border border-sky-500/20 font-mono">암호화 JWE / SAML Assertion</span>
                   </div>
                   <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -628,7 +628,7 @@ export default function App() {
                       <span className="text-sm font-bold text-white">6. 통합 로그아웃 (SLO)</span>
                       <ChevronRight size={12} className="ml-auto text-slate-600 group-hover:text-indigo-400 transition" />
                     </div>
-                    <p className="text-[13px] text-slate-400">하위 포털 + 상위 K-Water 로그아웃 연계</p>
+                    <p className="text-[13px] text-slate-400">하위 포털 + 상위 K-water 로그아웃 연계</p>
                   </button>
                   <button onClick={() => setActiveTab('code')} className="text-left bg-slate-900 border border-slate-800 hover:border-indigo-500/50 rounded-xl p-4 transition group">
                     <div className="flex items-center gap-2 mb-1">
@@ -657,15 +657,15 @@ export default function App() {
               <div className="bg-slate-950 border border-slate-800 p-8 rounded-2xl space-y-3">
                 <h3 className="text-md font-bold text-white flex items-center gap-2 mb-10">
                   <Network className="text-indigo-400" size={18} />
-                  K-Water ➜ 디지털플랫폼 SSO ➜ 하위 포털 3계층 토폴로지
+                  K-water ➜ 디지털플랫폼 SSO ➜ 하위 포털 3계층 토폴로지
                 </h3>
 
-                {/* Tier 1: K-Water (Upstream IdP) */}
+                {/* Tier 1: K-water (Upstream IdP) */}
                 <div className="flex flex-col items-center">
                   <div className="w-full max-w-md bg-gradient-to-br from-sky-950/80 to-slate-900 border-2 border-sky-500/60 rounded-2xl p-5 flex flex-col items-center text-center shadow-lg shadow-sky-500/10 relative">
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-sky-500 text-white text-[12px] px-3 py-0.5 rounded-full font-bold tracking-wider uppercase">Upstream IdP</div>
                     <Building2 className="text-sky-400 my-2" size={36} />
-                    <h4 className="font-bold text-white text-base">K-Water 통합 인증 시스템</h4>
+                    <h4 className="font-bold text-white text-base">K-water 통합 인증 시스템</h4>
                     <span className="text-[13px] text-slate-400 mt-1">별도 상위 인증 도메인</span>
                     <div className="w-full h-px bg-slate-800 my-3"></div>
                     <p className="text-xs text-slate-400 leading-relaxed">1차 사용자 인증 후, 암호화 페이로드(JWE/SAML)로 사용자 정보를 디지털플랫폼에 전달합니다.</p>
@@ -708,7 +708,7 @@ export default function App() {
                     <h4 className="font-bold text-white text-[13px]">클라우드 관리 포털 (CMP)</h4>
                     <span className="text-[12px] text-slate-500 mt-1 font-mono">cmp.kwater.com</span>
                     <div className="w-full h-px bg-slate-800 my-2.5"></div>
-                    <p className="text-[12px] text-slate-400 leading-relaxed">K-Water 페이로드 복호화 결과로 최초 로그인을 완료합니다.</p>
+                    <p className="text-[12px] text-slate-400 leading-relaxed">K-water 페이로드 복호화 결과로 최초 로그인을 완료합니다.</p>
                   </div>
 
                   <div className="bg-slate-900 border border-emerald-500/40 rounded-2xl p-4 flex flex-col items-center text-center shadow-lg relative">
@@ -1147,13 +1147,13 @@ export default function App() {
               {/* Canvas for Sequence Diagram */}
               <div className="bg-slate-950 border border-slate-800 rounded-2xl p-6 md:p-10 relative flex flex-col shadow-2xl">
                 
-                {/* Swimlanes Headers — 사용자 브라우저 / 포털 백엔드 / IdP / K-Water */}
+                {/* Swimlanes Headers — 사용자 브라우저 / 포털 백엔드 / IdP / K-water */}
                 <div className="flex justify-between relative z-10 mb-8">
                   {[
                     { name: '사용자 브라우저', role: 'Front-channel', accent: 'border-slate-700 text-slate-200', roleBg: 'bg-slate-800 text-slate-400' },
                     { name: '포털 백엔드', role: 'Back-channel Client', accent: 'border-purple-500/60 text-purple-200', roleBg: 'bg-purple-500/10 text-purple-300' },
                     { name: '디지털플랫폼 통합인증 서버', role: 'IdP / OIDC Provider', accent: 'border-indigo-500/60 text-indigo-200', roleBg: 'bg-indigo-500/10 text-indigo-300' },
-                    { name: 'K-Water 인증 서버', role: 'Upstream IdP', accent: 'border-sky-500/60 text-sky-200', roleBg: 'bg-sky-500/10 text-sky-300' },
+                    { name: 'K-water 인증 서버', role: 'Upstream IdP', accent: 'border-sky-500/60 text-sky-200', roleBg: 'bg-sky-500/10 text-sky-300' },
                   ].map((lane, i) => (
                     <div key={i} className="flex flex-col items-center w-1/4 gap-1.5">
                       <div className={`bg-slate-900 border px-3 md:px-4 py-2 rounded-xl text-[13px] md:text-xs font-bold shadow-lg relative z-20 whitespace-nowrap ${lane.accent}`}>
@@ -1177,19 +1177,19 @@ export default function App() {
                     ))}
                   </div>
 
-                  {/* Sequence Steps Grouped by Phase — lanes: 0=Browser, 1=Portal, 2=Inogrid IdP, 3=K-Water */}
+                  {/* Sequence Steps Grouped by Phase — lanes: 0=Browser, 1=Portal, 2=Inogrid IdP, 3=K-water */}
                   <div className="relative z-10 flex flex-col pt-6">
                     {[
                       {
                         title: "메인 포털 로그인",
-                        subtitle: "K-Water 인증 → 디지털플랫폼 통합인증 서버 SSO 세션 → 클라우드 관리 포털 (CMP) 토큰 발급",
+                        subtitle: "K-water 인증 → 디지털플랫폼 통합인증 서버 SSO 세션 → 클라우드 관리 포털 (CMP) 토큰 발급",
                         phaseBadge: "Phase 1 · Master Login",
                         phaseColor: "border-sky-500/40 bg-sky-500/5 text-sky-300",
                         steps: [
-                          { step: 1, from: 0, to: 3, label: "1. K-Water 로그인 시도 (사용자 진입)", lineColor: "bg-sky-500/80 group-hover:bg-sky-400 shadow-[0_0_15px_1px] shadow-sky-500/40", arrowColor: "text-sky-400", dotClass: "border-sky-500 text-sky-300", labelClass: "text-sky-300 border-sky-500/30", desc: "사용자가 디지털플랫폼 포털 접근 과정에서 K-Water 인증 페이지로 이동하여 ID/PW로 1차 로그인을 시도합니다." },
-                          { step: 2, from: 3, to: 0, label: "2. 인증 완료 + 암호화 페이로드 발급", lineColor: "bg-sky-500/80 group-hover:bg-sky-400 shadow-[0_0_15px_1px] shadow-sky-500/40", arrowColor: "text-sky-400", dotClass: "border-sky-500 text-sky-300", labelClass: "text-sky-300 border-sky-500/30", desc: "K-Water가 사용자 정보를 암호화한 페이로드(JWE/SAML)를 응답으로 발급하고, 디지털플랫폼 콜백 URL로 브라우저를 리다이렉트합니다." },
-                          { step: 3, from: 0, to: 2, label: "3. 페이로드 전달", lineColor: "bg-indigo-500/80 group-hover:bg-indigo-400 shadow-[0_0_15px_1px] shadow-indigo-500/40", arrowColor: "text-indigo-400", dotClass: "border-indigo-500 text-indigo-300", labelClass: "text-indigo-300 border-indigo-500/30", desc: "브라우저는 K-Water가 발급한 암호화 페이로드를 디지털플랫폼 통합인증 서버의 /oauth2/kwater/callback 엔드포인트로 전달합니다." },
-                          { step: 4, from: 2, to: 0, label: "4. 복호화 및 통합 SSO 쿠키 발급", lineColor: "bg-emerald-500/80 group-hover:bg-emerald-400 shadow-[0_0_15px_1px] shadow-emerald-500/40", arrowColor: "text-emerald-400", dotClass: "border-emerald-500 text-emerald-300", labelClass: "text-emerald-300 border-emerald-500/30", desc: "디지털플랫폼 통합인증 서버가 K-Water 페이로드를 복호화하여 디지털플랫폼 생태계 전용 통합 SSO 세션 쿠키를 브라우저에 발급합니다." },
+                          { step: 1, from: 0, to: 3, label: "1. K-water 로그인 시도 (사용자 진입)", lineColor: "bg-sky-500/80 group-hover:bg-sky-400 shadow-[0_0_15px_1px] shadow-sky-500/40", arrowColor: "text-sky-400", dotClass: "border-sky-500 text-sky-300", labelClass: "text-sky-300 border-sky-500/30", desc: "사용자가 디지털플랫폼 포털 접근 과정에서 K-water 인증 페이지로 이동하여 ID/PW로 1차 로그인을 시도합니다." },
+                          { step: 2, from: 3, to: 0, label: "2. 인증 완료 + 암호화 페이로드 발급", lineColor: "bg-sky-500/80 group-hover:bg-sky-400 shadow-[0_0_15px_1px] shadow-sky-500/40", arrowColor: "text-sky-400", dotClass: "border-sky-500 text-sky-300", labelClass: "text-sky-300 border-sky-500/30", desc: "K-water가 사용자 정보를 암호화한 페이로드(JWE/SAML)를 응답으로 발급하고, 디지털플랫폼 콜백 URL로 브라우저를 리다이렉트합니다." },
+                          { step: 3, from: 0, to: 2, label: "3. 페이로드 전달", lineColor: "bg-indigo-500/80 group-hover:bg-indigo-400 shadow-[0_0_15px_1px] shadow-indigo-500/40", arrowColor: "text-indigo-400", dotClass: "border-indigo-500 text-indigo-300", labelClass: "text-indigo-300 border-indigo-500/30", desc: "브라우저는 K-water가 발급한 암호화 페이로드를 디지털플랫폼 통합인증 서버의 /oauth2/kwater/callback 엔드포인트로 전달합니다." },
+                          { step: 4, from: 2, to: 0, label: "4. 복호화 및 통합 SSO 쿠키 발급", lineColor: "bg-emerald-500/80 group-hover:bg-emerald-400 shadow-[0_0_15px_1px] shadow-emerald-500/40", arrowColor: "text-emerald-400", dotClass: "border-emerald-500 text-emerald-300", labelClass: "text-emerald-300 border-emerald-500/30", desc: "디지털플랫폼 통합인증 서버가 K-water 페이로드를 복호화하여 디지털플랫폼 생태계 전용 통합 SSO 세션 쿠키를 브라우저에 발급합니다." },
                           { step: 5, from: 1, to: 2, label: "5. CMP 토큰 교환", lineColor: "bg-purple-500/80 group-hover:bg-purple-400 shadow-[0_0_15px_1px] shadow-purple-500/40", arrowColor: "text-purple-400", dotClass: "border-purple-500 text-purple-300", labelClass: "text-purple-300 border-purple-500/30", desc: "클라우드 관리 포털 (CMP) 백엔드가 디지털플랫폼 통합인증 서버와 백채널(Back-channel)로 통신하여 전용 토큰을 획득합니다." },
                         ],
                       },
@@ -1318,15 +1318,15 @@ export default function App() {
                 </div>
               </div>
 
-              {/* K-Water Token Overview */}
+              {/* K-water Token Overview */}
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
                 <h3 className="font-bold text-white text-xl mb-4 flex items-center gap-2">
                   <ShieldCheck className="text-indigo-400" size={20} />
-                  K-Water Payload ➜ 디지털플랫폼 통합 토큰 체계
+                  K-water Payload ➜ 디지털플랫폼 통합 토큰 체계
                 </h3>
                 <p className="text-sm text-slate-300 leading-relaxed">
-                  최초 로그인 시 K-Water 상위 시스템에서 사용자 데이터를 암호화하여 전달합니다. 디지털플랫폼 통합인증 서버는 이를 복호화하여 K-Water 사용자 식별 및 권한을 확인하고,
-                  본격적으로 디지털플랫폼 생태계 내부(클라우드 관리 포털 (CMP), 데이터허브, 생성형 AI 등)에서 통용되는 자체 <strong className="text-white">Access Token</strong>과 <strong className="text-white">Refresh Token</strong>을 발급하여 보안과 세션을 독립적으로 관리합니다. K-Water 신원은 입구에서만 사용하고, 디지털플랫폼 내부 활동은 자체 토큰으로 이뤄지는 셈입니다.
+                  최초 로그인 시 K-water 상위 시스템에서 사용자 데이터를 암호화하여 전달합니다. 디지털플랫폼 통합인증 서버는 이를 복호화하여 K-water 사용자 식별 및 권한을 확인하고,
+                  본격적으로 디지털플랫폼 생태계 내부(클라우드 관리 포털 (CMP), 데이터허브, 생성형 AI 등)에서 통용되는 자체 <strong className="text-white">Access Token</strong>과 <strong className="text-white">Refresh Token</strong>을 발급하여 보안과 세션을 독립적으로 관리합니다. K-water 신원은 입구에서만 사용하고, 디지털플랫폼 내부 활동은 자체 토큰으로 이뤄지는 셈입니다.
                 </p>
               </div>
 
@@ -1837,7 +1837,7 @@ export default function App() {
               <div>
                 <h2 className="text-3xl font-extrabold text-white tracking-tight mb-2">통합 로그아웃 및 글로벌 세션 만료 정책 (Single Logout)</h2>
                 <p className="text-slate-400 text-lg leading-relaxed">
-                  사용자가 어느 한 포털에서 로그아웃을 수행하더라도 디지털플랫폼 하위 포털의 토큰 및 세션이 전사적으로 정비되어야 합니다. 필요시 최상위 K-Water 세션까지 연계하여 동시 로그아웃(SLO)을 수행합니다.
+                  사용자가 어느 한 포털에서 로그아웃을 수행하더라도 디지털플랫폼 하위 포털의 토큰 및 세션이 전사적으로 정비되어야 합니다. 필요시 최상위 K-water 세션까지 연계하여 동시 로그아웃(SLO)을 수행합니다.
                 </p>
               </div>
 
@@ -1888,15 +1888,15 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Upstream K-Water Logout Reception */}
+              {/* Upstream K-water Logout Reception */}
               <div className="bg-slate-900 border border-sky-500/30 rounded-2xl overflow-hidden">
                 <div className="bg-sky-950/40 px-6 py-4 border-b border-sky-500/20 flex items-center gap-2">
                   <Building2 className="text-sky-400" size={18} />
-                  <h3 className="font-bold text-white text-base">상위 K-Water 로그아웃 수신 (Upstream-initiated SLO)</h3>
+                  <h3 className="font-bold text-white text-base">상위 K-water 로그아웃 수신 (Upstream-initiated SLO)</h3>
                 </div>
                 <div className="p-6 space-y-5">
                   <p className="text-sm text-slate-300 leading-relaxed">
-                    K-Water 쪽에서 사용자가 로그아웃하면 디지털플랫폼 통합인증 서버가 이를 감지해야 SSO 세션을 끊고 하위 4개 포털로 전파할 수 있습니다. 표준은 OIDC가 정의한 3가지 방식이며, K-Water와 사전 합의가 필요합니다.
+                    K-water 쪽에서 사용자가 로그아웃하면 디지털플랫폼 통합인증 서버가 이를 감지해야 SSO 세션을 끊고 하위 4개 포털로 전파할 수 있습니다. 표준은 OIDC가 정의한 3가지 방식이며, K-water와 사전 합의가 필요합니다.
                   </p>
 
                   {/* 3-method comparison table */}
@@ -1913,21 +1913,21 @@ export default function App() {
                       <tbody className="divide-y divide-slate-800/40">
                         <tr>
                           <td className="py-2 px-3 font-mono text-emerald-300">Back-Channel</td>
-                          <td className="py-2 px-3 text-slate-400">K-Water 서버 → 우리 서버 (Server-to-Server POST)</td>
+                          <td className="py-2 px-3 text-slate-400">K-water 서버 → 우리 서버 (Server-to-Server POST)</td>
                           <td className="py-2 px-3 text-emerald-400 font-semibold">높음 (권장)</td>
-                          <td className="py-2 px-3 text-slate-400">K-Water가 OIDC Back-Channel Logout 지원 시</td>
+                          <td className="py-2 px-3 text-slate-400">K-water가 OIDC Back-Channel Logout 지원 시</td>
                         </tr>
                         <tr>
                           <td className="py-2 px-3 font-mono text-amber-300">Front-Channel</td>
-                          <td className="py-2 px-3 text-slate-400">K-Water 로그아웃 페이지의 iframe이 우리 URL 호출</td>
+                          <td className="py-2 px-3 text-slate-400">K-water 로그아웃 페이지의 iframe이 우리 URL 호출</td>
                           <td className="py-2 px-3 text-amber-400 font-semibold">중간</td>
-                          <td className="py-2 px-3 text-slate-400">브라우저가 K-Water 로그아웃 페이지를 실제 방문해야 동작</td>
+                          <td className="py-2 px-3 text-slate-400">브라우저가 K-water 로그아웃 페이지를 실제 방문해야 동작</td>
                         </tr>
                         <tr>
                           <td className="py-2 px-3 font-mono text-purple-300">SAML SLO</td>
-                          <td className="py-2 px-3 text-slate-400">K-Water IdP → 우리 SP SLO endpoint (LogoutRequest)</td>
+                          <td className="py-2 px-3 text-slate-400">K-water IdP → 우리 SP SLO endpoint (LogoutRequest)</td>
                           <td className="py-2 px-3 text-emerald-400 font-semibold">높음</td>
-                          <td className="py-2 px-3 text-slate-400">K-Water 페이로드가 SAML Assertion 기반인 경우</td>
+                          <td className="py-2 px-3 text-slate-400">K-water 페이로드가 SAML Assertion 기반인 경우</td>
                         </tr>
                       </tbody>
                     </table>
@@ -1942,22 +1942,22 @@ export default function App() {
                     <pre className="text-xs bg-slate-950 border border-slate-800 rounded-lg p-4 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`POST https://auth.kwater.com/oauth2/v1/kwater/backchannel-logout
 Content-Type: application/x-www-form-urlencoded
 
-logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-Water>`}</pre>
+logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-water>`}</pre>
                     <p className="text-[13px] text-slate-400 mt-2 leading-relaxed">
-                      <code className="text-emerald-300">logout_token</code> 검증 필수 항목: <code className="text-slate-300">iss</code>=K-Water issuer · <code className="text-slate-300">aud</code>=우리 client_id · <code className="text-slate-300">iat</code> 신선도 · <code className="text-slate-300">jti</code> 재사용 차단 · <code className="text-slate-300">events</code>에 <code className="text-slate-300">http://schemas.openid.net/event/backchannel-logout</code> 포함 · <code className="text-slate-300">nonce</code> 부재 · <code className="text-slate-300">sub</code> 또는 <code className="text-slate-300">sid</code>로 세션 식별 (RFC 8417 §2.6).
+                      <code className="text-emerald-300">logout_token</code> 검증 필수 항목: <code className="text-slate-300">iss</code>=K-water issuer · <code className="text-slate-300">aud</code>=우리 client_id · <code className="text-slate-300">iat</code> 신선도 · <code className="text-slate-300">jti</code> 재사용 차단 · <code className="text-slate-300">events</code>에 <code className="text-slate-300">http://schemas.openid.net/event/backchannel-logout</code> 포함 · <code className="text-slate-300">nonce</code> 부재 · <code className="text-slate-300">sub</code> 또는 <code className="text-slate-300">sid</code>로 세션 식별 (RFC 8417 §2.6).
                     </p>
                   </div>
 
-                  {/* K-Water request checklist */}
+                  {/* K-water request checklist */}
                   <div className="bg-sky-950/30 border border-sky-500/30 rounded-xl p-4">
                     <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
                       <span className="bg-sky-500/20 text-sky-300 text-[12px] font-mono px-2 py-0.5 rounded">CHECKLIST</span>
-                      K-Water에 정식 요청할 항목
+                      K-water에 정식 요청할 항목
                     </h4>
                     <ul className="space-y-1.5 text-xs text-slate-300">
                       <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>Back-Channel Logout 지원 여부 확인</span></li>
                       <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>우리 측 URL 등록 요청: <code className="text-sky-300">https://auth.kwater.com/oauth2/v1/kwater/backchannel-logout</code></span></li>
-                      <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-Water Issuer URL 및 JWKS URI 공유 (logout_token 서명 검증용)</span></li>
+                      <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water Issuer URL 및 JWKS URI 공유 (logout_token 서명 검증용)</span></li>
                       <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>우리에게 발급될 <code className="text-sky-300">client_id</code> (RP 등록)</span></li>
                       <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span><code className="text-sky-300">sub</code> claim 형식 및 디지털플랫폼 user_id 매핑 정책</span></li>
                       <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>(Back-channel 미지원시) Front-channel iframe 방식 협의</span></li>
@@ -1970,12 +1970,12 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-Water>`}</pre>
                   <div className="bg-amber-500/5 border border-amber-500/20 rounded-xl p-4">
                     <h4 className="text-sm font-bold text-amber-200 mb-2 flex items-center gap-2">
                       <AlertTriangle className="text-amber-400" size={14} />
-                      Fallback — K-Water가 SLO 미지원 시
+                      Fallback — K-water가 SLO 미지원 시
                     </h4>
                     <ul className="space-y-1 text-xs text-slate-300">
                       <li>· 우리 SSO 쿠키 idle timeout을 짧게(15~30분)</li>
-                      <li>· Refresh Token 갱신 시점마다 K-Water <code className="text-amber-300">/userinfo</code> 또는 <code className="text-amber-300">/introspect</code> 재검증</li>
-                      <li>· K-Water 측에서 사용자에게 "디지털플랫폼도 함께 로그아웃" 안내 링크 제공</li>
+                      <li>· Refresh Token 갱신 시점마다 K-water <code className="text-amber-300">/userinfo</code> 또는 <code className="text-amber-300">/introspect</code> 재검증</li>
+                      <li>· K-water 측에서 사용자에게 "디지털플랫폼도 함께 로그아웃" 안내 링크 제공</li>
                     </ul>
                   </div>
                 </div>
@@ -1989,7 +1989,7 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-Water>`}</pre>
               <div>
                 <h2 className="text-3xl font-extrabold text-white tracking-tight mb-2">인증 API 엔드포인트 세부 명세</h2>
                 <p className="text-slate-400 text-lg leading-relaxed">
-                  디지털플랫폼 통합인증 서버가 노출하는 OIDC 표준 엔드포인트 + K-Water 연동 전용 엔드포인트 + 하위 포털 백채널 로그아웃 수신 엔드포인트의 전체 명세입니다.
+                  디지털플랫폼 통합인증 서버가 노출하는 OIDC 표준 엔드포인트 + K-water 연동 전용 엔드포인트 + 하위 포털 백채널 로그아웃 수신 엔드포인트의 전체 명세입니다.
                 </p>
               </div>
 
@@ -2018,8 +2018,8 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-Water>`}</pre>
                       <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/logout</td><td className="py-2 px-5 text-slate-400">RP-Initiated Logout</td><td className="py-2 px-5 text-slate-400">사용자 발화 통합 로그아웃 시작점</td></tr>
                       <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/introspect</td><td className="py-2 px-5 text-slate-400">RFC 7662</td><td className="py-2 px-5 text-slate-400">토큰 유효성/메타 정보 조회 (서버 간)</td></tr>
                       <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/revoke</td><td className="py-2 px-5 text-slate-400">RFC 7009</td><td className="py-2 px-5 text-slate-400">개별 토큰 즉시 폐기</td></tr>
-                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/kwater/callback</td><td className="py-2 px-5 text-slate-400">K-Water 연동</td><td className="py-2 px-5 text-slate-400">K-Water 암호화 페이로드 수신·복호화·SSO 발급</td></tr>
-                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/kwater/backchannel-logout</td><td className="py-2 px-5 text-slate-400">RFC 8417 (수신)</td><td className="py-2 px-5 text-slate-400">K-Water가 호출 — 상위 SLO 수신</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/kwater/callback</td><td className="py-2 px-5 text-slate-400">K-water 연동</td><td className="py-2 px-5 text-slate-400">K-water 암호화 페이로드 수신·복호화·SSO 발급</td></tr>
+                      <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/kwater/backchannel-logout</td><td className="py-2 px-5 text-slate-400">RFC 8417 (수신)</td><td className="py-2 px-5 text-slate-400">K-water가 호출 — 상위 SLO 수신</td></tr>
                       <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">{`{portal}/oauth2/v1/backchannel-logout`}</td><td className="py-2 px-5 text-slate-400">RFC 8417 (송신)</td><td className="py-2 px-5 text-slate-400">IdP가 각 포털 백엔드로 호출 — 하위 SLO 전파</td></tr>
                     </tbody>
                   </table>
@@ -2222,20 +2222,20 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                 </div>
               </div>
 
-              {/* ─── K-Water 연동 ─── */}
+              {/* ─── K-water 연동 ─── */}
               <div className="space-y-3">
                 <h3 className="text-sm font-bold text-slate-300 tracking-wider uppercase flex items-center gap-2">
                   <span className="w-1 h-4 bg-sky-400 rounded"></span>
-                  K-Water 연동 (Upstream)
+                  K-water 연동 (Upstream)
                 </h3>
 
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
                   <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
                     <span className="bg-emerald-600/10 text-emerald-400 font-mono text-xs font-bold px-2 py-1 rounded border border-emerald-500/20">GET</span>
-                    <h4 className="font-bold text-white text-sm">/oauth2/kwater/callback (K-Water 페이로드 수신)</h4>
+                    <h4 className="font-bold text-white text-sm">/oauth2/kwater/callback (K-water 페이로드 수신)</h4>
                   </div>
                   <div className="p-6 space-y-4">
-                    <p className="text-sm text-slate-400">K-Water 인증 시스템에서 암호화 페이로드(JWE/SAML)를 수신·복호화하여 디지털플랫폼 통합 SSO 세션을 생성합니다.</p>
+                    <p className="text-sm text-slate-400">K-water 인증 시스템에서 암호화 페이로드(JWE/SAML)를 수신·복호화하여 디지털플랫폼 통합 SSO 세션을 생성합니다.</p>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mb-1">Query Parameters</div>
                     <div className="overflow-x-auto">
                       <table className="w-full text-left text-xs border-collapse text-slate-300">
@@ -2247,7 +2247,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-800/40">
-                          <tr><td className="py-2 px-3 font-mono text-white">kwater_enc_payload</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3 text-slate-400">K-Water가 발급한 암호화 사용자 정보 토큰 (JWE/SAML Assertion)</td></tr>
+                          <tr><td className="py-2 px-3 font-mono text-white">kwater_enc_payload</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3 text-slate-400">K-water가 발급한 암호화 사용자 정보 토큰 (JWE/SAML Assertion)</td></tr>
                           <tr><td className="py-2 px-3 font-mono text-white">state</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3 text-slate-400">CSRF 방지 — 리다이렉트 시작 시 저장해둔 값과 일치 검증</td></tr>
                         </tbody>
                       </table>
@@ -2258,13 +2258,13 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
                   <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
                     <span className="bg-indigo-500/10 text-indigo-400 font-mono text-xs font-bold px-2 py-1 rounded border border-indigo-500/20">POST</span>
-                    <h4 className="font-bold text-white text-sm">/oauth2/v1/kwater/backchannel-logout (K-Water 로그아웃 수신)</h4>
+                    <h4 className="font-bold text-white text-sm">/oauth2/v1/kwater/backchannel-logout (K-water 로그아웃 수신)</h4>
                   </div>
                   <div className="p-6 space-y-3 text-sm">
-                    <p className="text-slate-400">K-Water에서 사용자가 로그아웃하면 호출되는 엔드포인트. <code className="text-sky-300">logout_token</code> JWT 검증 후 디지털플랫폼 SSO 세션을 만료시키고 모든 하위 포털로 백채널 로그아웃을 전파합니다.</p>
+                    <p className="text-slate-400">K-water에서 사용자가 로그아웃하면 호출되는 엔드포인트. <code className="text-sky-300">logout_token</code> JWT 검증 후 디지털플랫폼 SSO 세션을 만료시키고 모든 하위 포털로 백채널 로그아웃을 전파합니다.</p>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Request Body (application/x-www-form-urlencoded)</div>
-                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`logout_token=<JWT signed by K-Water, RFC 8417 §2.6>`}</pre>
-                    <p className="text-[13px] text-slate-400 leading-relaxed">검증: iss=K-Water · aud=우리 client_id · iat 신선도 · jti 재사용 차단 · events에 backchannel-logout 포함 · nonce 부재 · sub 또는 sid 식별.</p>
+                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`logout_token=<JWT signed by K-water, RFC 8417 §2.6>`}</pre>
+                    <p className="text-[13px] text-slate-400 leading-relaxed">검증: iss=K-water · aud=우리 client_id · iat 신선도 · jti 재사용 차단 · events에 backchannel-logout 포함 · nonce 부재 · sub 또는 sid 식별.</p>
                   </div>
                 </div>
               </div>
@@ -2419,8 +2419,8 @@ client_secret=<...>`}</pre>
               {codeLang === 'spring' && (
                 <div className="space-y-6">
                   {[
-                    { id: 'spring-security', title: '1) Security 설정 — JWT Resource Server', desc: 'IdP JWKS로 Bearer 토큰을 자동 검증. K-Water 페이로드 복호화 필터를 체인에 등록.', code: springCode },
-                    { id: 'spring-kwater-filter', title: '2) K-Water 페이로드 복호화 필터', desc: '/oauth2/kwater/callback에서 K-Water가 보낸 암호화 페이로드를 복호화 → 디지털플랫폼 SSO 세션 발급.', code: springKwaterFilterCode },
+                    { id: 'spring-security', title: '1) Security 설정 — JWT Resource Server', desc: 'IdP JWKS로 Bearer 토큰을 자동 검증. K-water 페이로드 복호화 필터를 체인에 등록.', code: springCode },
+                    { id: 'spring-kwater-filter', title: '2) K-water 페이로드 복호화 필터', desc: '/oauth2/kwater/callback에서 K-water가 보낸 암호화 페이로드를 복호화 → 디지털플랫폼 SSO 세션 발급.', code: springKwaterFilterCode },
                     { id: 'spring-bff-callback', title: '3) BFF 콜백 컨트롤러 — code↔token 교환', desc: '프론트가 받은 code를 백엔드가 받아 IdP /token과 교환. 토큰을 서버 세션에 저장하고 브라우저엔 세션 쿠키만 발급.', code: springBffCallbackCode },
                     { id: 'spring-backchannel', title: '4) 백채널 로그아웃 수신 엔드포인트', desc: 'IdP가 SLO 시 호출하는 엔드포인트. logout_token JWT 검증 → 사용자 세션·Refresh Token 즉시 폐기.', code: springBackchannelCode },
                   ].map(s => (
@@ -2581,10 +2581,10 @@ public class SecurityConfig {
             // 2. CSRF 비활성화
             .csrf(csrf -> csrf.disable())
             
-            // 3. K-Water 암호화 페이로드 복호화 및 통합 SSO 쿠키 발급용 커스텀 필터 등록
+            // 3. K-water 암호화 페이로드 복호화 및 통합 SSO 쿠키 발급용 커스텀 필터 등록
             .addFilterBefore(new KWaterPayloadDecryptionFilter(), UsernamePasswordAuthenticationFilter.class)
             
-            // 4. 리소스별 접근 제어 설정 (K-Water 콜백은 전체 접근 허용)
+            // 4. 리소스별 접근 제어 설정 (K-water 콜백은 전체 접근 허용)
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/api/public/**", "/oauth2/kwater/callback").permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
@@ -2697,7 +2697,7 @@ export function logout() {
 
 // 사용: <button onClick={logout}>로그아웃</button>`;
 
-// Spring: 2) K-Water 페이로드 복호화 필터
+// Spring: 2) K-water 페이로드 복호화 필터
 const springKwaterFilterCode = `package com.example.auth.filter;
 
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -2705,11 +2705,11 @@ import jakarta.servlet.http.*;
 import com.nimbusds.jwt.*;
 import com.nimbusds.jose.crypto.RSADecrypter;
 
-// /oauth2/kwater/callback 진입 시 K-Water 페이로드를 복호화하여
+// /oauth2/kwater/callback 진입 시 K-water 페이로드를 복호화하여
 // 디지털플랫폼 자체 SSO 세션을 발급한다.
 public class KWaterPayloadDecryptionFilter extends OncePerRequestFilter {
 
-    private final RSADecrypter decrypter;       // K-Water가 우리 공개키로 암호화 → 우리 비공개키로 복호화
+    private final RSADecrypter decrypter;       // K-water가 우리 공개키로 암호화 → 우리 비공개키로 복호화
     private final SsoSessionService ssoSessions;
 
     public KWaterPayloadDecryptionFilter(RSADecrypter d, SsoSessionService s) {
@@ -2726,13 +2726,13 @@ public class KWaterPayloadDecryptionFilter extends OncePerRequestFilter {
         String encPayload = req.getParameter("kwater_enc_payload");
         String state = req.getParameter("state");
 
-        // 1) state 검증 (앞서 우리가 K-Water로 보낼 때 저장해둔 값)
+        // 1) state 검증 (앞서 우리가 K-water로 보낼 때 저장해둔 값)
         String savedState = (String) req.getSession().getAttribute("kwater_state");
         if (savedState == null || !savedState.equals(state)) {
             res.sendError(400, "Invalid state"); return;
         }
 
-        // 2) JWE 복호화 — K-Water가 우리 공개키로 암호화한 사용자 정보
+        // 2) JWE 복호화 — K-water가 우리 공개키로 암호화한 사용자 정보
         EncryptedJWT jwt = EncryptedJWT.parse(encPayload);
         jwt.decrypt(decrypter);
         JWTClaimsSet claims = jwt.getJWTClaimsSet();
