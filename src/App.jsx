@@ -2506,6 +2506,9 @@ client_secret=<...>`} />
               )}
             </div>
           )}
+
+          {/* 페이지 하단 이전/다음 네비게이션 — 모든 탭 공통 */}
+          <PageNav activeTab={activeTab} onChange={setActiveTab} />
         </main>
       </div>
 
@@ -2513,6 +2516,57 @@ client_secret=<...>`} />
       <footer className="border-t border-slate-800 bg-slate-950/60 p-6 text-center text-xs text-slate-500">
         <p>© 2026 Enterprise SSO Auth Portal. All rights reserved. 본 인증 플랫폼은 OAuth 2.1 & OpenID Connect 표준 사양을 완벽하게 지원합니다.</p>
       </footer>
+    </div>
+  );
+}
+
+// 탭 순서 — 사이드바·이전/다음 네비게이션 공통 사용
+const TAB_ORDER = [
+  { id: 'overview',  label: '1. 연동 개요' },
+  { id: 'multi-sso', label: '2. 통합 & 하위 포털 SSO' },
+  { id: 'sequence',  label: '3. 데이터 흐름 애니메이션' },
+  { id: 'flow',      label: '4. 상세 연동 시뮬레이터' },
+  { id: 'tokens',    label: '5. 토큰 발급 & 갱신 (RTR)' },
+  { id: 'logout',    label: '6. 통합 로그아웃 (SLO)' },
+  { id: 'api',       label: 'Endpoints Spec' },
+  { id: 'code',      label: '구현 예제 코드' },
+];
+
+// 페이지 하단 이전/다음 네비게이션
+function PageNav({ activeTab, onChange }) {
+  const idx = TAB_ORDER.findIndex(t => t.id === activeTab);
+  if (idx === -1) return null;
+  const prev = idx > 0 ? TAB_ORDER[idx - 1] : null;
+  const next = idx < TAB_ORDER.length - 1 ? TAB_ORDER[idx + 1] : null;
+
+  const go = (id) => {
+    onChange(id);
+    document.querySelector('main')?.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const btn = "group flex items-center gap-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-4 transition w-full";
+
+  return (
+    <div className="mt-16 pt-8 border-t border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-3">
+      {prev ? (
+        <button onClick={() => go(prev.id)} className={btn} title={prev.label}>
+          <ChevronLeft className="shrink-0 text-slate-500 group-hover:text-indigo-400 transition" size={20} />
+          <div className="text-left min-w-0 flex-1">
+            <div className="text-[11px] text-slate-500 uppercase tracking-widest">← 이전</div>
+            <div className="text-sm font-semibold text-white truncate">{prev.label}</div>
+          </div>
+        </button>
+      ) : <div />}
+      {next ? (
+        <button onClick={() => go(next.id)} className={`${btn} md:flex-row-reverse`} title={next.label}>
+          <ChevronRight className="shrink-0 text-slate-500 group-hover:text-indigo-400 transition" size={20} />
+          <div className="text-right min-w-0 flex-1">
+            <div className="text-[11px] text-slate-500 uppercase tracking-widest">다음 →</div>
+            <div className="text-sm font-semibold text-white truncate">{next.label}</div>
+          </div>
+        </button>
+      ) : <div />}
     </div>
   );
 }
