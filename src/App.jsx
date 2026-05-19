@@ -29,7 +29,7 @@ import {
 } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('flow');
+  const [activeTab, setActiveTab] = useState('overview');
   const [copiedId, setCopiedId] = useState(null);
   const [simStep, setSimStep] = useState(0);
   const [showToast, setShowToast] = useState(false);
