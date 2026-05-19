@@ -799,13 +799,16 @@ export default function App() {
                         <span className="bg-emerald-500/20 text-emerald-300 text-[12px] font-mono px-2 py-0.5 rounded">REQUEST</span>
                         Silent Authorize 요청 예시
                       </h5>
-                      <CodeBlock language="http" code={`GET https://auth.kwater.com/oauth2/v1/authorize
-  ?response_type=code
-  &client_id=datahub-portal-id
-  &redirect_uri=https://datahub.kwater.com/callback
-  &scope=openid profile datahub:read
-  &state=sub_random_state_4410
-  &prompt=none           ← 핵심: UI 노출 금지`} />
+                      <CodeBlock language="http" code={`GET /oauth2/v1/authorize?response_type=code
+    &client_id=datahub-portal-id
+    &redirect_uri=https://datahub.kwater.com/callback
+    &scope=openid profile datahub:read
+    &state=sub_random_state_4410
+    &prompt=none HTTP/1.1
+Host: auth.kwater.com
+Accept: text/html
+
+# prompt=none — 사용자에게 UI를 띄우지 말고 백그라운드로만 인증 시도`} />
                     </div>
 
                     {/* prompt=none semantics */}
@@ -1878,7 +1881,10 @@ export default function App() {
                 <h3 className="font-bold text-white text-lg mb-3">OIDC SLO 로그아웃 요청 예시</h3>
                 <div className="relative">
                   <CodeBlock language="http"
-                    code={`GET https://auth.kwater.com/oauth2/v1/logout?id_token_hint=eyJhbGciOiJSUzI1NiIs...&post_logout_redirect_uri=https://cmp.kwater.com/login&state=secure_logout_state`} />
+                    code={`GET /oauth2/v1/logout?id_token_hint=eyJhbGciOiJSUzI1NiIs...
+    &post_logout_redirect_uri=https://cmp.kwater.com/login
+    &state=secure_logout_state HTTP/1.1
+Host: auth.kwater.com`} />
                   <button
                     onClick={() => handleCopy(`GET https://auth.kwater.com/oauth2/v1/logout?id_token_hint=eyJhbGciOiJSUzI1NiIs...&post_logout_redirect_uri=https://cmp.kwater.com/login&state=secure_logout_state`, 'logout-url')}
                     className="absolute right-3 top-3 text-slate-500 hover:text-slate-300 bg-slate-900/80 p-1.5 rounded-md border border-slate-800 hover:border-slate-700 transition"
@@ -1939,7 +1945,8 @@ export default function App() {
                       <span className="bg-emerald-500/20 text-emerald-300 text-[12px] font-mono px-2 py-0.5 rounded">RECOMMENDED</span>
                       Back-Channel Logout 수신 엔드포인트 예시
                     </h4>
-                    <CodeBlock language="http" code={`POST https://auth.kwater.com/oauth2/v1/kwater/backchannel-logout
+                    <CodeBlock language="http" code={`POST /oauth2/v1/kwater/backchannel-logout HTTP/1.1
+Host: auth.kwater.com
 Content-Type: application/x-www-form-urlencoded
 
 logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-water>`} />
