@@ -430,19 +430,19 @@ export default function App() {
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <div className="shrink-0 bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[10px] font-mono font-bold uppercase px-3 py-1.5 rounded">Tier 1</div>
-                    <div className="flex-1 bg-slate-950 border border-sky-500/40 rounded-lg px-4 py-2.5 flex items-center gap-2">
+                    <div className="flex-1 bg-slate-950 border border-sky-500/40 rounded-lg px-4 py-2.5 relative flex items-center justify-center gap-2">
                       <Building2 size={16} className="text-sky-400" />
                       <span className="text-sm text-white font-bold">K-Water 통합 인증 시스템</span>
-                      <span className="ml-auto text-[10px] text-slate-500 font-mono">Upstream IdP</span>
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-500 font-mono">Upstream IdP</span>
                     </div>
                   </div>
                   <div className="flex items-center justify-center text-slate-600 text-xs">↓ 암호화 페이로드 (JWE/SAML)</div>
                   <div className="flex items-center gap-3">
                     <div className="shrink-0 bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 text-[10px] font-mono font-bold uppercase px-3 py-1.5 rounded">Tier 2</div>
-                    <div className="flex-1 bg-slate-950 border border-indigo-500/40 rounded-lg px-4 py-2.5 flex items-center gap-2">
+                    <div className="flex-1 bg-slate-950 border border-indigo-500/40 rounded-lg px-4 py-2.5 relative flex items-center justify-center gap-2">
                       <Server size={16} className="text-indigo-400" />
                       <span className="text-sm text-white font-bold">디지털플랫폼 통합인증 서버</span>
-                      <span className="ml-auto text-[10px] text-emerald-400 font-mono">auth.kwater.com</span>
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-emerald-400 font-mono">auth.kwater.com</span>
                     </div>
                   </div>
                   <div className="flex items-center justify-center text-slate-600 text-xs">↓ Silent SSO · 포털별 토큰 발급</div>
@@ -2055,16 +2055,55 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-Water>`}</pre>
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
                   <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
                     <span className="bg-emerald-600/10 text-emerald-400 font-mono text-xs font-bold px-2 py-1 rounded border border-emerald-500/20">GET</span>
-                    <h4 className="font-bold text-white text-sm">/oauth2/v1/jwks</h4>
+                    <h4 className="font-bold text-white text-sm">/oauth2/v1/jwks (서명 검증용 공개 키 목록)</h4>
                   </div>
-                  <div className="p-6 space-y-3 text-sm">
-                    <p className="text-slate-400">JWT 서명을 검증할 공개 키 집합. 리소스 서버가 캐싱(TTL 1시간 권장)하여 사용합니다. <code className="text-emerald-300">kid</code>로 회전된 키를 추적합니다.</p>
+                  <div className="p-6 space-y-4 text-sm">
+                    <p className="text-slate-300 leading-relaxed">
+                      IdP의 <strong className="text-white">공개 도장 목록</strong>입니다. 리소스 서버는 토큰의 서명이 진짜 IdP가 찍은 것인지 이 공개키로 확인합니다.
+                    </p>
+
+                    {/* Three-part friendly explanation */}
+                    <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4 space-y-3">
+                      <div>
+                        <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-300 mb-1">① 공개 키란?</div>
+                        <p className="text-xs text-slate-400 leading-relaxed">
+                          JWT(Access Token)는 IdP의 <strong className="text-slate-200">비공개 키(private key)</strong>로 서명되어 있습니다. 리소스 서버가 그 서명이 진짜인지 확인하려면 짝이 되는 <strong className="text-slate-200">공개 키(public key)</strong>가 필요한데, 그 공개 키들을 모아놓은 게 JWKS(JSON Web Key Set)입니다.
+                        </p>
+                      </div>
+
+                      <div>
+                        <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-indigo-300 mb-1">② TTL 1시간 캐싱</div>
+                        <p className="text-xs text-slate-400 leading-relaxed">
+                          매 API 호출마다 JWKS를 IdP에 묻으면 트래픽이 폭주합니다. 그래서 한 번 받은 키들을 메모리(또는 Redis)에 1시간 정도 저장해두고 재사용합니다. 1시간 후 새로 가져오면 그동안 회전된 키도 자연스럽게 반영됩니다.
+                        </p>
+                      </div>
+
+                      <div>
+                        <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-amber-300 mb-1">③ <code className="text-amber-300">kid</code> = key ID (어느 키로 서명했는지 표시)</div>
+                        <p className="text-xs text-slate-400 leading-relaxed mb-2">
+                          IdP는 보안을 위해 서명용 키를 주기적으로 교체(<strong className="text-slate-200">key rotation</strong>)합니다. 단, 바꾸자마자 기존 토큰을 무효화하면 사용자들이 갑자기 로그아웃되므로 <strong className="text-slate-200">옛 키 + 새 키를 잠시 같이</strong> JWKS에 둡니다. 어느 키로 서명한 토큰인지 알려주는 게 JWT 헤더의 <code className="text-amber-300">kid</code> 값입니다.
+                        </p>
+                        <pre className="text-[10px] bg-slate-950 border border-slate-800 rounded p-2.5 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`JWT Header:  { "alg": "RS256", "kid": "key-2026-q2" }
+                                       ↑ "이 토큰은 이 키로 서명함"
+
+JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
+                      </div>
+                    </div>
+
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK)</div>
                     <pre className="text-[11px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
   "keys": [
     {
       "kty": "RSA",
-      "kid": "key-2026-q2",
+      "kid": "key-2026-q1",          // 이전 키 (잠시 유지 — 옛 토큰 검증용)
+      "use": "sig",
+      "alg": "RS256",
+      "n": "<modulus base64url>",
+      "e": "AQAB"
+    },
+    {
+      "kty": "RSA",
+      "kid": "key-2026-q2",          // 현재 사용 중인 키
       "use": "sig",
       "alg": "RS256",
       "n": "<modulus base64url>",
