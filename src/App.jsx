@@ -799,13 +799,13 @@ export default function App() {
                         <span className="bg-emerald-500/20 text-emerald-300 text-[12px] font-mono px-2 py-0.5 rounded">REQUEST</span>
                         Silent Authorize 요청 예시
                       </h5>
-                      <pre className="text-xs bg-slate-950 border border-slate-800 rounded-lg p-4 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`GET https://auth.kwater.com/oauth2/v1/authorize
+                      <CodeBlock language="http" code={`GET https://auth.kwater.com/oauth2/v1/authorize
   ?response_type=code
   &client_id=datahub-portal-id
   &redirect_uri=https://datahub.kwater.com/callback
   &scope=openid profile datahub:read
   &state=sub_random_state_4410
-  &prompt=none           ← 핵심: UI 노출 금지`}</pre>
+  &prompt=none           ← 핵심: UI 노출 금지`} />
                     </div>
 
                     {/* prompt=none semantics */}
@@ -869,16 +869,16 @@ export default function App() {
                             <span className="text-[12px] font-mono font-bold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">(A) Top-level redirect</span>
                             <span className="text-[12px] text-emerald-400 font-semibold">권장</span>
                           </div>
-                          <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-2 font-mono text-slate-300 overflow-x-auto whitespace-pre mb-2">{`window.location.href =
-  'https://auth.kwater.com/oauth2/v1/authorize?...&prompt=none'`}</pre>
+                          <div className="mb-2"><CodeBlock language="javascript" fontSize="0.72rem" code={`window.location.href =
+  'https://auth.kwater.com/oauth2/v1/authorize?...&prompt=none'`} /></div>
                           <p className="text-[13px] text-slate-400 leading-relaxed">짧은 깜빡임은 있지만 안전. 가이드의 React 예제(구현 예제 코드 탭)가 이 방식입니다.</p>
                         </div>
                         <div className="bg-slate-950/60 border border-amber-500/30 rounded-xl p-4">
                           <div className="flex items-center gap-2 mb-2">
                             <span className="text-[12px] font-mono font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded">(B) Hidden iframe</span>
                           </div>
-                          <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-2 font-mono text-slate-300 overflow-x-auto whitespace-pre mb-2">{`<iframe src=
-  'https://auth.kwater.com/oauth2/v1/authorize?...&prompt=none' />`}</pre>
+                          <div className="mb-2"><CodeBlock language="markup" fontSize="0.72rem" code={`<iframe src=
+  'https://auth.kwater.com/oauth2/v1/authorize?...&prompt=none' />`} /></div>
                           <p className="text-[13px] text-slate-400 leading-relaxed">깜빡임 없음. 단, IdP가 <code className="text-amber-300">frame-ancestors</code> 화이트리스트에 sub-portal 도메인을 허용해야 함. <code className="text-amber-300">postMessage</code>로 부모 윈도우에 code 전달.</p>
                         </div>
                       </div>
@@ -1050,9 +1050,8 @@ export default function App() {
                         </button>
                       </div>
                       <div className="p-4 bg-slate-950/40">
-                        <pre className="text-xs font-mono text-emerald-400 overflow-x-auto whitespace-pre leading-relaxed max-h-[300px]">
-                          {JSON.stringify(simulationSteps[simStep].payload, null, 2)}
-                        </pre>
+                        <CodeBlock language="json" maxHeight="300px"
+                          code={JSON.stringify(simulationSteps[simStep].payload, null, 2)} />
                       </div>
                     </div>
                   </div>
@@ -1378,32 +1377,32 @@ export default function App() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div className="bg-slate-950/60 border border-indigo-500/30 rounded-xl p-4">
                       <div className="text-indigo-300 text-[12px] font-mono font-bold uppercase mb-2">Header (헤더)</div>
-                      <pre className="text-[13px] font-mono text-slate-300 whitespace-pre">{`{
+                      <CodeBlock language="json" fontSize="0.72rem" code={`{
   "alg": "RS256",
   "typ": "JWT",
   "kid": "123"
-}`}</pre>
+}`} />
                       <p className="text-[13px] text-slate-400 mt-2">서명 알고리즘과 키 ID. 리소스 서버가 JWKS에서 어떤 공개키로 검증할지 식별.</p>
                     </div>
                     <div className="bg-slate-950/60 border border-emerald-500/30 rounded-xl p-4">
                       <div className="text-emerald-300 text-[12px] font-mono font-bold uppercase mb-2">Payload (페이로드)</div>
-                      <pre className="text-[13px] font-mono text-slate-300 whitespace-pre">{`{
+                      <CodeBlock language="json" fontSize="0.72rem" code={`{
   "iss": "auth.kwater.com",
   "sub": "kwater_user_1234",
   "aud": "cmp-portal",
   "scope": "openid profile",
   "exp": 1716985593,
   "iat": 1716981993
-}`}</pre>
+}`} />
                       <p className="text-[13px] text-slate-400 mt-2">사용자 정보·권한·만료시각. <strong className="text-emerald-300">암호화되지 않음</strong> — 비밀번호 절대 금지.</p>
                     </div>
                     <div className="bg-slate-950/60 border border-rose-500/30 rounded-xl p-4">
                       <div className="text-rose-300 text-[12px] font-mono font-bold uppercase mb-2">Signature (서명)</div>
-                      <pre className="text-[13px] font-mono text-slate-300 whitespace-pre">{`RSA-SHA256(
+                      <CodeBlock language="javascript" fontSize="0.72rem" code={`RSA_SHA256(
   Base64(header) + "." +
   Base64(payload),
   IdP_PrivateKey
-)`}</pre>
+)`} />
                       <p className="text-[13px] text-slate-400 mt-2">IdP의 비공개키로 서명. 페이로드를 1바이트만 바꿔도 서명 검증 실패.</p>
                     </div>
                   </div>
@@ -1878,9 +1877,8 @@ export default function App() {
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
                 <h3 className="font-bold text-white text-lg mb-3">OIDC SLO 로그아웃 요청 예시</h3>
                 <div className="relative">
-                  <pre className="text-xs bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-slate-300 overflow-x-auto whitespace-pre-wrap leading-relaxed">
-{`GET https://auth.kwater.com/oauth2/v1/logout?id_token_hint=eyJhbGciOiJSUzI1NiIs...&post_logout_redirect_uri=https://cmp.kwater.com/login&state=secure_logout_state`}
-                  </pre>
+                  <CodeBlock language="http"
+                    code={`GET https://auth.kwater.com/oauth2/v1/logout?id_token_hint=eyJhbGciOiJSUzI1NiIs...&post_logout_redirect_uri=https://cmp.kwater.com/login&state=secure_logout_state`} />
                   <button
                     onClick={() => handleCopy(`GET https://auth.kwater.com/oauth2/v1/logout?id_token_hint=eyJhbGciOiJSUzI1NiIs...&post_logout_redirect_uri=https://cmp.kwater.com/login&state=secure_logout_state`, 'logout-url')}
                     className="absolute right-3 top-3 text-slate-500 hover:text-slate-300 bg-slate-900/80 p-1.5 rounded-md border border-slate-800 hover:border-slate-700 transition"
@@ -1941,10 +1939,10 @@ export default function App() {
                       <span className="bg-emerald-500/20 text-emerald-300 text-[12px] font-mono px-2 py-0.5 rounded">RECOMMENDED</span>
                       Back-Channel Logout 수신 엔드포인트 예시
                     </h4>
-                    <pre className="text-xs bg-slate-950 border border-slate-800 rounded-lg p-4 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`POST https://auth.kwater.com/oauth2/v1/kwater/backchannel-logout
+                    <CodeBlock language="http" code={`POST https://auth.kwater.com/oauth2/v1/kwater/backchannel-logout
 Content-Type: application/x-www-form-urlencoded
 
-logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-water>`}</pre>
+logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-water>`} />
                     <p className="text-[13px] text-slate-400 mt-2 leading-relaxed">
                       <code className="text-emerald-300">logout_token</code> 검증 필수 항목: <code className="text-slate-300">iss</code>=K-water issuer · <code className="text-slate-300">aud</code>=우리 client_id · <code className="text-slate-300">iat</code> 신선도 · <code className="text-slate-300">jti</code> 재사용 차단 · <code className="text-slate-300">events</code>에 <code className="text-slate-300">http://schemas.openid.net/event/backchannel-logout</code> 포함 · <code className="text-slate-300">nonce</code> 부재 · <code className="text-slate-300">sub</code> 또는 <code className="text-slate-300">sid</code>로 세션 식별 (RFC 8417 §2.6).
                     </p>
@@ -2043,7 +2041,7 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-water>`}</pre>
                   <div className="p-6 space-y-3 text-sm">
                     <p className="text-slate-400">OIDC Discovery 표준 문서. 클라이언트·리소스 서버가 모든 엔드포인트·지원 알고리즘·JWKS URI를 자동 발견하도록 합니다.</p>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK · 일부 발췌)</div>
-                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+                    <CodeBlock language="json" code={`{
   "issuer": "https://auth.kwater.com/oauth2/v1",
   "authorization_endpoint": "https://auth.kwater.com/oauth2/v1/authorize",
   "token_endpoint": "https://auth.kwater.com/oauth2/v1/token",
@@ -2057,7 +2055,7 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-water>`}</pre>
   "id_token_signing_alg_values_supported": ["RS256"],
   "backchannel_logout_supported": true,
   "backchannel_logout_session_supported": true
-}`}</pre>
+}`} />
                   </div>
                 </div>
 
@@ -2092,34 +2090,36 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-water>`}</pre>
                         <p className="text-xs text-slate-400 leading-relaxed mb-2">
                           IdP는 보안을 위해 서명용 키를 주기적으로 교체(<strong className="text-slate-200">key rotation</strong>)합니다. 단, 바꾸자마자 기존 토큰을 무효화하면 사용자들이 갑자기 로그아웃되므로 <strong className="text-slate-200">옛 키 + 새 키를 잠시 같이</strong> JWKS에 둡니다. 어느 키로 서명한 토큰인지 알려주는 게 JWT 헤더의 <code className="text-amber-300">kid</code> 값입니다.
                         </p>
-                        <pre className="text-[12px] bg-slate-950 border border-slate-800 rounded p-2.5 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`JWT Header:  { "alg": "RS256", "kid": "key-2026-q2" }
+                        <CodeBlock language="json" fontSize="0.72rem" code={`JWT Header:  { "alg": "RS256", "kid": "key-2026-q2" }
                                        ↑ "이 토큰은 이 키로 서명함"
 
-JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
+JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`} />
                       </div>
                     </div>
 
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK)</div>
-                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+                    <CodeBlock language="json" code={`{
   "keys": [
     {
       "kty": "RSA",
-      "kid": "key-2026-q1",          // 이전 키 (잠시 유지 — 옛 토큰 검증용)
+      "kid": "key-2026-q1",
       "use": "sig",
       "alg": "RS256",
       "n": "<modulus base64url>",
-      "e": "AQAB"
+      "e": "AQAB",
+      "_comment": "이전 키 — 잠시 유지하여 옛 토큰 검증"
     },
     {
       "kty": "RSA",
-      "kid": "key-2026-q2",          // 현재 사용 중인 키
+      "kid": "key-2026-q2",
       "use": "sig",
       "alg": "RS256",
       "n": "<modulus base64url>",
-      "e": "AQAB"
+      "e": "AQAB",
+      "_comment": "현재 사용 중인 키"
     }
   ]
-}`}</pre>
+}`} />
                   </div>
                 </div>
               </div>
@@ -2195,14 +2195,14 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                       </table>
                     </div>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK)</div>
-                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+                    <CodeBlock language="json" code={`{
   "access_token": "eyJhbGciOiJSUzI1NiIs...",
   "refresh_token": "rfr_771239ab8c19ef",
   "id_token": "eyJhbGciOiJSUzI1NiIs...",
   "token_type": "Bearer",
   "expires_in": 3600,
   "scope": "openid profile datahub:read"
-}`}</pre>
+}`} />
                   </div>
                 </div>
 
@@ -2214,14 +2214,14 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                   <div className="p-6 space-y-3 text-sm">
                     <p className="text-slate-400">Access Token으로 인증된 사용자의 프로필 정보를 반환합니다. <code className="text-emerald-300">Authorization: Bearer ...</code> 헤더 필수.</p>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK)</div>
-                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+                    <CodeBlock language="json" code={`{
   "sub": "kwater_user_1234",
   "name": "홍길동",
   "email": "hong@example.com",
   "department": "수자원관리본부",
   "role": "ADMIN",
   "kwater_employee_id": "K012345"
-}`}</pre>
+}`} />
                   </div>
                 </div>
               </div>
@@ -2267,7 +2267,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                   <div className="p-6 space-y-3 text-sm">
                     <p className="text-slate-400">K-water에서 사용자가 로그아웃하면 호출되는 엔드포인트. <code className="text-sky-300">logout_token</code> JWT 검증 후 디지털플랫폼 SSO 세션을 만료시키고 모든 하위 포털로 백채널 로그아웃을 전파합니다.</p>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Request Body (application/x-www-form-urlencoded)</div>
-                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`logout_token=<JWT signed by K-water, RFC 8417 §2.6>`}</pre>
+                    <CodeBlock language="bash" code={`logout_token=<JWT signed by K-water, RFC 8417 §2.6>`} />
                     <p className="text-[13px] text-slate-400 leading-relaxed">검증: iss=K-water · aud=우리 client_id · iat 신선도 · jti 재사용 차단 · events에 backchannel-logout 포함 · nonce 부재 · sub 또는 sid 식별.</p>
                   </div>
                 </div>
@@ -2334,7 +2334,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                       </table>
                     </div>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Response (200 OK · 활성 토큰)</div>
-                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`{
+                    <CodeBlock language="json" code={`{
   "active": true,
   "scope": "openid profile datahub:read",
   "client_id": "datahub-portal-id",
@@ -2342,7 +2342,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
   "exp": 1716985593,
   "iat": 1716981993,
   "sub": "kwater_user_1234"
-}`}</pre>
+}`} />
                     <p className="text-[13px] text-slate-400">폐기/만료된 토큰은 <code className="text-rose-300">{`{ "active": false }`}</code>만 반환 (토큰 열거 방지).</p>
                   </div>
                 </div>
@@ -2355,10 +2355,10 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`}</pre>
                   <div className="p-6 space-y-3 text-sm">
                     <p className="text-slate-400">특정 Access Token 또는 Refresh Token을 즉시 무효화합니다. 사용자가 명시적으로 "이 기기에서 로그아웃"을 누르거나, 도난 감지 시 사용.</p>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Request Body</div>
-                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`token=<폐기할 토큰>
+                    <CodeBlock language="bash" code={`token=<폐기할 토큰>
 token_type_hint=refresh_token   # 또는 access_token
 client_id=cmp-portal
-client_secret=<...>`}</pre>
+client_secret=<...>`} />
                     <p className="text-[13px] text-slate-400 leading-relaxed">응답:
                       <span className="text-emerald-300"> 200 OK</span> — 폐기 성공 또는 알 수 없는 토큰 (토큰 열거 방지 차원에서 동일 처리, 본문 없음) ·
                       <span className="text-amber-300"> 400</span> — <code className="text-slate-300">invalid_request</code> 등 요청 자체 오류 ·
@@ -2383,7 +2383,7 @@ client_secret=<...>`}</pre>
                   <div className="p-6 space-y-3 text-sm">
                     <p className="text-slate-400">디지털플랫폼 통합인증 서버가 SLO 시 각 하위 포털 백엔드로 호출하는 엔드포인트입니다. <strong className="text-white">각 포털이 구현하여 IdP에 등록</strong>합니다 (예: <code className="text-purple-300">https://api.datahub.kwater.com/oauth2/v1/backchannel-logout</code>).</p>
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-2 mb-1">Request Body</div>
-                    <pre className="text-[13px] bg-slate-950 border border-slate-800 rounded p-3 font-mono text-slate-300 overflow-x-auto whitespace-pre leading-relaxed">{`logout_token=<JWT signed by IdP, RFC 8417>`}</pre>
+                    <CodeBlock language="bash" code={`logout_token=<JWT signed by IdP, RFC 8417>`} />
                     <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mt-3 mb-1">필수 검증 (RFC 8417 §2.6)</div>
                     <ul className="text-[13px] text-slate-300 leading-relaxed list-disc list-inside space-y-0.5">
                       <li>JWT 헤더 <code className="text-purple-300">typ=&quot;logout+jwt&quot;</code> — ID Token 위장 차단</li>
@@ -2470,6 +2470,30 @@ client_secret=<...>`}</pre>
         <p>© 2026 Enterprise SSO Auth Portal. All rights reserved. 본 인증 플랫폼은 OAuth 2.1 & OpenID Connect 표준 사양을 완벽하게 지원합니다.</p>
       </footer>
     </div>
+  );
+}
+
+// 인라인 구문 강조 블록 — 짧은 예시(HTTP·JSON·form-body 등)에 사용
+function CodeBlock({ code, language = 'http', fontSize = '0.78rem', maxHeight }) {
+  return (
+    <SyntaxHighlighter
+      language={language}
+      style={vscDarkPlus}
+      customStyle={{
+        margin: 0,
+        padding: '0.875rem 1rem',
+        background: 'rgb(2 6 23)',
+        fontSize,
+        lineHeight: '1.65',
+        border: '1px solid rgb(30 41 59)',
+        borderRadius: '0.5rem',
+        maxHeight,
+        overflow: 'auto',
+      }}
+      codeTagProps={{ style: { fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace' } }}
+    >
+      {code}
+    </SyntaxHighlighter>
   );
 }
 
