@@ -107,14 +107,6 @@ export default function App() {
         </div>
       </header>
 
-      {/* Sample data disclaimer banner */}
-      <div className="bg-amber-500/10 border-b border-amber-500/30 px-6 py-2.5 flex items-center justify-center gap-2">
-        <AlertTriangle className="text-amber-400 shrink-0" size={14} />
-        <p className="text-[13px] md:text-xs text-amber-200 leading-relaxed text-center">
-          본 가이드의 모든 <strong className="text-amber-100">URL · 도메인 · client_id · 토큰 값 · 사용자 정보</strong>는 설명을 위해 만든 <strong className="text-amber-100">임의의 예시 데이터</strong>입니다. 실제 운영 환경의 값과 다릅니다.
-        </p>
-      </div>
-
       {/* Main Container */}
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Navigation Sidebar (collapsible on lg+) */}
@@ -178,8 +170,17 @@ export default function App() {
         </nav>
 
         {/* Content Area */}
-        <main className="flex-1 px-6 md:px-10 pt-6 md:pt-10 pb-0 overflow-y-auto">
-          
+        <main className="flex-1 overflow-y-auto">
+          {/* Sample data disclaimer banner — scrolls away with content */}
+          <div className="bg-amber-500/10 border-b border-amber-500/30 px-6 py-2.5 flex items-center justify-center gap-2">
+            <AlertTriangle className="text-amber-400 shrink-0" size={14} />
+            <p className="text-[13px] md:text-xs text-amber-200 leading-relaxed text-center">
+              본 가이드의 모든 <strong className="text-amber-100">URL · 도메인 · client_id · 토큰 값 · 사용자 정보</strong>는 설명을 위해 만든 <strong className="text-amber-100">임의의 예시 데이터</strong>입니다. 실제 운영 환경의 값과 다릅니다.
+            </p>
+          </div>
+
+          <div className="px-6 md:px-10 pt-6 md:pt-10">
+
           {/* TOAST NOTIFICATION */}
           {showToast && (
             <div className="fixed bottom-5 right-5 z-50 bg-slate-800 border border-slate-700 text-indigo-400 px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-2">
@@ -200,6 +201,8 @@ export default function App() {
 
           {/* 페이지 하단 이전/다음 네비게이션 — 모든 탭 공통 */}
           <PageNav activeTab={activeTab} onChange={setActiveTab} />
+
+          </div>
         </main>
       </div>
 
