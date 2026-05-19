@@ -741,6 +741,84 @@ export default function App() {
                   </div>
                 </div>
 
+                {/* Master vs Sub Client 차이 설명 */}
+                <div className="bg-slate-900 border border-indigo-500/20 rounded-2xl mt-6 overflow-hidden">
+                  <div className="bg-indigo-950/40 px-5 py-4 border-b border-indigo-500/20 flex items-center gap-2">
+                    <Layers className="text-indigo-400" size={18} />
+                    <h4 className="font-bold text-white text-base">Master Client (CMP) vs Sub Client — 같은 OIDC, 다른 역할</h4>
+                  </div>
+                  <div className="p-6 space-y-5">
+                    <p className="text-sm text-slate-300 leading-relaxed">
+                      자주 묻는 질문: "<strong className="text-white">CMP만 K-water로 로그인하고 나머지는 Silent SSO 쓰는 거 아냐?</strong>" — 부분적으로만 맞습니다.
+                      <span className="text-indigo-300"> CMP도 Silent SSO를 씁니다.</span> 다만 "최초 K-water 인증 직후의 진입점"이라는 점에서만 다릅니다.
+                    </p>
+
+                    {/* 시점별 동작 표 */}
+                    <div>
+                      <h5 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
+                        <span className="bg-emerald-500/20 text-emerald-300 text-[12px] font-mono px-2 py-0.5 rounded">WHEN</span>
+                        시점별 로그인 동작
+                      </h5>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-left text-xs border-collapse text-slate-300">
+                          <thead>
+                            <tr className="border-b border-slate-800 text-slate-500">
+                              <th className="py-2 px-3 font-semibold">상황</th>
+                              <th className="py-2 px-3 font-semibold text-indigo-300">CMP (Master)</th>
+                              <th className="py-2 px-3 font-semibold text-emerald-300">서브 포털 (Sub)</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-slate-800/40">
+                            <tr>
+                              <td className="py-2.5 px-3 font-semibold">최초 K-water 인증 직후 진입</td>
+                              <td className="py-2.5 px-3 text-slate-400">K-water 페이로드 → SSO 세션 생성 → CMP 토큰 발급 <span className="text-sky-300 font-mono text-[12px]">(Phase 1)</span></td>
+                              <td className="py-2.5 px-3 text-slate-500 italic">해당 없음 — K-water 페이로드는 CMP 콜백으로만 옴</td>
+                            </tr>
+                            <tr>
+                              <td className="py-2.5 px-3 font-semibold">SSO 쿠키 있는 상태에서 새 탭/재방문</td>
+                              <td className="py-2.5 px-3 text-indigo-300 font-semibold">✓ Silent SSO (prompt=none)</td>
+                              <td className="py-2.5 px-3 text-emerald-300 font-semibold">✓ Silent SSO (prompt=none)</td>
+                            </tr>
+                            <tr>
+                              <td className="py-2.5 px-3 font-semibold">SSO 세션 만료 후 다시 진입</td>
+                              <td className="py-2.5 px-3 text-slate-400">K-water 풀 플로우 재실행</td>
+                              <td className="py-2.5 px-3 text-slate-400"><code className="text-rose-300">login_required</code> → CMP 경유해서 K-water로 폴백</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    {/* 진짜 차이 3가지 */}
+                    <div>
+                      <h5 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
+                        <span className="bg-purple-500/20 text-purple-300 text-[12px] font-mono px-2 py-0.5 rounded">DIFF</span>
+                        진짜 차이 — OIDC 메커니즘이 아니라 역할
+                      </h5>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div className="bg-slate-950/60 border border-sky-500/30 rounded-xl p-3.5">
+                          <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-sky-300 mb-1">① K-water 페이로드 진입점</div>
+                          <p className="text-[13px] text-slate-300 leading-relaxed">K-water는 RP 등록 시 CMP 콜백 URL(<code className="text-sky-300 text-[12px]">cmp.kwater.com/callback</code>) 하나만 받음. K-water 인증이 끝나면 <strong className="text-white">항상 CMP로 먼저 옴</strong>.</p>
+                        </div>
+                        <div className="bg-slate-950/60 border border-indigo-500/30 rounded-xl p-3.5">
+                          <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-indigo-300 mb-1">② 마스터 포털 역할</div>
+                          <p className="text-[13px] text-slate-300 leading-relaxed">CMP는 사용자가 다른 포털로 갈지 선택하는 <strong className="text-white">허브 + 권한·리소스 관리 콘솔</strong>. 서브 포털은 특정 도메인 기능만 제공.</p>
+                        </div>
+                        <div className="bg-slate-950/60 border border-purple-500/30 rounded-xl p-3.5">
+                          <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-purple-300 mb-1">③ Scope 범위</div>
+                          <p className="text-[13px] text-slate-300 leading-relaxed">CMP는 <code className="text-purple-300 text-[12px]">admin:*</code> 등 관리자 scope 허용. 서브 포털은 자기 도메인 scope만 (<code className="text-purple-300 text-[12px]">datahub:read</code> 등) — IdP가 client_id별로 제한.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-indigo-950/30 border border-indigo-500/30 rounded-xl p-4">
+                      <p className="text-sm text-slate-300 leading-relaxed">
+                        <strong className="text-white">정리:</strong> "Master Client"라는 이름은 <strong className="text-indigo-300">K-water 페이로드를 처음 받는 진입점</strong>이라는 뜻이지, Silent SSO를 안 쓴다는 의미가 아닙니다. OIDC 클라이언트로서는 두 종류 포털이 같은 메커니즘을 공유하며, 차이는 <em className="text-slate-200">"K-water와 직접 통신하느냐"</em> + <em className="text-slate-200">"역할/scope"</em>뿐입니다.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Silent Authentication — Deep Dive */}
                 <div className="bg-slate-900 border border-indigo-500/20 rounded-2xl mt-6 overflow-hidden">
                   <div className="bg-indigo-950/40 px-5 py-4 border-b border-indigo-500/20 flex items-center gap-2">
