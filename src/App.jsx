@@ -35,6 +35,7 @@ export default function App() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [codeLang, setCodeLang] = useState('react'); // react | spring
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const triggerToast = (msg) => {
     setToastMessage(msg);
@@ -280,75 +281,63 @@ export default function App() {
 
       {/* Main Container */}
       <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Navigation Sidebar */}
-        <nav className="w-full lg:w-72 border-b lg:border-b-0 lg:border-r border-slate-800 bg-slate-950/40 p-4 space-y-1 shrink-0">
-          <div className="text-[11px] font-semibold text-slate-500 tracking-wider uppercase px-3 mb-2">메인 가이드</div>
-          
-          <button 
-            onClick={() => setActiveTab('overview')}
-            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'overview' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
-          >
-            <BookOpen size={18} />
-            <span>1. 연동 개요</span>
-          </button>
-
-          <button 
-            onClick={() => setActiveTab('multi-sso')}
-            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'multi-sso' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
-          >
-            <Layers size={18} />
-            <span>2. 통합 & 하위 포털 SSO</span>
-          </button>
-
+        {/* Navigation Sidebar (collapsible on lg+) */}
+        <nav className={`w-full ${sidebarCollapsed ? 'lg:w-16' : 'lg:w-72'} border-b lg:border-b-0 lg:border-r border-slate-800 bg-slate-950/40 p-3 lg:p-4 space-y-1 shrink-0 transition-all duration-200 relative`}>
+          {/* Collapse toggle (visible on lg+) */}
           <button
-            onClick={() => setActiveTab('sequence')}
-            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'sequence' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            className="hidden lg:flex items-center justify-center w-full mb-3 p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 border border-slate-800 hover:border-slate-700 transition"
+            title={sidebarCollapsed ? '메뉴 펼치기' : '메뉴 접기'}
           >
-            <Activity size={18} />
-            <span>3. 데이터 흐름 애니메이션</span>
+            {sidebarCollapsed ? <ChevronRight size={18} /> : <><ChevronLeft size={16} /><span className="ml-1.5 text-xs font-semibold">메뉴 접기</span></>}
           </button>
 
-          <button
-            onClick={() => setActiveTab('flow')}
-            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'flow' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
-          >
-            <ArrowRightLeft size={18} />
-            <span>4. 상세 연동 시뮬레이터</span>
-          </button>
+          {!sidebarCollapsed && <div className="hidden lg:block text-[11px] font-semibold text-slate-500 tracking-wider uppercase px-3 mb-2">메인 가이드</div>}
 
-          <button 
-            onClick={() => setActiveTab('tokens')}
-            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'tokens' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
-          >
-            <Key size={18} />
-            <span>5. 토큰 발급 & 갱신 (RTR)</span>
-          </button>
+          {[
+            { id: 'overview', icon: BookOpen, label: '1. 연동 개요' },
+            { id: 'multi-sso', icon: Layers, label: '2. 통합 & 하위 포털 SSO' },
+            { id: 'sequence', icon: Activity, label: '3. 데이터 흐름 애니메이션' },
+            { id: 'flow', icon: ArrowRightLeft, label: '4. 상세 연동 시뮬레이터' },
+            { id: 'tokens', icon: Key, label: '5. 토큰 발급 & 갱신 (RTR)' },
+            { id: 'logout', icon: LogOut, label: '6. 통합 로그아웃 (SLO)' },
+          ].map(item => {
+            const Icon = item.icon;
+            const active = activeTab === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                title={sidebarCollapsed ? item.label : undefined}
+                className={`w-full flex items-center ${sidebarCollapsed ? 'lg:justify-center lg:px-2' : 'space-x-3 px-3'} py-2.5 rounded-lg text-sm font-medium transition-all ${active ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
+              >
+                <Icon size={18} className="shrink-0" />
+                <span className={sidebarCollapsed ? 'lg:hidden' : ''}>{item.label}</span>
+              </button>
+            );
+          })}
 
-          <button 
-            onClick={() => setActiveTab('logout')}
-            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'logout' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
-          >
-            <LogOut size={18} />
-            <span>6. 통합 로그아웃 (SLO)</span>
-          </button>
+          {!sidebarCollapsed && <div className="hidden lg:block text-[11px] font-semibold text-slate-500 tracking-wider uppercase px-3 pt-6 mb-2">개발 정보</div>}
+          {sidebarCollapsed && <div className="hidden lg:block border-t border-slate-800 my-3"></div>}
 
-          <div className="text-[11px] font-semibold text-slate-500 tracking-wider uppercase px-3 pt-6 mb-2">개발 정보</div>
-
-          <button 
-            onClick={() => setActiveTab('api')}
-            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'api' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
-          >
-            <Terminal size={18} />
-            <span>Endpoints Spec</span>
-          </button>
-
-          <button 
-            onClick={() => setActiveTab('code')}
-            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === 'code' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
-          >
-            <Code2 size={18} />
-            <span>구현 예제 코드</span>
-          </button>
+          {[
+            { id: 'api', icon: Terminal, label: 'Endpoints Spec' },
+            { id: 'code', icon: Code2, label: '구현 예제 코드' },
+          ].map(item => {
+            const Icon = item.icon;
+            const active = activeTab === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                title={sidebarCollapsed ? item.label : undefined}
+                className={`w-full flex items-center ${sidebarCollapsed ? 'lg:justify-center lg:px-2' : 'space-x-3 px-3'} py-2.5 rounded-lg text-sm font-medium transition-all ${active ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
+              >
+                <Icon size={18} className="shrink-0" />
+                <span className={sidebarCollapsed ? 'lg:hidden' : ''}>{item.label}</span>
+              </button>
+            );
+          })}
         </nav>
 
         {/* Content Area */}
