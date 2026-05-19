@@ -103,10 +103,22 @@ export default function Overview({ setActiveTab, handleCopy }) {
           <div className="flex items-center gap-3">
             <div className="shrink-0 bg-purple-500/20 border border-purple-500/40 text-purple-300 text-[12px] font-mono font-bold uppercase px-3 py-1.5 rounded">Tier 3</div>
             <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-2">
-              <div className="bg-slate-950 border border-indigo-500/30 rounded px-2 py-1.5 text-[13px] text-center text-indigo-200">CMP</div>
-              <div className="bg-slate-950 border border-emerald-500/30 rounded px-2 py-1.5 text-[13px] text-center text-emerald-200">데이터허브</div>
-              <div className="bg-slate-950 border border-purple-500/30 rounded px-2 py-1.5 text-[13px] text-center text-purple-200">생성형 AI</div>
-              <div className="bg-slate-950 border border-amber-500/30 rounded px-2 py-1.5 text-[13px] text-center text-amber-200">SaaS</div>
+              <div className="bg-slate-950 border border-indigo-500/30 rounded px-2 py-1.5 text-center">
+                <div className="text-[13px] text-indigo-200">CMP</div>
+                <div className="text-[11px] font-mono text-slate-500 mt-0.5">cmp.kwater.com</div>
+              </div>
+              <div className="bg-slate-950 border border-emerald-500/30 rounded px-2 py-1.5 text-center">
+                <div className="text-[13px] text-emerald-200">데이터허브</div>
+                <div className="text-[11px] font-mono text-slate-500 mt-0.5">datahub.kwater.com</div>
+              </div>
+              <div className="bg-slate-950 border border-purple-500/30 rounded px-2 py-1.5 text-center">
+                <div className="text-[13px] text-purple-200">생성형 AI</div>
+                <div className="text-[11px] font-mono text-slate-500 mt-0.5">genai.kwater.com</div>
+              </div>
+              <div className="bg-slate-950 border border-amber-500/30 rounded px-2 py-1.5 text-center">
+                <div className="text-[13px] text-amber-200">SaaS</div>
+                <div className="text-[11px] font-mono text-slate-500 mt-0.5">saas.kwater.com</div>
+              </div>
             </div>
           </div>
         </div>

@@ -39,7 +39,7 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
               }`}
             >
               <span className="text-[12px] font-bold tracking-wider uppercase mb-1.5">Step {idx + 1}</span>
-              <span className="text-[13px] font-semibold line-clamp-2 leading-relaxed text-slate-300">{step.shortTitle || step.title}</span>
+              <span className="text-[13px] font-semibold line-clamp-2 leading-relaxed text-slate-300 break-keep">{step.shortTitle || step.title}</span>
             </button>
           ))}
         </div>

@@ -30,7 +30,8 @@ import {
   ChevronLeft,
   Layers,
   Activity,
-  AlertTriangle
+  AlertTriangle,
+  FileText
 } from 'lucide-react';
 
 import { simulationSteps } from './data/simulationSteps';
@@ -43,6 +44,7 @@ import Tokens from './components/views/Tokens';
 import Logout from './components/views/Logout';
 import ApiSpec from './components/views/ApiSpec';
 import CodeExample from './components/views/CodeExample';
+import SpecDoc from './components/views/SpecDoc';
 
 // 탭 순서 — 사이드바·이전/다음 네비게이션 공통 사용
 const TAB_ORDER = [
@@ -54,6 +56,7 @@ const TAB_ORDER = [
   { id: 'logout',    label: '6. 통합 로그아웃 (SLO)' },
   { id: 'api',       label: 'Endpoints Spec' },
   { id: 'code',      label: '구현 예제 코드' },
+  { id: 'spec-doc',  label: '서버 구축 요구사항 & 스펙' },
 ];
 
 export default function App() {
@@ -87,7 +90,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 font-sans flex flex-col antialiased">
+    <div className="h-screen bg-slate-900 text-slate-100 font-sans flex flex-col antialiased overflow-hidden">
       {/* Header */}
       <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-40 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-3">
@@ -113,9 +116,9 @@ export default function App() {
       </div>
 
       {/* Main Container */}
-      <div className="flex-1 flex flex-col lg:flex-row">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Navigation Sidebar (collapsible on lg+) */}
-        <nav className={`w-full ${sidebarCollapsed ? 'lg:w-16' : 'lg:w-72'} border-b lg:border-b-0 lg:border-r border-slate-800 bg-slate-950/40 p-3 lg:p-4 space-y-1 shrink-0 transition-all duration-200 relative`}>
+        <nav className={`w-full ${sidebarCollapsed ? 'lg:w-16' : 'lg:w-72'} border-b lg:border-b-0 lg:border-r border-slate-800 bg-slate-950/40 p-3 lg:p-4 space-y-1 shrink-0 transition-all duration-200 relative lg:overflow-y-auto`}>
           {/* Collapse toggle (visible on lg+) */}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -156,6 +159,7 @@ export default function App() {
           {[
             { id: 'api', icon: Terminal, label: 'Endpoints Spec' },
             { id: 'code', icon: Code2, label: '구현 예제 코드' },
+            { id: 'spec-doc', icon: FileText, label: '서버 구축 요구사항 & 스펙' },
           ].map(item => {
             const Icon = item.icon;
             const active = activeTab === item.id;
@@ -174,7 +178,7 @@ export default function App() {
         </nav>
 
         {/* Content Area */}
-        <main className="flex-1 p-6 md:p-10 max-w-7xl overflow-y-auto">
+        <main className="flex-1 px-6 md:px-10 pt-6 md:pt-10 pb-0 overflow-y-auto">
           
           {/* TOAST NOTIFICATION */}
           {showToast && (
@@ -192,16 +196,12 @@ export default function App() {
           {activeTab === 'logout' && <ErrorBoundary><Logout handleCopy={handleCopy} /></ErrorBoundary>}
           {activeTab === 'api' && <ErrorBoundary><ApiSpec /></ErrorBoundary>}
           {activeTab === 'code' && <ErrorBoundary><CodeExample handleCopy={handleCopy} copiedId={copiedId} /></ErrorBoundary>}
+          {activeTab === 'spec-doc' && <ErrorBoundary><SpecDoc /></ErrorBoundary>}
 
           {/* 페이지 하단 이전/다음 네비게이션 — 모든 탭 공통 */}
           <PageNav activeTab={activeTab} onChange={setActiveTab} />
         </main>
       </div>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-800 bg-slate-950/60 p-6 text-center text-xs text-slate-500">
-        <p>© 2026 Enterprise SSO Auth Portal. All rights reserved. 본 인증 플랫폼은 OAuth 2.1 & OpenID Connect 표준 사양을 완벽하게 지원합니다.</p>
-      </footer>
     </div>
   );
 }
@@ -222,7 +222,7 @@ function PageNav({ activeTab, onChange }) {
   const btn = "group flex items-center gap-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-4 transition w-full";
 
   return (
-    <div className="mt-16 pt-8 border-t border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div className="mt-16 pt-8 pb-8 border-t border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-3">
       {prev ? (
         <button onClick={() => go(prev.id)} className={btn} title={prev.label}>
           <ChevronLeft className="shrink-0 text-slate-500 group-hover:text-indigo-400 transition" size={20} />
