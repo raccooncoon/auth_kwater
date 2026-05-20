@@ -17,41 +17,78 @@ export default function Comparison() {
           </div>
           <h2 className="text-4xl font-extrabold text-white tracking-tight mb-3 leading-tight">디지털플랫폼 통합인증 서버 구축 필요성 — 구조적 분리 근거</h2>
           <p className="text-slate-300 text-lg leading-relaxed max-w-3xl">
-            <strong className="text-emerald-200">K-water 메인 포탈(OASIS)은 자체 사업 범위에서 효율적으로 설계·운영되고 있습니다.</strong> 본 페이지는 그 시스템의 결함을 지적하는 것이 아니라, OASIS의 인증 계층을 <strong className="text-white">디지털플랫폼 4개 포털(CMP·데이터허브·생성형 AI·SaaS)의 인증 책임으로 그대로 위임할 수 없는 구조적 이유</strong>를 정리한 자료입니다. 사업·운영·기술 영역 분리 관점에서 별도 인증 계층이 필요한 근거를 설명합니다.
+            <strong className="text-emerald-200">OASIS는 K-water가 기존부터 운영해 온 시스템</strong>으로 그 자체로는 안정적으로 작동하고 있습니다. 본 페이지는 OASIS의 결함을 지적하는 것이 아니라, <strong className="text-white">디지털플랫폼 사업 안에서 클라우드(CMP)가 디지털플랫폼 통합인증 서버를 별도로 구축하지 않고 OASIS 인증값을 그대로 다른 포털(데이터허브·생성형 AI·SaaS)에 넘기는 현재 가이드 구조</strong>의 구조적 문제와, <strong className="text-indigo-300">디지털플랫폼이 자체 통합인증 서버를 갖춰야 하는 이유</strong>를 정리한 자료입니다.
           </p>
         </div>
       </div>
 
-      {/* SECTION 1 — 사업 범위 차이 */}
-      <Section icon={FileWarning} title="1. 두 시스템의 사업 범위 차이" subtitle="OASIS는 메인 포탈 사업의 인증 계층, 디지털플랫폼 통합인증 서버는 신규 사업의 인증 계층">
+      {/* SECTION 1 — 두 사업의 영역 차이 */}
+      <Section icon={FileWarning} title="1. 두 사업의 영역 차이" subtitle="OASIS는 K-water 기존 운영 시스템 · 디지털플랫폼은 4개 포털(클라우드·데이터허브·생성형 AI·SaaS)로 구성된 신규 사업">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-slate-900 border border-emerald-500/30 rounded-xl p-5">
-            <h4 className="text-sm font-bold text-emerald-300 mb-3 uppercase tracking-wider">OASIS의 사업 범위 (메인 포탈)</h4>
+            <h4 className="text-sm font-bold text-emerald-300 mb-3 uppercase tracking-wider">OASIS — K-water 기존 운영 시스템</h4>
             <ul className="space-y-1.5 text-[17px] text-slate-300">
               <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water Fasoo SSO 페이로드 복호화</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>메인 포탈 사용자 토큰 발급</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water 사내 사용자 토큰 발급</span></li>
               <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water 사용자 마스터 조회 (<code className="text-[17px] text-emerald-300">/api/member</code>)</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>메인 포탈용 알림 발송 (카카오)</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>메인 포탈 결재 워크플로 (<code className="text-[17px] text-emerald-300">/api/approval</code>)</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water 사내 알림 발송 (카카오)</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water 사내 결재 워크플로 (<code className="text-[17px] text-emerald-300">/api/approval</code>)</span></li>
             </ul>
-            <div className="mt-3 pt-3 border-t border-slate-800 text-[15px] text-slate-400 leading-relaxed">→ <strong className="text-emerald-300">메인 포탈 사업 범위에서 효율적으로 설계됨</strong></div>
+            <div className="mt-3 pt-3 border-t border-slate-800 text-[15px] text-slate-400 leading-relaxed">→ <strong className="text-emerald-300">K-water 사내 시스템으로 운영 중</strong></div>
           </div>
           <div className="bg-slate-900 border border-indigo-500/30 rounded-xl p-5">
-            <h4 className="text-sm font-bold text-indigo-300 mb-3 uppercase tracking-wider">디지털플랫폼 사업의 인증 책임</h4>
+            <h4 className="text-sm font-bold text-indigo-300 mb-3 uppercase tracking-wider">디지털플랫폼 — 신규 사업의 4개 포털</h4>
             <ul className="space-y-1.5 text-[17px] text-slate-300">
-              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>4개 포털(CMP·데이터허브·생성형 AI·SaaS) 인증 통합</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>포털별 권한·스코프·감사 분리 운영</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>디지털플랫폼 자체 SLA·운영 책임 분리</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>향후 신규 포털·외부 SaaS 확장 자율 운영</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>디지털플랫폼 권한 관리 허브(CMP) 구축</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span><strong className="text-white">클라우드(CMP)</strong> — 디지털플랫폼 진입점·메인 포털</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>데이터허브 포털</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>생성형 AI 포털</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>SaaS 포털</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>포털별 권한·스코프·감사 분리 운영 필요</span></li>
             </ul>
-            <div className="mt-3 pt-3 border-t border-slate-800 text-[15px] text-slate-400 leading-relaxed">→ <strong className="text-indigo-300">메인 포탈과 다른 사업 영역 · 다른 책임 주체</strong></div>
+            <div className="mt-3 pt-3 border-t border-slate-800 text-[15px] text-slate-400 leading-relaxed">→ <strong className="text-indigo-300">자체 인증 책임을 갖는 별도 사업</strong></div>
           </div>
         </div>
+
+        <div className="bg-rose-500/5 border border-rose-500/30 rounded-xl p-5 mt-4">
+          <h4 className="text-base font-bold text-rose-200 mb-3 flex items-center gap-2">
+            <AlertOctagon size={18} className="text-rose-400" />
+            현재 가이드의 문제 — 디지털플랫폼 통합인증 서버 부재
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-slate-900/60 border border-rose-500/30 rounded-lg p-4">
+              <div className="text-[13px] font-mono font-bold uppercase tracking-wider text-rose-300 mb-2">현재 가이드 구조</div>
+              <pre className="text-[15px] font-mono text-slate-300 leading-relaxed whitespace-pre-wrap">{`K-water Fasoo SSO
+       ↓
+   OASIS (인증값 발급)
+       ↓
+   클라우드(CMP)
+       ↓ (인증값 그대로 전달)
+   데이터허브 / 생성형 AI / SaaS`}</pre>
+              <div className="mt-3 text-[15px] text-rose-200 leading-relaxed">
+                → 클라우드(CMP)가 <strong className="text-rose-300">디지털플랫폼 통합인증 서버를 만들지 않고</strong> OASIS 인증값을 다른 포털에 그대로 넘김
+              </div>
+            </div>
+            <div className="bg-slate-900/60 border border-emerald-500/30 rounded-lg p-4">
+              <div className="text-[13px] font-mono font-bold uppercase tracking-wider text-emerald-300 mb-2">권장 구조</div>
+              <pre className="text-[15px] font-mono text-slate-300 leading-relaxed whitespace-pre-wrap">{`K-water Fasoo SSO
+       ↓
+   OASIS (K-water 신원 공급)
+       ↓
+디지털플랫폼 통합인증 서버
+       ↓ (OIDC 표준 토큰)
+클라우드(CMP) / 데이터허브
+  / 생성형 AI / SaaS`}</pre>
+              <div className="mt-3 text-[15px] text-emerald-200 leading-relaxed">
+                → 디지털플랫폼이 <strong className="text-emerald-300">자체 인증 계층을 갖춤</strong>. OASIS는 K-water 신원 공급자로 그대로 유지
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="bg-indigo-500/5 border border-indigo-500/30 rounded-xl p-5 mt-4 flex items-start gap-3">
           <Lightbulb className="shrink-0 text-indigo-400 mt-0.5" size={18} />
           <div className="text-[17px] text-slate-300 leading-relaxed">
-            <strong className="text-indigo-200">핵심 관점:</strong> OASIS는 그 자체로 잘 작동하는 시스템이지만, 메인 포탈의 인증 계층이 디지털플랫폼의 인증 책임까지 떠안으면 <strong className="text-white">두 사업의 책임·일정·SLA가 결합</strong>되어 양쪽 모두에 불리합니다. 본 페이지는 <strong className="text-white">사업 영역을 깨끗이 분리하기 위한 구조적 근거</strong>를 제시합니다.
+            <strong className="text-indigo-200">핵심 관점:</strong> OASIS는 K-water 사내 시스템으로 그대로 두고, <strong className="text-white">디지털플랫폼 사업 안에서 자체 통합인증 서버를 구축</strong>해 4개 포털(클라우드·데이터허브·생성형 AI·SaaS)의 인증 책임을 캡슐화하는 것이 표준 구조입니다. 현재 가이드는 이 계층이 빠져 있어 디지털플랫폼 사업의 자율성을 확보할 수 없습니다.
           </div>
         </div>
       </Section>
@@ -133,7 +170,7 @@ export default function Comparison() {
         <div className="bg-indigo-500/5 border border-indigo-500/30 rounded-xl p-5 mt-4 flex items-start gap-3">
           <Lightbulb className="shrink-0 text-indigo-400 mt-0.5" size={18} />
           <div className="text-[17px] text-slate-300 leading-relaxed">
-            <strong className="text-indigo-200">구조적 관점:</strong> OASIS는 메인 포탈 내부 호출 패턴을 가정해 설계됨 — 외부 시스템이 직접 토큰을 검증할 필요가 없는 환경. 디지털플랫폼 4개 포털이 OASIS JWT를 외부에서 검증하려면 위 3가지 선택 중 하나를 골라야 하고, <strong className="text-white">어떤 선택도 디지털플랫폼의 운영 요구사항을 충족하지 못합니다</strong>. 별도 IdP 계층이 OIDC 표준 RS256+JWKS로 이 구조적 선택을 무력화합니다.
+            <strong className="text-indigo-200">구조적 관점:</strong> OASIS는 K-water 사내 호출 패턴을 가정해 설계됨 — 외부 시스템이 직접 토큰을 검증할 필요가 없는 환경. 디지털플랫폼 4개 포털이 OASIS JWT를 외부에서 검증하려면 위 3가지 선택 중 하나를 골라야 하고, <strong className="text-white">어떤 선택도 디지털플랫폼의 운영 요구사항을 충족하지 못합니다</strong>. 별도 IdP 계층이 OIDC 표준 RS256+JWKS로 이 구조적 선택을 무력화합니다.
           </div>
         </div>
       </Section>
@@ -145,19 +182,19 @@ export default function Comparison() {
             title="사업 책임 영역 분리 원칙"
             evidence="SI 모범 사례"
             evidenceLevel="strongest"
-            problem="OASIS는 K-water 메인 포탈 사업의 인증 계층. 디지털플랫폼은 별도 사업으로 운영 주체·예산·SLA·일정·KPI가 다름. 인증을 결합하면 한쪽 변경이 양쪽 영향. 메인 포탈 사업의 보안 패치·기능 추가·인터페이스 변경마다 디지털플랫폼 4개 포털 영향."
+            problem="OASIS는 K-water 사내 운영 시스템. 디지털플랫폼은 별도 사업으로 운영 주체·예산·SLA·일정·KPI가 다름. 인증을 결합하면 한쪽 변경이 양쪽 영향. OASIS 사업의 보안 패치·기능 추가·인터페이스 변경마다 디지털플랫폼 4개 포털 영향."
             solution="별도 인증 계층 = 사업 책임·일정·예산·승인 라인 독립 운영. 두 사업 모두 자율 진행 가능." />
           <ReasonCard num="2" severity="critical" icon={Network}
             title="장애 격리 · 운영 SLA 분리"
             evidence="운영 모델 차이"
             evidenceLevel="strongest"
-            problem="디지털플랫폼이 OASIS 단일 의존이면 OASIS 장애 = 디지털플랫폼 4개 포털 동시 마비. 메인 포탈과 디지털플랫폼은 SLA·운영 시간·복구 절차가 다른데 결합 시 같은 가용성에 강제 종속."
+            problem="디지털플랫폼이 OASIS 단일 의존이면 OASIS 장애 = 디지털플랫폼 4개 포털 동시 마비. OASIS와 디지털플랫폼은 SLA·운영 시간·복구 절차가 다른데 결합 시 같은 가용성에 강제 종속."
             solution="별도 IdP 계층은 세션 캐시·키 캐시로 OASIS 부분 장애를 흡수. 디지털플랫폼 가용성을 자체적으로 관리." />
           <ReasonCard num="3" severity="critical" icon={ShieldCheck}
             title="포털별 클라이언트 분리 불가"
             evidence="OASIS 구조"
             evidenceLevel="strong"
-            problem="OASIS는 메인 포탈 단일 클라이언트 가정으로 설계 (client_id 개념 부재). 디지털플랫폼 4개 포털은 각자 다른 스코프·권한·감사 영역이 필요한데 OASIS 구조로는 client별 분리·격리 운영 불가."
+            problem="OASIS는 단일 클라이언트 가정 (K-water 사내용)으로 설계 (client_id 개념 부재). 디지털플랫폼 4개 포털은 각자 다른 스코프·권한·감사 영역이 필요한데 OASIS 구조로는 client별 분리·격리 운영 불가."
             solution="OIDC 표준의 client_id 분리 모델 적용 — 포털별 토큰·스코프·감사 로그 독립 운영" />
           <ReasonCard num="4" severity="critical" icon={Users}
             title="권한 관리 책임 분리"
@@ -175,13 +212,13 @@ export default function Comparison() {
             title="외부 시스템 표준 연동"
             evidence="확장 호환성"
             evidenceLevel="medium"
-            problem="디지털플랫폼이 향후 클라우드 SaaS(AWS IAM Identity Center, Azure AD, M365 등), 협력사 시스템, 신규 외부 서비스와 연동할 때 OIDC/SAML 표준 인증 필요. OASIS는 메인 포탈 내부 호출 패턴 전제 → 외부 연동마다 별도 어댑터 개발."
+            problem="디지털플랫폼이 향후 클라우드 SaaS(AWS IAM Identity Center, Azure AD, M365 등), 협력사 시스템, 신규 외부 서비스와 연동할 때 OIDC/SAML 표준 인증 필요. OASIS는 K-water 사내 호출 패턴 전제 → 외부 연동마다 별도 어댑터 개발."
             solution="OIDC 표준 IdP는 모든 표준 호환 시스템과 즉시 연동 — 1회 구축으로 향후 모든 외부 연동 자동 호환" />
           <ReasonCard num="7" severity="major" icon={Eye}
             title="포털별 인증 정책 차이"
             evidence="운영 정책 차이"
             evidenceLevel="medium"
-            problem="메인 포탈 = 일반 업무 사용자 (긴 세션, 단일 권한 구조). 디지털플랫폼 = 다양한 권한 등급, 짧은 토큰 회전, 외부 API 호출, BFF·SPA·SaaS 다양한 클라이언트 형태. 단일 인증 시스템으로 두 가지 정책을 만족시키려면 OASIS 측 사업 범위 확장 필요."
+            problem="OASIS(K-water 사내) = 일반 업무 사용자 (긴 세션, 단일 권한 구조). 디지털플랫폼 = 다양한 권한 등급, 짧은 토큰 회전, 외부 API 호출, BFF·SPA·SaaS 다양한 클라이언트 형태. 단일 인증 시스템으로 두 가지 정책을 만족시키려면 OASIS 측 사업 범위 확장 필요."
             solution="별도 IdP가 디지털플랫폼 전용 인증 정책(짧은 AT, RTR, BCL, scope 분리) 자율 수립" />
           <ReasonCard num="8" severity="major" icon={AlertTriangle}
             title="감사·로깅 책임 분리"
@@ -193,7 +230,7 @@ export default function Comparison() {
         <div className="bg-emerald-500/5 border border-emerald-500/30 rounded-xl p-5 mt-4 flex items-start gap-3">
           <Lightbulb className="shrink-0 text-emerald-400 mt-0.5" size={18} />
           <div className="text-[17px] text-slate-300 leading-relaxed">
-            <strong className="text-emerald-200">8가지 모두 OASIS의 결함이 아닌 사업·운영 구조의 차이에서 비롯</strong>됩니다. OASIS는 메인 포탈 인증 계층으로 적절히 설계되어 있으며, 디지털플랫폼은 별도 사업이라 자체 인증 계층이 필요한 것뿐입니다.
+            <strong className="text-emerald-200">8가지 모두 OASIS의 결함이 아닌 사업·운영 구조의 차이에서 비롯</strong>됩니다. OASIS는 K-water 사내 인증 계층으로 적절히 설계되어 있으며, 디지털플랫폼은 별도 사업이라 자체 인증 계층이 필요한 것뿐입니다.
           </div>
         </div>
       </Section>
@@ -203,13 +240,13 @@ export default function Comparison() {
         <div className="space-y-3">
           <CounterRow
             objection="OASIS가 이미 있는데 또 만드는 건 중복 아닌가?"
-            rebut="중복이 아니라 사업 영역 분리입니다. OASIS는 K-water 메인 포탈의 인증 계층이고, 디지털플랫폼 통합인증 서버는 디지털플랫폼 사업의 인증 계층입니다. 두 사업은 운영 주체·SLA·일정·예산이 다르므로 인증 계층도 분리하는 게 표준 SI 모범 사례입니다. OASIS는 그대로 유지하고, 디지털플랫폼은 자체 인증 계층을 갖추는 구조입니다." />
+            rebut="중복이 아니라 사업 영역 분리입니다. OASIS는 K-water 기존 운영 시스템이고, 디지털플랫폼 통합인증 서버는 디지털플랫폼 사업의 인증 계층입니다. 두 사업은 운영 주체·SLA·일정·예산이 다르므로 인증 계층도 분리하는 게 표준 SI 모범 사례입니다. OASIS는 그대로 유지하고, 디지털플랫폼은 자체 인증 계층을 갖추는 구조입니다." />
           <CounterRow
             objection="OASIS JWT를 그냥 4 포털이 받아 쓰면 안 되나?"
             rebut="기술적으로 가능은 하지만 디지털플랫폼이 OASIS에 완전히 종속됩니다. OASIS 측 변경·장애·인터페이스 수정이 디지털플랫폼 4 포털 모두에 즉시 전파되어, 사업 일정·운영 책임을 분리할 수 없습니다. 또한 OASIS는 단일 client 가정으로 설계되어 포털별 권한·감사 분리도 어렵습니다. 별도 인증 계층이 두 사업의 자율성을 확보합니다." />
           <CounterRow
             objection="OASIS 측에 기능 추가 요청하면 되지 않나?"
-            rebut="OASIS는 메인 포탈 사업 범위이므로 기능 추가는 별도 사업·예산·일정 협의가 필요합니다. 디지털플랫폼 사업이 OASIS 사업의 변경 일정에 종속되면 자체 일정 제어가 불가능합니다. 디지털플랫폼 통합인증 서버를 별도 구축하면 OASIS는 그대로 두고 디지털플랫폼이 자율적으로 진행할 수 있습니다." />
+            rebut="OASIS는 K-water 사내 시스템이므로 기능 추가는 별도 사업·예산·일정 협의가 필요합니다. 디지털플랫폼 사업이 OASIS 사업의 변경 일정에 종속되면 자체 일정 제어가 불가능합니다. 디지털플랫폼 통합인증 서버를 별도 구축하면 OASIS는 그대로 두고 디지털플랫폼이 자율적으로 진행할 수 있습니다." />
           <CounterRow
             objection="비용이 추가되는 것 아닌가?"
             rebut="단기 구축 비용은 추가되지만 장기적으로는 절감됩니다: (1) 디지털플랫폼 사업이 OASIS 변경 일정에 휘둘리지 않음, (2) 신규 포털 추가 시 OASIS 측 협조 불필요, (3) 외부 SaaS 연동 시 표준 호환으로 어댑터 개발 0, (4) 디지털플랫폼 장애 영향 격리. 사업 영역 분리에 따른 운영 자율성이 비용보다 큰 가치입니다." />
@@ -229,7 +266,7 @@ export default function Comparison() {
           <h3 className="text-xl font-bold text-white">결정적 한 줄 메시지</h3>
         </div>
         <p className="text-base text-slate-200 leading-relaxed mb-4">
-          <strong className="text-emerald-300">"OASIS는 K-water 메인 포탈 사업의 인증 계층으로 적절히 설계·운영되고 있습니다.</strong> 단, 메인 포탈과 디지털플랫폼은 <strong className="text-white">운영 주체·SLA·예산·일정·확장 모델·인증 정책·감사 요구사항이 모두 다른 별개 사업</strong>입니다. 두 사업의 인증 계층을 결합하면 <strong className="text-amber-300">사업 일정 종속·장애 전파·포털별 분리 불가·신규 확장 자율성 상실·외부 연동 비호환·감사 책임 혼재</strong>가 발생합니다. <strong className="text-indigo-300">디지털플랫폼 통합인증 서버는 OASIS를 K-water 신원 공급자로 그대로 유지한 상태에서, 디지털플랫폼 자체 인증·권한·SLO·감사 책임을 표준(OIDC)으로 캡슐화</strong>하여 두 사업의 자율성을 확보합니다. 이는 OASIS의 결함을 보완하는 것이 아니라, <strong className="text-white">사업 영역을 깨끗이 분리하는 구조적 분기점</strong>입니다."
+          <strong className="text-emerald-300">"OASIS는 K-water 사내 운영 시스템으로 적절히 설계·운영되고 있습니다.</strong> 단, OASIS(K-water 사내)와 디지털플랫폼은 <strong className="text-white">운영 주체·SLA·예산·일정·확장 모델·인증 정책·감사 요구사항이 모두 다른 별개 사업</strong>입니다. 두 사업의 인증 계층을 결합하면 <strong className="text-amber-300">사업 일정 종속·장애 전파·포털별 분리 불가·신규 확장 자율성 상실·외부 연동 비호환·감사 책임 혼재</strong>가 발생합니다. <strong className="text-indigo-300">디지털플랫폼 통합인증 서버는 OASIS를 K-water 신원 공급자로 그대로 유지한 상태에서, 디지털플랫폼 자체 인증·권한·SLO·감사 책임을 표준(OIDC)으로 캡슐화</strong>하여 두 사업의 자율성을 확보합니다. 이는 OASIS의 결함을 보완하는 것이 아니라, <strong className="text-white">사업 영역을 깨끗이 분리하는 구조적 분기점</strong>입니다."
         </p>
         <div className="text-[16px] text-slate-500 font-mono mt-3 pt-3 border-t border-slate-800">
           ※ 발주처·K-water 회의 자료, 결재 문서, RFP 수정 요청서 등에 그대로 인용 가능합니다.
