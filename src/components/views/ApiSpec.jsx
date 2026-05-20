@@ -258,7 +258,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`} />
             <h4 className="font-bold text-white text-sm">/oauth2/kwater/callback (K-water 페이로드 수신)</h4>
           </div>
           <div className="p-6 space-y-4">
-            <p className="text-sm text-slate-400">K-water 인증 시스템에서 암호화 페이로드(JWE/SAML)를 수신·복호화하여 디지털플랫폼 통합 SSO 세션을 생성합니다.</p>
+            <p className="text-sm text-slate-400">K-water 인증 시스템에서 Fasoo 암호화 페이로드를 수신·복호화하여 디지털플랫폼 통합 SSO 세션을 생성합니다.</p>
             <div className="text-xs text-slate-500 font-semibold tracking-wider uppercase mb-1">Query Parameters</div>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse text-slate-300">
@@ -270,7 +270,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`} />
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/40">
-                  <tr><td className="py-2 px-3 font-mono text-white">kwater_enc_payload</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3 text-slate-400">K-water가 발급한 암호화 사용자 정보 토큰 (JWE/SAML Assertion)</td></tr>
+                  <tr><td className="py-2 px-3 font-mono text-white">kwater_enc_payload</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3 text-slate-400">K-water가 발급한 암호화 사용자 정보 토큰 (Fasoo 암호화 페이로드)</td></tr>
                   <tr><td className="py-2 px-3 font-mono text-white">state</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3 text-slate-400">CSRF 방지 — 리다이렉트 시작 시 저장해둔 값과 일치 검증</td></tr>
                 </tbody>
               </table>

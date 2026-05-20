@@ -253,7 +253,7 @@ export default function SpecDoc() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <SecCard title="Mock K-water 어댑터 (개발·시험 환경 전용)">
             <ul className="text-[15px] text-slate-300 space-y-1.5">
-              <li>· K-water와 동일한 JWE 페이로드 발급 (테스트 키 사용)</li>
+              <li>· K-water와 동일한 Fasoo 암호화 페이로드 발급 (테스트 키 사용)</li>
               <li>· 사전 정의된 N명의 가상 사용자 풀 (예: kwater_test_user_0001 ~ 1000)</li>
               <li>· <strong className="text-white">운영 K-water와 네트워크 격리</strong> — DNS는 사내 VIP/Hosts로 분리</li>
               <li>· 실 K-water Upstream SLO 수신은 <strong className="text-white">시험 발송기</strong>로 시뮬레이션</li>

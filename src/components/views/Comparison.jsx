@@ -28,7 +28,7 @@ export default function Comparison() {
           <div className="bg-slate-900 border border-emerald-500/30 rounded-xl p-5">
             <h4 className="text-sm font-bold text-emerald-300 mb-3 uppercase tracking-wider">OASIS — K-water 기존 운영 시스템</h4>
             <ul className="space-y-1.5 text-[17px] text-slate-300">
-              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water Fasoo SSO 페이로드 복호화</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water SSO Fasoo 페이로드 복호화</span></li>
               <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water 사내 사용자 토큰 발급</span></li>
               <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water 사용자 마스터 조회 (<code className="text-[17px] text-emerald-300">/api/member</code>)</span></li>
               <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water 사내 알림 발송 (카카오)</span></li>
@@ -57,7 +57,7 @@ export default function Comparison() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-slate-900/60 border border-rose-500/30 rounded-lg p-4">
               <div className="text-[13px] font-mono font-bold uppercase tracking-wider text-rose-300 mb-2">현재 가이드 구조</div>
-              <pre className="text-[15px] font-mono text-slate-300 leading-relaxed whitespace-pre-wrap">{`K-water Fasoo SSO
+              <pre className="text-[15px] font-mono text-slate-300 leading-relaxed whitespace-pre-wrap">{`K-water SSO 인증 서버
        ↓
    OASIS (인증값 발급)
        ↓
@@ -70,7 +70,7 @@ export default function Comparison() {
             </div>
             <div className="bg-slate-900/60 border border-emerald-500/30 rounded-lg p-4">
               <div className="text-[13px] font-mono font-bold uppercase tracking-wider text-emerald-300 mb-2">권장 구조</div>
-              <pre className="text-[15px] font-mono text-slate-300 leading-relaxed whitespace-pre-wrap">{`K-water Fasoo SSO
+              <pre className="text-[15px] font-mono text-slate-300 leading-relaxed whitespace-pre-wrap">{`K-water SSO 인증 서버
        ↓
    OASIS (K-water 신원 공급)
        ↓

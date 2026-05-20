@@ -90,7 +90,7 @@ export default function Overview({ setActiveTab, handleCopy }) {
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[14px] text-slate-500 font-mono">Upstream IdP</span>
             </div>
           </div>
-          <div className="flex items-center justify-center text-slate-600 text-xs">↓ 암호화 페이로드 (JWE/SAML)</div>
+          <div className="flex items-center justify-center text-slate-600 text-xs">↓ Fasoo 암호화 페이로드</div>
           <div className="flex items-center gap-3">
             <div className="shrink-0 bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 text-[14px] font-mono font-bold uppercase px-3 py-1.5 rounded">Tier 2</div>
             <div className="flex-1 bg-slate-950 border border-indigo-500/40 rounded-lg px-4 py-2.5 relative flex items-center justify-center gap-2">
@@ -235,7 +235,7 @@ export default function Overview({ setActiveTab, handleCopy }) {
           </div>
           <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <span className="text-sm text-slate-400 font-medium">K-water 연동 (Payload)</span>
-            <span className="text-xs bg-sky-500/10 text-sky-300 px-3 py-1 rounded-full border border-sky-500/20 font-mono">암호화 JWE / SAML Assertion</span>
+            <span className="text-xs bg-sky-500/10 text-sky-300 px-3 py-1 rounded-full border border-sky-500/20 font-mono">Fasoo 암호화 페이로드</span>
           </div>
           <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <span className="text-sm text-slate-400 font-medium">하위 포털 자동 연동</span>

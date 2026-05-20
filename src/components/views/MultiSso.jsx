@@ -27,7 +27,7 @@ export default function MultiSso() {
             <h4 className="font-bold text-white text-base">K-water 통합 인증 시스템</h4>
             <span className="text-[15px] text-slate-400 mt-1">별도 상위 인증 도메인</span>
             <div className="w-full h-px bg-slate-800 my-3"></div>
-            <p className="text-xs text-slate-400 leading-relaxed">1차 사용자 인증 후, 암호화 페이로드(JWE/SAML)로 사용자 정보를 디지털플랫폼에 전달합니다.</p>
+            <p className="text-xs text-slate-400 leading-relaxed">1차 사용자 인증 후, Fasoo 암호화 페이로드로 사용자 정보를 디지털플랫폼에 전달합니다.</p>
           </div>
         </div>
 

@@ -12,7 +12,7 @@ export const simulationSteps = [
     payload: {
       endpoint: "GET https://auth.kwater.com/oauth2/kwater/callback",
       queryParams: {
-        kwater_enc_payload: "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZHQ00ifQ.OKOawW...[암호화된 JWE 토큰]",
+        kwater_enc_payload: "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZHQ00ifQ.OKOawW...[Fasoo 암호화 페이로드]",
         state: "secure_random_state_9812"
       }
     },

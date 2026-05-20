@@ -101,7 +101,7 @@ K-water 인증 시스템에서 1차 인증을 거친 사용자가 디지털플�
 
 | 대상 | 방향 | 프로토콜 | 용도 |
 |------|------|----------|------|
-| K-water 인증 시스템 | 수신 | HTTPS + JWE 페이로드 | 1차 인증 결과 수신 |
+| K-water 인증 시스템 | 수신 | HTTPS + Fasoo 암호화 페이로드 | 1차 인증 결과 수신 |
 | K-water 인증 시스템 | 수신 | HTTPS + logout_token (RFC 8417) | Upstream SLO 수신 (선택) |
 | 4개 포털 백엔드 | 수신 | HTTPS + OIDC | 토큰 발급/갱신/UserInfo 요청 |
 | 4개 포털 백엔드 | 발송 | HTTPS + logout_token | Back-Channel SLO 푸시 |
@@ -144,7 +144,7 @@ K-water 인증 시스템에서 1차 인증을 거친 사용자가 디지털플�
 - HTTP GET \`/oauth2/kwater/callback?kwater_enc_payload=<JWE>&state=<random>\`
 
 **처리**
-1. JWE 페이로드를 IdP 개인키(RSA-OAEP)로 복호화
+1. Fasoo 암호화 페이로드를 IdP 개인키(RSA-OAEP)로 복호화
 2. 내부 페이로드 무결성 검증 (서명 또는 HMAC)
 3. \`state\` 값 검증 (CSRF 방지)
 4. 사용자 정보 추출: \`kwater_user_id\`, \`department\`, \`role\` 등
@@ -650,7 +650,7 @@ CREATE INDEX idx_audit_created ON audit_logs(created_at);
 | 용도 | 알고리즘 |
 |------|---------|
 | JWT 서명 | RS256 (RSA-PKCS1-v1_5 + SHA-256, 키 길이 ≥ 2048) |
-| K-water 페이로드 복호화 | RSA-OAEP + AES-256-GCM (JWE) |
+| K-water 페이로드 복호화 | Fasoo 암호화 (사내 표준) |
 | DB 개인정보 컬럼 암호화 | AES-256-GCM |
 | client_secret 저장 | bcrypt (cost ≥ 12) |
 | 통신 | TLS 1.2 이상 (TLS 1.3 권장) |
@@ -747,7 +747,7 @@ CREATE INDEX idx_audit_created ON audit_logs(created_at);
 
 #### 10.3.1 Mock K-water 어댑터 (개발·시험 환경 전용)
 
-- K-water와 동일한 JWE 페이로드 발급 (테스트 키 사용)
+- K-water와 동일한 Fasoo 암호화 페이로드 발급 (테스트 키 사용)
 - 사전 정의된 N명의 가상 사용자 풀 (예: \`kwater_test_user_0001\` ~ \`kwater_test_user_1000\`)
 - **운영 K-water와 네트워크 격리** — DNS는 사내 VIP 또는 Hosts 파일로 분리
 - K-water Upstream SLO 수신은 시험용 발송기로 시뮬레이션
@@ -1016,7 +1016,7 @@ CMP 권한 허브 + 각 포털 Admin API는 **별도 사업 범위**로 RFP에 �
 
 ### C.2 기능 요구사항 (Mock 어댑터)
 
-#### MK-1: K-water JWE 페이로드 발급 시뮬레이션
+#### MK-1: K-water Fasoo 암호화 페이로드 발급 시뮬레이션
 
 - 실 K-water와 **동일한 JWE 구조** 발급 (RSA-OAEP + AES-256-GCM)
 - 페이로드 클레임 구조:
