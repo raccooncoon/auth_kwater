@@ -15,44 +15,43 @@ export default function Comparison() {
             <span className="text-[16px] font-mono font-bold uppercase tracking-widest bg-rose-500/20 text-rose-300 border border-rose-500/30 px-2.5 py-0.5 rounded">왜 별도 IdP가 필요한가</span>
             <span className="text-[16px] font-mono font-bold uppercase tracking-widest bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded">설득 근거 자료</span>
           </div>
-          <h2 className="text-4xl font-extrabold text-white tracking-tight mb-3 leading-tight">OASIS 비교 · 디지털플랫폼 통합인증 서버 구축 필요성</h2>
+          <h2 className="text-4xl font-extrabold text-white tracking-tight mb-3 leading-tight">디지털플랫폼 통합인증 서버 구축 필요성 — 구조적 분리 근거</h2>
           <p className="text-slate-300 text-lg leading-relaxed max-w-3xl">
-            K-water가 제공한 가이드(OASIS Portal API)는 메인 포탈 전용 JWT 발급기일 뿐 IdP가 아닙니다. 디지털플랫폼 4개 포털(CMP·데이터허브·생성형 AI·SaaS)을 OASIS JWT에 그대로 묶으면 <strong className="text-rose-200">보안·확장성·감사 측면에서 누적 리스크</strong>가 발생합니다. 본 페이지는 별도 OIDC 표준 IdP 구축 필요성을 발주처·K-water 측에 설득하기 위한 근거 자료입니다.
+            <strong className="text-emerald-200">K-water 메인 포탈(OASIS)은 자체 사업 범위에서 효율적으로 설계·운영되고 있습니다.</strong> 본 페이지는 그 시스템의 결함을 지적하는 것이 아니라, OASIS의 인증 계층을 <strong className="text-white">디지털플랫폼 4개 포털(CMP·데이터허브·생성형 AI·SaaS)의 인증 책임으로 그대로 위임할 수 없는 구조적 이유</strong>를 정리한 자료입니다. 사업·운영·기술 영역 분리 관점에서 별도 인증 계층이 필요한 근거를 설명합니다.
           </p>
         </div>
       </div>
 
-      {/* SECTION 1 — 현재 상황 정리 */}
-      <Section icon={FileWarning} title="1. 현재 받은 가이드의 의미" subtitle="OASIS는 OIDC 표준 IdP가 아닙니다">
+      {/* SECTION 1 — 사업 범위 차이 */}
+      <Section icon={FileWarning} title="1. 두 시스템의 사업 범위 차이" subtitle="OASIS는 메인 포탈 사업의 인증 계층, 디지털플랫폼 통합인증 서버는 신규 사업의 인증 계층">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-slate-900 border border-emerald-500/30 rounded-xl p-5">
-            <h4 className="text-sm font-bold text-emerald-300 mb-3 uppercase tracking-wider">OASIS가 하는 일</h4>
+            <h4 className="text-sm font-bold text-emerald-300 mb-3 uppercase tracking-wider">OASIS의 사업 범위 (메인 포탈)</h4>
             <ul className="space-y-1.5 text-[17px] text-slate-300">
               <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water Fasoo SSO 페이로드 복호화</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>자체 JWT 발급 (HS256 추정)</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>사용자 마스터 조회 (<code className="text-[17px] text-emerald-300">/api/member</code>)</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>토큰 검증 (<code className="text-[17px] text-emerald-300">/api/auth/validate</code>)</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>카카오 알림톡 발송</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>메인 포탈 사용자 토큰 발급</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water 사용자 마스터 조회 (<code className="text-[17px] text-emerald-300">/api/member</code>)</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>메인 포탈용 알림 발송 (카카오)</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>메인 포탈 결재 워크플로 (<code className="text-[17px] text-emerald-300">/api/approval</code>)</span></li>
             </ul>
+            <div className="mt-3 pt-3 border-t border-slate-800 text-[15px] text-slate-400 leading-relaxed">→ <strong className="text-emerald-300">메인 포탈 사업 범위에서 효율적으로 설계됨</strong></div>
           </div>
-          <div className="bg-slate-900 border border-rose-500/30 rounded-xl p-5">
-            <h4 className="text-sm font-bold text-rose-300 mb-3 uppercase tracking-wider">OASIS가 안 하는 일</h4>
+          <div className="bg-slate-900 border border-indigo-500/30 rounded-xl p-5">
+            <h4 className="text-sm font-bold text-indigo-300 mb-3 uppercase tracking-wider">디지털플랫폼 사업의 인증 책임</h4>
             <ul className="space-y-1.5 text-[17px] text-slate-300">
-              <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>OIDC 표준 흐름 (<code className="text-[17px] text-rose-300">/authorize</code>, PKCE, state, nonce)</span></li>
-              <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>Discovery / JWKS 공개</span></li>
-              <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>Refresh Token Rotation</span></li>
-              <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>Single Logout / 백채널 콜백</span></li>
-              <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>client_id별 토큰 분리</span></li>
-              <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>scope·role 관리</span></li>
-              <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>토큰 즉시 폐기(revoke)</span></li>
-              <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>Step-up 재인증 (<code className="text-[17px] text-rose-300">prompt=login</code>)</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>4개 포털(CMP·데이터허브·생성형 AI·SaaS) 인증 통합</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>포털별 권한·스코프·감사 분리 운영</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>디지털플랫폼 자체 SLA·운영 책임 분리</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>향후 신규 포털·외부 SaaS 확장 자율 운영</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-indigo-400 mt-0.5" size={14} /><span>디지털플랫폼 권한 관리 허브(CMP) 구축</span></li>
             </ul>
+            <div className="mt-3 pt-3 border-t border-slate-800 text-[15px] text-slate-400 leading-relaxed">→ <strong className="text-indigo-300">메인 포탈과 다른 사업 영역 · 다른 책임 주체</strong></div>
           </div>
         </div>
-        <div className="bg-amber-500/5 border border-amber-500/30 rounded-xl p-5 mt-4 flex items-start gap-3">
-          <AlertTriangle className="shrink-0 text-amber-400 mt-0.5" size={18} />
+        <div className="bg-indigo-500/5 border border-indigo-500/30 rounded-xl p-5 mt-4 flex items-start gap-3">
+          <Lightbulb className="shrink-0 text-indigo-400 mt-0.5" size={18} />
           <div className="text-[17px] text-slate-300 leading-relaxed">
-            <strong className="text-amber-200">OASIS의 메시지를 한 줄로:</strong> "Fasoo 어려운 거 내가 풀어줄게. JWT 받아서 나머지는 너희가 알아서 해." → 그런데 "나머지"가 OIDC IdP 본체이며, 4개 포털이 안전하게 묶이려면 누군가는 그 본체를 만들어야 합니다.
+            <strong className="text-indigo-200">핵심 관점:</strong> OASIS는 그 자체로 잘 작동하는 시스템이지만, 메인 포탈의 인증 계층이 디지털플랫폼의 인증 책임까지 떠안으면 <strong className="text-white">두 사업의 책임·일정·SLA가 결합</strong>되어 양쪽 모두에 불리합니다. 본 페이지는 <strong className="text-white">사업 영역을 깨끗이 분리하기 위한 구조적 근거</strong>를 제시합니다.
           </div>
         </div>
       </Section>
@@ -92,7 +91,7 @@ export default function Comparison() {
       </Section>
 
       {/* SECTION 3 — 검증 트릴레마 */}
-      <Section icon={Scale} title="3. 토큰 검증 트릴레마 — OASIS만 사용 시 빠지는 딜레마" subtitle="3가지 옵션 모두 결함이 있고, OIDC 표준은 이 트릴레마를 깸">
+      <Section icon={Scale} title="3. 토큰 검증 모델 — 4 포털이 OASIS JWT를 직접 검증할 때의 구조적 선택" subtitle="OASIS의 결함이 아니라, JWKS 미노출 구조에서 외부 시스템이 검증할 때 마주하는 선택지">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm border-collapse">
             <thead>
@@ -134,62 +133,68 @@ export default function Comparison() {
         <div className="bg-indigo-500/5 border border-indigo-500/30 rounded-xl p-5 mt-4 flex items-start gap-3">
           <Lightbulb className="shrink-0 text-indigo-400 mt-0.5" size={18} />
           <div className="text-[17px] text-slate-300 leading-relaxed">
-            <strong className="text-indigo-200">OIDC가 해결한 핵심:</strong> 비대칭 키(RS256/ES256) + 공개 JWKS 모델은 각 포털이 <strong className="text-white">공개키로 로컬 검증</strong>(빠름) + <strong className="text-white">비공개키는 IdP에만 보관</strong>(안전) + <strong className="text-white">revoke API로 즉시 폐기</strong>(권한 회수). 이 트릴레마를 OASIS 단독으로는 어떤 방식으로도 해결할 수 없습니다.
+            <strong className="text-indigo-200">구조적 관점:</strong> OASIS는 메인 포탈 내부 호출 패턴을 가정해 설계됨 — 외부 시스템이 직접 토큰을 검증할 필요가 없는 환경. 디지털플랫폼 4개 포털이 OASIS JWT를 외부에서 검증하려면 위 3가지 선택 중 하나를 골라야 하고, <strong className="text-white">어떤 선택도 디지털플랫폼의 운영 요구사항을 충족하지 못합니다</strong>. 별도 IdP 계층이 OIDC 표준 RS256+JWKS로 이 구조적 선택을 무력화합니다.
           </div>
         </div>
       </Section>
 
-      {/* SECTION 4 — 8 핵심 근거 (강도 순) */}
-      <Section icon={AlertOctagon} title="4. 8가지 핵심 근거 — OASIS만 사용 시 누적 리스크" subtitle="각 카드의 '근거' 표시는 K-water가 반박하기 어려운 정도를 의미. 강한 순서대로 정렬">
+      {/* SECTION 4 — 8 구조적 분리 근거 */}
+      <Section icon={AlertOctagon} title="4. 디지털플랫폼에 OASIS를 그대로 위임할 수 없는 8가지 구조적 이유" subtitle="OASIS 자체의 결함이 아니라, 두 사업의 책임 영역·운영 모델·확장 모델 차이에서 비롯되는 근거">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <ReasonCard num="1" severity="critical" icon={GitBranch}
-            title="Refresh Token Rotation 부재"
-            evidence="OpenAPI 스펙 명시"
+            title="사업 책임 영역 분리 원칙"
+            evidence="SI 모범 사례"
             evidenceLevel="strongest"
-            problem='OpenAPI 스펙 명시: "리프레시 토큰은 재발급되지 않습니다". 도난당해도 RT 만료까지 무한 갱신 가능, 탐지 불가.'
-            solution="RTR + chain DB 추적 + 재사용 즉시 chain 폐기 — RT 도난 자동 탐지" />
-          <ReasonCard num="2" severity="critical" icon={AlertTriangle}
-            title="accessToken을 URL Query string으로"
-            evidence="OpenAPI 스펙 명시"
+            problem="OASIS는 K-water 메인 포탈 사업의 인증 계층. 디지털플랫폼은 별도 사업으로 운영 주체·예산·SLA·일정·KPI가 다름. 인증을 결합하면 한쪽 변경이 양쪽 영향. 메인 포탈 사업의 보안 패치·기능 추가·인터페이스 변경마다 디지털플랫폼 4개 포털 영향."
+            solution="별도 인증 계층 = 사업 책임·일정·예산·승인 라인 독립 운영. 두 사업 모두 자율 진행 가능." />
+          <ReasonCard num="2" severity="critical" icon={Network}
+            title="장애 격리 · 운영 SLA 분리"
+            evidence="운영 모델 차이"
             evidenceLevel="strongest"
-            problem="/api/approval/v2 GET 파라미터에 accessToken을 query string으로 받음 → URL 로그·브라우저 히스토리·Referer 헤더에 토큰 노출. OAuth 2.1 BCP 위반."
-            solution="모든 토큰을 Authorization 헤더 + POST body로 — 표준 OAuth 2.1 강제" />
-          <ReasonCard num="3" severity="critical" icon={Network}
-            title="Single Logout 부재"
-            evidence="스펙에 백채널 콜백 없음"
+            problem="디지털플랫폼이 OASIS 단일 의존이면 OASIS 장애 = 디지털플랫폼 4개 포털 동시 마비. 메인 포탈과 디지털플랫폼은 SLA·운영 시간·복구 절차가 다른데 결합 시 같은 가용성에 강제 종속."
+            solution="별도 IdP 계층은 세션 캐시·키 캐시로 OASIS 부분 장애를 흡수. 디지털플랫폼 가용성을 자체적으로 관리." />
+          <ReasonCard num="3" severity="critical" icon={ShieldCheck}
+            title="포털별 클라이언트 분리 불가"
+            evidence="OASIS 구조"
             evidenceLevel="strong"
-            problem="OASIS에 백채널 로그아웃 콜백 엔드포인트 자체가 없음 → 한 포털 로그아웃이 다른 포털에 전파 안 됨. 퇴직자·보안사고 시 토큰 만료까지 통과."
-            solution="OIDC BCL 1.0 (RFC 8417 SET) 백채널 푸시로 4 포털 동시 종료" />
-          <ReasonCard num="4" severity="critical" icon={Eye}
-            title="PII가 JWT에 인라인"
-            evidence="OpenAPI 스펙 명시"
+            problem="OASIS는 메인 포탈 단일 클라이언트 가정으로 설계 (client_id 개념 부재). 디지털플랫폼 4개 포털은 각자 다른 스코프·권한·감사 영역이 필요한데 OASIS 구조로는 client별 분리·격리 운영 불가."
+            solution="OIDC 표준의 client_id 분리 모델 적용 — 포털별 토큰·스코프·감사 로그 독립 운영" />
+          <ReasonCard num="4" severity="critical" icon={Users}
+            title="권한 관리 책임 분리"
+            evidence="사업 범위 분할"
             evidenceLevel="strong"
-            problem='TokenResponse 설명: "Payload에 id, name, position, dept, phone 포함". 사번·이름은 OIDC ID Token에도 통상 포함되지만 직위·부서·내선번호까지는 OIDC 권고 범위를 벗어남. accessToken을 query string으로 노출하는 흐름과 결합되면 PII 유출 경로 발생.'
-            solution="payload는 sub만, 나머지는 /userinfo 별도 — OIDC 표준 minimal claims 패턴" />
-          <ReasonCard num="5" severity="critical" icon={Lock}
-            title="토큰 검증 트릴레마"
-            evidence="JWKS 미노출 사실"
+            problem="OASIS는 K-water 사용자 마스터(신원)만 담당. 디지털플랫폼은 자체 권한(role·scope·dataset access·승인 워크플로)을 관리해야 함. 신원 마스터와 권한 관리를 같은 시스템에 묶으면 K-water 인사 변경마다 디지털플랫폼 권한도 영향."
+            solution="IdP가 신원·인증만 책임 + CMP 권한 허브 + 각 포털 RBAC DB로 명확한 책임 분리" />
+          <ReasonCard num="5" severity="critical" icon={Zap}
+            title="신규 포털 확장 자율성"
+            evidence="확장 모델"
             evidenceLevel="strong"
-            problem="OASIS는 JWKS·Discovery를 노출하지 않음 → 각 포털이 (a) 비밀키 공유로 로컬 검증 (b) /api/auth/validate 매번 호출 (c) 캐시 — 세 가지 옵션 모두 결함. ※ 예시 토큰 디코딩 시 HS256으로 보이나 운영 알고리즘은 확인 필요."
-            solution="OIDC RS256 + JWKS 공개로 트릴레마 자체를 무력화 (공개키 로컬 검증 + 즉시 폐기)" />
-          <ReasonCard num="6" severity="major" icon={Users}
-            title="권한 관리 위치 부재"
-            evidence="스펙 범위 밖"
+            problem="디지털플랫폼은 향후 신규 포털(5번째, 6번째…) 추가가 예상됨. OASIS 의존 구조에서는 신규 포털마다 K-water 측 사업 변경 요청·승인·일정 협조 필요. 디지털플랫폼 자체 일정으로 진행 불가."
+            solution="자체 IdP는 신규 client 등록을 디지털플랫폼 측에서 자율 처리 — 사업 일정 자기 결정권 확보" />
+          <ReasonCard num="6" severity="major" icon={Lock}
+            title="외부 시스템 표준 연동"
+            evidence="확장 호환성"
             evidenceLevel="medium"
-            problem="OASIS JWT에 role claim 없음. 권한 신청·승인·감사 워크플로 미정의. ※ OASIS의 잘못이라기보다 '단순 빈칸' — K-water 측이 '권한은 우리 영역 아님'이라고 답할 수 있지만, 그러면 '누가 어디서?'가 명확해야 함."
-            solution="CMP 권한 허브 + 각 포털 RBAC DB 모델로 책임 분리 명확화" />
-          <ReasonCard num="7" severity="major" icon={ShieldCheck}
-            title="client_id 분리 부재"
-            evidence="현재 가이드 구조"
+            problem="디지털플랫폼이 향후 클라우드 SaaS(AWS IAM Identity Center, Azure AD, M365 등), 협력사 시스템, 신규 외부 서비스와 연동할 때 OIDC/SAML 표준 인증 필요. OASIS는 메인 포탈 내부 호출 패턴 전제 → 외부 연동마다 별도 어댑터 개발."
+            solution="OIDC 표준 IdP는 모든 표준 호환 시스템과 즉시 연동 — 1회 구축으로 향후 모든 외부 연동 자동 호환" />
+          <ReasonCard num="7" severity="major" icon={Eye}
+            title="포털별 인증 정책 차이"
+            evidence="운영 정책 차이"
             evidenceLevel="medium"
-            problem="현재 가이드 구조상 client_id 분리·aud 검증 명세 없음. 그대로 적용하면 단일 OASIS JWT를 4 포털이 통용 → 한 곳에서 토큰 새면 4 포털 모두 침투. ※ K-water가 'client별 발급 가능합니다'라고 답하면 별도 명세 추가 필요."
-            solution="포털별 client_id + aud claim 검증으로 토큰 침투 격리" />
-          <ReasonCard num="8" severity="major" icon={Zap}
-            title="외부 SaaS 호환성 (조건부)"
-            evidence="사업 범위 조건"
-            evidenceLevel="conditional"
-            problem="OASIS는 OIDC 표준 아님 → 향후 외부 SaaS(AWS IAM Identity Center, Azure AD, M365, 협력사 SaaS) 연동 시 어댑터 매번 개발 필요. ※ 외부 연동이 본 사업 또는 향후 로드맵에 있는 경우에만 유효한 근거."
-            solution="OIDC 표준 IdP → 모든 표준 호환 시스템과 즉시 연동 (향후 비용 절감)" />
+            problem="메인 포탈 = 일반 업무 사용자 (긴 세션, 단일 권한 구조). 디지털플랫폼 = 다양한 권한 등급, 짧은 토큰 회전, 외부 API 호출, BFF·SPA·SaaS 다양한 클라이언트 형태. 단일 인증 시스템으로 두 가지 정책을 만족시키려면 OASIS 측 사업 범위 확장 필요."
+            solution="별도 IdP가 디지털플랫폼 전용 인증 정책(짧은 AT, RTR, BCL, scope 분리) 자율 수립" />
+          <ReasonCard num="8" severity="major" icon={AlertTriangle}
+            title="감사·로깅 책임 분리"
+            evidence="운영 책임 분할"
+            evidenceLevel="medium"
+            problem="디지털플랫폼 4개 포털의 모든 인증·권한 이벤트가 OASIS에 분산되면 통합 감사·모니터링 어려움. 사업별 컴플라이언스 요구사항·감사 보존 정책이 다른데 같은 로그 시스템에 묶이면 분리 어려움."
+            solution="별도 IdP가 디지털플랫폼 인증·권한 이벤트의 단일 진실 근거 — 통합 감사·모니터링·컴플라이언스 대응" />
+        </div>
+        <div className="bg-emerald-500/5 border border-emerald-500/30 rounded-xl p-5 mt-4 flex items-start gap-3">
+          <Lightbulb className="shrink-0 text-emerald-400 mt-0.5" size={18} />
+          <div className="text-[17px] text-slate-300 leading-relaxed">
+            <strong className="text-emerald-200">8가지 모두 OASIS의 결함이 아닌 사업·운영 구조의 차이에서 비롯</strong>됩니다. OASIS는 메인 포탈 인증 계층으로 적절히 설계되어 있으며, 디지털플랫폼은 별도 사업이라 자체 인증 계층이 필요한 것뿐입니다.
+          </div>
         </div>
       </Section>
 
@@ -198,22 +203,22 @@ export default function Comparison() {
         <div className="space-y-3">
           <CounterRow
             objection="OASIS가 이미 있는데 또 만드는 건 중복 아닌가?"
-            rebut="역할이 다릅니다. OASIS = K-water Fasoo → JWT 변환기 + 메인 포탈 백엔드. 디지털플랫폼 통합인증 서버 = OIDC 표준 IdP for 디지털플랫폼 4개 포털. 둘은 직렬 연결되는 다른 계층입니다. OASIS가 OS면 디지털플랫폼 통합인증 서버는 그 위의 표준 인증 미들웨어." />
+            rebut="중복이 아니라 사업 영역 분리입니다. OASIS는 K-water 메인 포탈의 인증 계층이고, 디지털플랫폼 통합인증 서버는 디지털플랫폼 사업의 인증 계층입니다. 두 사업은 운영 주체·SLA·일정·예산이 다르므로 인증 계층도 분리하는 게 표준 SI 모범 사례입니다. OASIS는 그대로 유지하고, 디지털플랫폼은 자체 인증 계층을 갖추는 구조입니다." />
           <CounterRow
-            objection="JWT 발급되니까 충분하지 않나?"
-            rebut="JWT는 토큰 형식일 뿐 인증 시스템이 아닙니다. 보안의 핵심은 PKCE·state·RTR·SLO·BCL·scope 분리이고, OASIS는 이 중 어느 것도 제공하지 않습니다. 같은 JWT라도 누가 어떻게 검증하느냐가 보안의 본질입니다." />
+            objection="OASIS JWT를 그냥 4 포털이 받아 쓰면 안 되나?"
+            rebut="기술적으로 가능은 하지만 디지털플랫폼이 OASIS에 완전히 종속됩니다. OASIS 측 변경·장애·인터페이스 수정이 디지털플랫폼 4 포털 모두에 즉시 전파되어, 사업 일정·운영 책임을 분리할 수 없습니다. 또한 OASIS는 단일 client 가정으로 설계되어 포털별 권한·감사 분리도 어렵습니다. 별도 인증 계층이 두 사업의 자율성을 확보합니다." />
           <CounterRow
-            objection="각 포털이 알아서 /api/auth/validate로 검증하면 되지 않나?"
-            rebut="섹션 3 트릴레마 참조. HS256 공유는 키 유출 위험, /validate 매번 호출은 OASIS SPOF + 성능 저하, 캐시는 권한 즉시 회수 불가. OIDC RS256+JWKS만이 세 가지 모두 해결합니다. 게다가 SLO·RTR·권한 허브·PII 분리는 검증 방식과 무관하게 OASIS에 없는 기능들입니다." />
-          <CounterRow
-            objection="OASIS 측이 OIDC 표준 추가하면 되지 않나?"
-            rebut="OASIS는 메인 포탈 사업 범위 — 이미 운영 중인 시스템. OIDC 표준 추가는 별도 사업으로 추진해야 하며 일정·예산이 분리됩니다. 그 동안 디지털플랫폼은 보안 약점 상태로 운영해야 합니다. 디지털플랫폼 통합인증 서버를 별도 만들면 OASIS는 그대로 두고 즉시 표준화 효과를 얻을 수 있습니다." />
+            objection="OASIS 측에 기능 추가 요청하면 되지 않나?"
+            rebut="OASIS는 메인 포탈 사업 범위이므로 기능 추가는 별도 사업·예산·일정 협의가 필요합니다. 디지털플랫폼 사업이 OASIS 사업의 변경 일정에 종속되면 자체 일정 제어가 불가능합니다. 디지털플랫폼 통합인증 서버를 별도 구축하면 OASIS는 그대로 두고 디지털플랫폼이 자율적으로 진행할 수 있습니다." />
           <CounterRow
             objection="비용이 추가되는 것 아닌가?"
-            rebut="별도 구축 안 했을 때 누적 비용이 훨씬 큽니다: 보안 사고 대응 비용, 감사 지적 시 재구축 비용, 외부 SaaS 연동마다 어댑터 비용, 권한 관리 시스템 4중 구축 비용. 표준 OIDC IdP는 1회성 구축 비용으로 모두 해결되며, 향후 모든 표준 호환 시스템과 자동 연동됩니다." />
+            rebut="단기 구축 비용은 추가되지만 장기적으로는 절감됩니다: (1) 디지털플랫폼 사업이 OASIS 변경 일정에 휘둘리지 않음, (2) 신규 포털 추가 시 OASIS 측 협조 불필요, (3) 외부 SaaS 연동 시 표준 호환으로 어댑터 개발 0, (4) 디지털플랫폼 장애 영향 격리. 사업 영역 분리에 따른 운영 자율성이 비용보다 큰 가치입니다." />
           <CounterRow
             objection="포털이 4개뿐인데 굳이 OIDC 표준까지 필요한가?"
-            rebut="4개가 5개·6개로 늘어나는 것은 시간 문제입니다. 표준 없이 만들면 N번째 포털 추가할 때마다 인증 모듈 재개발 + OASIS 비밀키 분산. 표준으로 만들면 신규 포털은 client_id 등록만으로 즉시 통합. 1년 후 신규 포털 1개 추가 비용만 비교해도 차이가 명확합니다." />
+            rebut="4개 포털도 각자 다른 스코프·권한·감사 요구사항을 가집니다. 단일 인증 시스템에 묶으면 한 포털의 정책 변경이 다른 포털 영향. 향후 신규 포털 추가(5번째, 6번째…)도 예상되므로 표준 IdP가 신규 client 등록만으로 자율 확장 가능. 1년 후 신규 포털 추가 일정·비용을 비교하면 차이가 명확합니다." />
+          <CounterRow
+            objection="OASIS와 디지털플랫폼 통합인증 서버는 어떻게 협력하나?"
+            rebut="디지털플랫폼 통합인증 서버가 OASIS API를 호출해 K-water 신원을 받아오고, 그 신원을 기반으로 자체 OIDC 표준 토큰을 4 포털에 발급합니다. OASIS는 K-water 신원 마스터 공급자 역할로 그대로 유지되며, 디지털플랫폼은 표준 인증·권한·SLO 책임을 자체 부담합니다. 두 시스템은 직렬 협력하되 운영 책임은 분리됩니다." />
         </div>
       </Section>
 
@@ -224,7 +229,7 @@ export default function Comparison() {
           <h3 className="text-xl font-bold text-white">결정적 한 줄 메시지</h3>
         </div>
         <p className="text-base text-slate-200 leading-relaxed mb-4">
-          <strong className="text-indigo-300">"OASIS는 K-water 메인 포탈 전용 JWT 발급기이지 OIDC 표준 IdP가 아닙니다.</strong> 현재 가이드에서 확인 가능한 결함은 <strong className="text-rose-300">RTR 부재(스펙 명시), URL Query string 토큰 노출(스펙 명시), SLO 부재, PII 인라인, JWKS 미노출로 인한 검증 트릴레마</strong> 5가지가 명확하며, 추가로 <strong className="text-amber-300">권한 관리 위치, client_id 분리, 외부 SaaS 호환성</strong>은 사업 범위·전제에 따라 누적 리스크가 됩니다. <strong className="text-emerald-300">디지털플랫폼 통합인증 서버는 OIDC 표준(RS256+JWKS, PKCE, RTR, BCL 1.0, client_id 분리, /userinfo)으로 이 모든 리스크를 해결</strong>하면서 향후 외부 SaaS 연동·권한 통합 관리·감사 단일 지점을 확보합니다."
+          <strong className="text-emerald-300">"OASIS는 K-water 메인 포탈 사업의 인증 계층으로 적절히 설계·운영되고 있습니다.</strong> 단, 메인 포탈과 디지털플랫폼은 <strong className="text-white">운영 주체·SLA·예산·일정·확장 모델·인증 정책·감사 요구사항이 모두 다른 별개 사업</strong>입니다. 두 사업의 인증 계층을 결합하면 <strong className="text-amber-300">사업 일정 종속·장애 전파·포털별 분리 불가·신규 확장 자율성 상실·외부 연동 비호환·감사 책임 혼재</strong>가 발생합니다. <strong className="text-indigo-300">디지털플랫폼 통합인증 서버는 OASIS를 K-water 신원 공급자로 그대로 유지한 상태에서, 디지털플랫폼 자체 인증·권한·SLO·감사 책임을 표준(OIDC)으로 캡슐화</strong>하여 두 사업의 자율성을 확보합니다. 이는 OASIS의 결함을 보완하는 것이 아니라, <strong className="text-white">사업 영역을 깨끗이 분리하는 구조적 분기점</strong>입니다."
         </p>
         <div className="text-[16px] text-slate-500 font-mono mt-3 pt-3 border-t border-slate-800">
           ※ 발주처·K-water 회의 자료, 결재 문서, RFP 수정 요청서 등에 그대로 인용 가능합니다.
