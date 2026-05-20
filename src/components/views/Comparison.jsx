@@ -139,41 +139,57 @@ export default function Comparison() {
         </div>
       </Section>
 
-      {/* SECTION 4 — 8 핵심 근거 */}
-      <Section icon={AlertOctagon} title="4. 8가지 핵심 근거 — OASIS만 사용 시 누적 리스크" subtitle="각 항목은 디지털플랫폼 통합인증 서버 도입 시 즉시 해결됨">
+      {/* SECTION 4 — 8 핵심 근거 (강도 순) */}
+      <Section icon={AlertOctagon} title="4. 8가지 핵심 근거 — OASIS만 사용 시 누적 리스크" subtitle="각 카드의 '근거' 표시는 K-water가 반박하기 어려운 정도를 의미. 강한 순서대로 정렬">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <ReasonCard num="1" severity="critical" icon={Lock}
-            title="토큰 검증 트릴레마"
-            problem="HS256 비밀키 공유 / /validate 매번 호출 / 캐시 — 3가지 옵션 모두 결함"
-            solution="RS256 + JWKS로 트릴레마 자체를 무력화" />
-          <ReasonCard num="2" severity="critical" icon={ShieldCheck}
-            title="단일 토큰 = 4 포털 침투"
-            problem="OASIS JWT는 모든 하위 서비스에 통용. 한 포털에서 토큰 새면 4개 포털 모두 침투"
-            solution="client_id별 별도 토큰 + aud 검증" />
+          <ReasonCard num="1" severity="critical" icon={GitBranch}
+            title="Refresh Token Rotation 부재"
+            evidence="OpenAPI 스펙 명시"
+            evidenceLevel="strongest"
+            problem='OpenAPI 스펙 명시: "리프레시 토큰은 재발급되지 않습니다". 도난당해도 RT 만료까지 무한 갱신 가능, 탐지 불가.'
+            solution="RTR + chain DB 추적 + 재사용 즉시 chain 폐기 — RT 도난 자동 탐지" />
+          <ReasonCard num="2" severity="critical" icon={AlertTriangle}
+            title="accessToken을 URL Query string으로"
+            evidence="OpenAPI 스펙 명시"
+            evidenceLevel="strongest"
+            problem="/api/approval/v2 GET 파라미터에 accessToken을 query string으로 받음 → URL 로그·브라우저 히스토리·Referer 헤더에 토큰 노출. OAuth 2.1 BCP 위반."
+            solution="모든 토큰을 Authorization 헤더 + POST body로 — 표준 OAuth 2.1 강제" />
           <ReasonCard num="3" severity="critical" icon={Network}
             title="Single Logout 부재"
-            problem="한 포털 로그아웃이 다른 포털에 전파 안 됨. 퇴직자 처리 시 토큰 만료까지 통과"
-            solution="OIDC BCL 1.0 백채널 푸시로 4 포털 동시 종료" />
-          <ReasonCard num="4" severity="critical" icon={Users}
-            title="권한 관리 위치 부재"
-            problem="role claim 없음. 권한 신청·승인·감사 워크플로 설계 없음"
-            solution="CMP 권한 허브 + 각 포털 RBAC DB 모델 적용 가능" />
-          <ReasonCard num="5" severity="major" icon={Zap}
-            title="외부 SaaS 호환성"
-            problem="OASIS는 비표준 → AWS·Azure AD·M365·협력사 SaaS 연동 시 어댑터 매번 개발"
-            solution="OIDC 표준 IdP → 모든 표준 호환 시스템과 즉시 연동" />
-          <ReasonCard num="6" severity="major" icon={GitBranch}
-            title="Refresh Token Rotation 부재"
-            problem="OASIS는 RT 재발급 안 함. 도난당해도 RT 만료까지 무한 갱신, 탐지 불가"
-            solution="RTR + chain DB 추적 + 재사용 즉시 chain 폐기" />
-          <ReasonCard num="7" severity="major" icon={Eye}
+            evidence="스펙에 백채널 콜백 없음"
+            evidenceLevel="strong"
+            problem="OASIS에 백채널 로그아웃 콜백 엔드포인트 자체가 없음 → 한 포털 로그아웃이 다른 포털에 전파 안 됨. 퇴직자·보안사고 시 토큰 만료까지 통과."
+            solution="OIDC BCL 1.0 (RFC 8417 SET) 백채널 푸시로 4 포털 동시 종료" />
+          <ReasonCard num="4" severity="critical" icon={Eye}
             title="PII가 JWT에 인라인"
-            problem="사번·이름·직위·부서·전화번호 모두 JWT payload에 — Base64 디코딩만 하면 누구나 읽음"
-            solution="payload는 sub만, 나머지는 /userinfo 별도 — 개인정보보호법 대응" />
-          <ReasonCard num="8" severity="major" icon={AlertTriangle}
-            title="accessToken을 URL Query string으로"
-            problem="/api/approval/v2?accessToken=... → URL 로그·브라우저 히스토리·Referer 헤더에 토큰 노출. docId도 query라 추측 공격 가능"
-            solution="모든 토큰을 Authorization 헤더 + POST body로 — 표준 OAuth 2.1 강제" />
+            evidence="OpenAPI 스펙 명시"
+            evidenceLevel="strong"
+            problem='TokenResponse 설명: "Payload에 id, name, position, dept, phone 포함". 사번·이름은 OIDC ID Token에도 통상 포함되지만 직위·부서·내선번호까지는 OIDC 권고 범위를 벗어남. accessToken을 query string으로 노출하는 흐름과 결합되면 PII 유출 경로 발생.'
+            solution="payload는 sub만, 나머지는 /userinfo 별도 — OIDC 표준 minimal claims 패턴" />
+          <ReasonCard num="5" severity="critical" icon={Lock}
+            title="토큰 검증 트릴레마"
+            evidence="JWKS 미노출 사실"
+            evidenceLevel="strong"
+            problem="OASIS는 JWKS·Discovery를 노출하지 않음 → 각 포털이 (a) 비밀키 공유로 로컬 검증 (b) /api/auth/validate 매번 호출 (c) 캐시 — 세 가지 옵션 모두 결함. ※ 예시 토큰 디코딩 시 HS256으로 보이나 운영 알고리즘은 확인 필요."
+            solution="OIDC RS256 + JWKS 공개로 트릴레마 자체를 무력화 (공개키 로컬 검증 + 즉시 폐기)" />
+          <ReasonCard num="6" severity="major" icon={Users}
+            title="권한 관리 위치 부재"
+            evidence="스펙 범위 밖"
+            evidenceLevel="medium"
+            problem="OASIS JWT에 role claim 없음. 권한 신청·승인·감사 워크플로 미정의. ※ OASIS의 잘못이라기보다 '단순 빈칸' — K-water 측이 '권한은 우리 영역 아님'이라고 답할 수 있지만, 그러면 '누가 어디서?'가 명확해야 함."
+            solution="CMP 권한 허브 + 각 포털 RBAC DB 모델로 책임 분리 명확화" />
+          <ReasonCard num="7" severity="major" icon={ShieldCheck}
+            title="client_id 분리 부재"
+            evidence="현재 가이드 구조"
+            evidenceLevel="medium"
+            problem="현재 가이드 구조상 client_id 분리·aud 검증 명세 없음. 그대로 적용하면 단일 OASIS JWT를 4 포털이 통용 → 한 곳에서 토큰 새면 4 포털 모두 침투. ※ K-water가 'client별 발급 가능합니다'라고 답하면 별도 명세 추가 필요."
+            solution="포털별 client_id + aud claim 검증으로 토큰 침투 격리" />
+          <ReasonCard num="8" severity="major" icon={Zap}
+            title="외부 SaaS 호환성 (조건부)"
+            evidence="사업 범위 조건"
+            evidenceLevel="conditional"
+            problem="OASIS는 OIDC 표준 아님 → 향후 외부 SaaS(AWS IAM Identity Center, Azure AD, M365, 협력사 SaaS) 연동 시 어댑터 매번 개발 필요. ※ 외부 연동이 본 사업 또는 향후 로드맵에 있는 경우에만 유효한 근거."
+            solution="OIDC 표준 IdP → 모든 표준 호환 시스템과 즉시 연동 (향후 비용 절감)" />
         </div>
       </Section>
 
@@ -208,7 +224,7 @@ export default function Comparison() {
           <h3 className="text-xl font-bold text-white">결정적 한 줄 메시지</h3>
         </div>
         <p className="text-base text-slate-200 leading-relaxed mb-4">
-          <strong className="text-indigo-300">"OASIS는 K-water 메인 포탈 전용 JWT 발급기이지 OIDC 표준 IdP가 아닙니다.</strong> 디지털플랫폼 4개 포털에 OASIS JWT를 그대로 통용시키는 것은 <strong className="text-rose-300">검증 트릴레마, 단일 토큰 침투, SLO 부재, RTR 부재, 권한 관리 위치 부재, 외부 SaaS 비호환, PII 노출, URL 토큰 노출</strong>이라는 8개 영역의 누적 리스크를 발생시킵니다. <strong className="text-emerald-300">디지털플랫폼 통합인증 서버는 OIDC 표준(RS256+JWKS, PKCE, RTR, BCL 1.0, client_id 분리, /userinfo)으로 이 모든 리스크를 해결</strong>하면서 향후 외부 SaaS 연동·권한 통합 관리·감사 단일 지점을 확보합니다."
+          <strong className="text-indigo-300">"OASIS는 K-water 메인 포탈 전용 JWT 발급기이지 OIDC 표준 IdP가 아닙니다.</strong> 현재 가이드에서 확인 가능한 결함은 <strong className="text-rose-300">RTR 부재(스펙 명시), URL Query string 토큰 노출(스펙 명시), SLO 부재, PII 인라인, JWKS 미노출로 인한 검증 트릴레마</strong> 5가지가 명확하며, 추가로 <strong className="text-amber-300">권한 관리 위치, client_id 분리, 외부 SaaS 호환성</strong>은 사업 범위·전제에 따라 누적 리스크가 됩니다. <strong className="text-emerald-300">디지털플랫폼 통합인증 서버는 OIDC 표준(RS256+JWKS, PKCE, RTR, BCL 1.0, client_id 분리, /userinfo)으로 이 모든 리스크를 해결</strong>하면서 향후 외부 SaaS 연동·권한 통합 관리·감사 단일 지점을 확보합니다."
         </p>
         <div className="text-[16px] text-slate-500 font-mono mt-3 pt-3 border-t border-slate-800">
           ※ 발주처·K-water 회의 자료, 결재 문서, RFP 수정 요청서 등에 그대로 인용 가능합니다.
@@ -260,7 +276,7 @@ function CmpRow({ item, ours, theirs, warn }) {
   );
 }
 
-function ReasonCard({ num, severity, icon: Icon, title, problem, solution }) {
+function ReasonCard({ num, severity, icon: Icon, title, problem, solution, evidence, evidenceLevel }) {
   const colorMap = {
     critical: 'border-rose-500/30 bg-rose-500/5',
     major: 'border-amber-500/30 bg-amber-500/5',
@@ -268,6 +284,18 @@ function ReasonCard({ num, severity, icon: Icon, title, problem, solution }) {
   const badgeMap = {
     critical: 'bg-rose-500/20 text-rose-300 border-rose-500/40',
     major: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+  };
+  const evidenceColorMap = {
+    strongest: 'bg-emerald-500/20 text-emerald-200 border-emerald-500/40',
+    strong: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30',
+    medium: 'bg-amber-500/10 text-amber-300 border-amber-500/30',
+    conditional: 'bg-slate-500/10 text-slate-300 border-slate-500/30',
+  };
+  const evidenceLabel = {
+    strongest: '★★★★ 반박 불가',
+    strong: '★★★ 강함',
+    medium: '★★ 전제 필요',
+    conditional: '★ 조건부',
   };
   const sevLabel = severity === 'critical' ? 'Critical' : 'Major';
   return (
@@ -277,9 +305,14 @@ function ReasonCard({ num, severity, icon: Icon, title, problem, solution }) {
           <span className="text-sm font-mono font-bold text-slate-300">{num}</span>
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center gap-2 mb-1 flex-wrap">
             <Icon className="text-slate-400 shrink-0" size={14} />
-            <span className={`text-[16px] font-mono font-bold uppercase tracking-widest px-1.5 py-0.5 rounded border ${badgeMap[severity]}`}>{sevLabel}</span>
+            <span className={`text-[14px] font-mono font-bold uppercase tracking-widest px-1.5 py-0.5 rounded border ${badgeMap[severity]}`}>{sevLabel}</span>
+            {evidence && (
+              <span className={`text-[13px] font-mono font-bold px-1.5 py-0.5 rounded border ${evidenceColorMap[evidenceLevel] || evidenceColorMap.medium}`}>
+                {evidenceLabel[evidenceLevel] || '근거'} · {evidence}
+              </span>
+            )}
           </div>
           <h4 className="text-base font-bold text-white leading-tight">{title}</h4>
         </div>
