@@ -29,17 +29,17 @@ export default function ApiSpec() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/40">
-              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/.well-known/openid-configuration</td><td className="py-2 px-5 text-slate-400">Discovery</td><td className="py-2 px-5 text-slate-400">메타데이터·엔드포인트·지원 알고리즘 자동 노출</td></tr>
-              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/.well-known/jwks.json</td><td className="py-2 px-5 text-slate-400">Discovery</td><td className="py-2 px-5 text-slate-400">JWT 서명 검증용 공개 키 집합</td></tr>
-              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/authorize</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">사용자 인가 요청 (front-channel)</td></tr>
-              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/token</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">인가 코드 ↔ 토큰 교환 · Refresh Token 갱신</td></tr>
-              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/userinfo</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">Access Token으로 사용자 프로필 조회</td></tr>
-              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/logout</td><td className="py-2 px-5 text-slate-400">RP-Initiated Logout</td><td className="py-2 px-5 text-slate-400">사용자 발화 통합 로그아웃 시작점</td></tr>
-              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/introspect</td><td className="py-2 px-5 text-slate-400">RFC 7662</td><td className="py-2 px-5 text-slate-400">토큰 유효성/메타 정보 조회 (서버 간)</td></tr>
-              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/revoke</td><td className="py-2 px-5 text-slate-400">RFC 7009</td><td className="py-2 px-5 text-slate-400">개별 토큰 즉시 폐기</td></tr>
-              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/kwater/callback</td><td className="py-2 px-5 text-slate-400">K-water 연동</td><td className="py-2 px-5 text-slate-400">K-water 암호화 페이로드 수신·복호화·SSO 발급</td></tr>
-              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/kwater/backchannel-logout</td><td className="py-2 px-5 text-slate-400">OIDC BCL 1.0 (수신)</td><td className="py-2 px-5 text-slate-400">K-water가 호출 — 상위 SLO 수신</td></tr>
-              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[12px]">POST</span></td><td className="py-2 px-5 font-mono">{`{portal}/oauth2/v1/backchannel-logout`}</td><td className="py-2 px-5 text-slate-400">OIDC BCL 1.0 (송신)</td><td className="py-2 px-5 text-slate-400">IdP가 각 포털 백엔드로 호출 — 하위 SLO 전파</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[14px]">GET</span></td><td className="py-2 px-5 font-mono">/.well-known/openid-configuration</td><td className="py-2 px-5 text-slate-400">Discovery</td><td className="py-2 px-5 text-slate-400">메타데이터·엔드포인트·지원 알고리즘 자동 노출</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[14px]">GET</span></td><td className="py-2 px-5 font-mono">/.well-known/jwks.json</td><td className="py-2 px-5 text-slate-400">Discovery</td><td className="py-2 px-5 text-slate-400">JWT 서명 검증용 공개 키 집합</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[14px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/authorize</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">사용자 인가 요청 (front-channel)</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[14px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/token</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">인가 코드 ↔ 토큰 교환 · Refresh Token 갱신</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[14px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/userinfo</td><td className="py-2 px-5 text-slate-400">OIDC Core</td><td className="py-2 px-5 text-slate-400">Access Token으로 사용자 프로필 조회</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[14px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/logout</td><td className="py-2 px-5 text-slate-400">RP-Initiated Logout</td><td className="py-2 px-5 text-slate-400">사용자 발화 통합 로그아웃 시작점</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[14px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/introspect</td><td className="py-2 px-5 text-slate-400">RFC 7662</td><td className="py-2 px-5 text-slate-400">토큰 유효성/메타 정보 조회 (서버 간)</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[14px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/revoke</td><td className="py-2 px-5 text-slate-400">RFC 7009</td><td className="py-2 px-5 text-slate-400">개별 토큰 즉시 폐기</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-emerald-500/10 text-emerald-300 font-mono font-bold px-1.5 py-0.5 rounded text-[14px]">GET</span></td><td className="py-2 px-5 font-mono">/oauth2/kwater/callback</td><td className="py-2 px-5 text-slate-400">K-water 연동</td><td className="py-2 px-5 text-slate-400">K-water 암호화 페이로드 수신·복호화·SSO 발급</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[14px]">POST</span></td><td className="py-2 px-5 font-mono">/oauth2/v1/kwater/backchannel-logout</td><td className="py-2 px-5 text-slate-400">OIDC BCL 1.0 (수신)</td><td className="py-2 px-5 text-slate-400">K-water가 호출 — 상위 SLO 수신</td></tr>
+              <tr><td className="py-2 px-5"><span className="bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded text-[14px]">POST</span></td><td className="py-2 px-5 font-mono">{`{portal}/oauth2/v1/backchannel-logout`}</td><td className="py-2 px-5 text-slate-400">OIDC BCL 1.0 (송신)</td><td className="py-2 px-5 text-slate-400">IdP가 각 포털 백엔드로 호출 — 하위 SLO 전파</td></tr>
             </tbody>
           </table>
         </div>
@@ -91,21 +91,21 @@ export default function ApiSpec() {
             {/* Three-part friendly explanation */}
             <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4 space-y-3">
               <div>
-                <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-emerald-300 mb-1">① 공개 키란?</div>
+                <div className="text-[14px] font-mono font-bold uppercase tracking-widest text-emerald-300 mb-1">① 공개 키란?</div>
                 <p className="text-xs text-slate-400 leading-relaxed">
                   JWT(Access Token)는 IdP의 <strong className="text-slate-200">비공개 키(private key)</strong>로 서명되어 있습니다. 리소스 서버가 그 서명이 진짜인지 확인하려면 짝이 되는 <strong className="text-slate-200">공개 키(public key)</strong>가 필요한데, 그 공개 키들을 모아놓은 게 JWKS(JSON Web Key Set)입니다.
                 </p>
               </div>
 
               <div>
-                <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-indigo-300 mb-1">② TTL 1시간 캐싱</div>
+                <div className="text-[14px] font-mono font-bold uppercase tracking-widest text-indigo-300 mb-1">② TTL 1시간 캐싱</div>
                 <p className="text-xs text-slate-400 leading-relaxed">
                   매 API 호출마다 JWKS를 IdP에 묻으면 트래픽이 폭주합니다. 그래서 한 번 받은 키들을 메모리(또는 Redis)에 1시간 정도 저장해두고 재사용합니다. 1시간 후 새로 가져오면 그동안 회전된 키도 자연스럽게 반영됩니다.
                 </p>
               </div>
 
               <div>
-                <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-amber-300 mb-1">③ <code className="text-amber-300">kid</code> = key ID (어느 키로 서명했는지 표시)</div>
+                <div className="text-[14px] font-mono font-bold uppercase tracking-widest text-amber-300 mb-1">③ <code className="text-amber-300">kid</code> = key ID (어느 키로 서명했는지 표시)</div>
                 <p className="text-xs text-slate-400 leading-relaxed mb-2">
                   IdP는 보안을 위해 서명용 키를 주기적으로 교체(<strong className="text-slate-200">key rotation</strong>)합니다. 단, 바꾸자마자 기존 토큰을 무효화하면 사용자들이 갑자기 로그아웃되므로 <strong className="text-slate-200">옛 키 + 새 키를 잠시 같이</strong> JWKS에 둡니다. 어느 키로 서명한 토큰인지 알려주는 게 JWT 헤더의 <code className="text-amber-300">kid</code> 값입니다.
                 </p>
@@ -292,11 +292,11 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`} />
             </div>
 
             <div className="bg-slate-950/60 border border-sky-500/30 rounded-xl p-4">
-              <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-sky-300 mb-2">logout_token 검증 항목 (OIDC BCL 1.0 §2.4 (RFC 8417 SET))</div>
-              <p className="text-[13px] text-slate-400 leading-relaxed mb-3">
+              <div className="text-[14px] font-mono font-bold uppercase tracking-widest text-sky-300 mb-2">logout_token 검증 항목 (OIDC BCL 1.0 §2.4 (RFC 8417 SET))</div>
+              <p className="text-[15px] text-slate-400 leading-relaxed mb-3">
                 K-water가 보낸 JWT 안의 클레임들을 한 줄 한 줄 확인하여 — <strong className="text-white">정말 K-water가 보낸 것인지 + 우리에게 보낸 것인지 + 변조·재사용·위장이 없는지</strong>를 검증합니다.
               </p>
-              <ul className="space-y-2 text-[13px] text-slate-300">
+              <ul className="space-y-2 text-[15px] text-slate-300">
                 <li className="flex gap-2">
                   <code className="shrink-0 text-sky-300 font-mono">typ</code>
                   <span>JWT 헤더가 <code className="text-slate-300">&quot;logout+jwt&quot;</code> — 일반 ID Token으로 위장된 공격 차단</span>
@@ -330,7 +330,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`} />
                   <span>둘 중 최소 하나는 있어야 — 누구 세션을 끊을지 식별. <code className="text-slate-300">sub</code>는 사용자, <code className="text-slate-300">sid</code>는 특정 세션 ID</span>
                 </li>
               </ul>
-              <p className="text-[12px] text-slate-500 mt-3 italic">한 항목이라도 실패하면 <span className="text-rose-300">400 Bad Request</span> 반환. 검증 통과 시 해당 sub/sid 세션을 폐기하고 <span className="text-emerald-300">200 OK</span> + <code className="text-slate-300">Cache-Control: no-store</code>.</p>
+              <p className="text-[14px] text-slate-500 mt-3 italic">한 항목이라도 실패하면 <span className="text-rose-300">400 Bad Request</span> 반환. 검증 통과 시 해당 sub/sid 세션을 폐기하고 <span className="text-emerald-300">200 OK</span> + <code className="text-slate-300">Cache-Control: no-store</code>.</p>
             </div>
           </div>
         </div>
@@ -406,7 +406,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`} />
   "iat": 1716981993,
   "sub": "kwater_user_1234"
 }`} />
-            <p className="text-[13px] text-slate-400">폐기/만료된 토큰은 <code className="text-rose-300">{`{ "active": false }`}</code>만 반환 (토큰 열거 방지).</p>
+            <p className="text-[15px] text-slate-400">폐기/만료된 토큰은 <code className="text-rose-300">{`{ "active": false }`}</code>만 반환 (토큰 열거 방지).</p>
           </div>
         </div>
 
@@ -422,7 +422,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`} />
 token_type_hint=refresh_token   # 또는 access_token
 client_id=cmp-portal
 client_secret=<...>`} />
-            <p className="text-[13px] text-slate-400 leading-relaxed">응답:
+            <p className="text-[15px] text-slate-400 leading-relaxed">응답:
               <span className="text-emerald-300"> 200 OK</span> — 폐기 성공 또는 알 수 없는 토큰 (토큰 열거 방지 차원에서 동일 처리, 본문 없음) ·
               <span className="text-amber-300"> 400</span> — <code className="text-slate-300">invalid_request</code> 등 요청 자체 오류 ·
               <span className="text-rose-300"> 401</span> — 클라이언트 인증 실패
@@ -452,11 +452,11 @@ client_secret=<...>`} />
             </div>
 
             <div className="bg-slate-950/60 border border-purple-500/30 rounded-xl p-4">
-              <div className="text-[12px] font-mono font-bold uppercase tracking-widest text-purple-300 mb-2">logout_token 검증 항목 (OIDC BCL 1.0 §2.4 (RFC 8417 SET))</div>
-              <p className="text-[13px] text-slate-400 leading-relaxed mb-3">
+              <div className="text-[14px] font-mono font-bold uppercase tracking-widest text-purple-300 mb-2">logout_token 검증 항목 (OIDC BCL 1.0 §2.4 (RFC 8417 SET))</div>
+              <p className="text-[15px] text-slate-400 leading-relaxed mb-3">
                 IdP가 보낸 JWT 안의 클레임들을 한 줄 한 줄 확인하여 — <strong className="text-white">정말 우리 IdP가 보낸 것인지 + 우리 포털에게 보낸 것인지 + 변조·재사용·위장이 없는지</strong>를 검증합니다.
               </p>
-              <ul className="space-y-2 text-[13px] text-slate-300">
+              <ul className="space-y-2 text-[15px] text-slate-300">
                 <li className="flex gap-2">
                   <code className="shrink-0 text-purple-300 font-mono">typ</code>
                   <span>JWT 헤더가 <code className="text-slate-300">&quot;logout+jwt&quot;</code> — 일반 ID Token으로 위장된 공격 차단</span>
@@ -496,7 +496,7 @@ client_secret=<...>`} />
               </ul>
             </div>
 
-            <div className="text-[12px] text-slate-400 leading-relaxed">
+            <div className="text-[14px] text-slate-400 leading-relaxed">
               <strong className="text-slate-200">응답:</strong>
               <span className="text-emerald-300 ml-1">200 OK</span> + <code className="text-purple-300">Cache-Control: no-store</code> 헤더 (OIDC BCL 1.0 §2.8 (Cache-Control)) · 빈 본문 ·
               검증 실패 시 <span className="text-rose-300">400 Bad Request</span> → IdP가 재시도 큐에 적재.

@@ -25,10 +25,10 @@ export default function Sequence() {
             { name: 'K-water 인증 서버', role: 'Upstream IdP', accent: 'border-sky-500/60 text-sky-200', roleBg: 'bg-sky-500/10 text-sky-300' },
           ].map((lane, i) => (
             <div key={i} className="flex flex-col items-center w-1/4 gap-1.5">
-              <div className={`bg-slate-900 border px-3 md:px-4 py-2 rounded-xl text-[13px] md:text-xs font-bold shadow-lg relative z-20 whitespace-nowrap ${lane.accent}`}>
+              <div className={`bg-slate-900 border px-3 md:px-4 py-2 rounded-xl text-[15px] md:text-xs font-bold shadow-lg relative z-20 whitespace-nowrap ${lane.accent}`}>
                 {lane.name}
               </div>
-              <span className={`text-[11px] md:text-[12px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded ${lane.roleBg}`}>
+              <span className={`text-[13px] md:text-[14px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded ${lane.roleBg}`}>
                 {lane.role}
               </span>
             </div>
@@ -103,12 +103,12 @@ export default function Sequence() {
                 {/* Phase Header Banner */}
                 <div className={`relative z-20 mb-20 md:mb-24 rounded-xl border ${phase.phaseColor} px-4 md:px-5 py-3 backdrop-blur-md shadow-lg`}>
                   <div className="flex items-center gap-3">
-                    <span className={`text-[12px] font-mono font-bold uppercase tracking-widest px-2 py-0.5 rounded border ${phase.phaseColor}`}>
+                    <span className={`text-[14px] font-mono font-bold uppercase tracking-widest px-2 py-0.5 rounded border ${phase.phaseColor}`}>
                       {phase.phaseBadge}
                     </span>
                     <h4 className="text-sm md:text-base font-bold text-white">{phase.title}</h4>
                   </div>
-                  <p className="text-[13px] md:text-xs text-slate-400 mt-1.5 leading-relaxed">{phase.subtitle}</p>
+                  <p className="text-[15px] md:text-xs text-slate-400 mt-1.5 leading-relaxed">{phase.subtitle}</p>
                 </div>
 
                 {/* Steps inside this phase */}
@@ -123,7 +123,7 @@ export default function Sequence() {
                     return (
                       <div key={idx} className="relative w-full group">
                         {/* Step Number Dot */}
-                        <div className={`absolute top-0 w-7 h-7 rounded-full bg-slate-900 border-2 flex items-center justify-center text-[13px] font-bold z-20 shadow-lg ${s.dotClass}`}
+                        <div className={`absolute top-0 w-7 h-7 rounded-full bg-slate-900 border-2 flex items-center justify-center text-[15px] font-bold z-20 shadow-lg ${s.dotClass}`}
                              style={{ left: `${startPercent}%`, transform: 'translate(-50%, -50%)' }}>
                           {s.step}
                         </div>

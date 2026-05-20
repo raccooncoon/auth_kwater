@@ -20,7 +20,7 @@ export default function SpecDoc() {
         <div className="absolute -top-12 -right-12 w-48 h-48 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
         <div className="relative">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-[12px] font-mono font-bold uppercase tracking-widest bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded">Build Spec · v1.0</span>
+            <span className="text-[14px] font-mono font-bold uppercase tracking-widest bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded">Build Spec · v1.0</span>
           </div>
           <h2 className="text-4xl font-extrabold text-white tracking-tight mb-3 leading-tight">디지털플랫폼 통합인증 서버 — 구축 요구사항 & 스펙</h2>
           <p className="text-slate-300 text-lg leading-relaxed max-w-3xl mb-5">
@@ -33,7 +33,7 @@ export default function SpecDoc() {
             <Download size={16} />
             <span>요구사항 정의서 PDF 다운로드</span>
           </button>
-          <p className="text-[12px] text-slate-500 mt-2.5">
+          <p className="text-[14px] text-slate-500 mt-2.5">
             · 이 문서만으로 분석·설계·개발이 가능한 자체 완결 문서 (ERD/DDL · API 명세 · 시험 계획 포함)
             <br />
             · 버튼 클릭 시 인쇄 미리보기 창이 열립니다 → 대상 프린터에서 <strong className="text-slate-400">"PDF로 저장"</strong>을 선택해주세요
@@ -77,9 +77,9 @@ export default function SpecDoc() {
           <table className="w-full text-left text-sm border-collapse">
             <thead>
               <tr className="border-b border-slate-700 text-slate-400">
-                <th className="py-3 px-4 font-semibold text-[12px] uppercase tracking-wider w-20">ID</th>
-                <th className="py-3 px-4 font-semibold text-[12px] uppercase tracking-wider">기능</th>
-                <th className="py-3 px-4 font-semibold text-[12px] uppercase tracking-wider">요구 내용</th>
+                <th className="py-3 px-4 font-semibold text-[14px] uppercase tracking-wider w-20">ID</th>
+                <th className="py-3 px-4 font-semibold text-[14px] uppercase tracking-wider">기능</th>
+                <th className="py-3 px-4 font-semibold text-[14px] uppercase tracking-wider">요구 내용</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
@@ -100,9 +100,9 @@ export default function SpecDoc() {
           <table className="w-full text-left text-sm border-collapse">
             <thead>
               <tr className="border-b border-slate-700 text-slate-400">
-                <th className="py-3 px-4 font-semibold text-[12px] uppercase tracking-wider w-20">ID</th>
-                <th className="py-3 px-4 font-semibold text-[12px] uppercase tracking-wider w-32">항목</th>
-                <th className="py-3 px-4 font-semibold text-[12px] uppercase tracking-wider">요구 수준</th>
+                <th className="py-3 px-4 font-semibold text-[14px] uppercase tracking-wider w-20">ID</th>
+                <th className="py-3 px-4 font-semibold text-[14px] uppercase tracking-wider w-32">항목</th>
+                <th className="py-3 px-4 font-semibold text-[14px] uppercase tracking-wider">요구 수준</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
@@ -135,7 +135,7 @@ export default function SpecDoc() {
             <ArchBox color="indigo" title="Application Tier" items={["/authorize · /token", "/userinfo · /logout", "/.well-known/*", "Stateless (수평 확장)"]} />
             <ArchBox color="emerald" title="Data Tier" items={["RDBMS (Clients · Users · RT)", "Redis (Session · Auth Code)", "암호화 키 저장소"]} />
           </div>
-          <div className="mt-4 text-[13px] text-slate-400 leading-relaxed">
+          <div className="mt-4 text-[15px] text-slate-400 leading-relaxed">
             외부 인터페이스: <strong className="text-white">K-water 인증 시스템</strong>(상위 IdP) · <strong className="text-white">4개 포털 백엔드</strong>(RP) · <strong className="text-white">암호화 키 저장소</strong>(KMS 또는 OS 키 스토어)
           </div>
         </div>
@@ -191,7 +191,7 @@ export default function SpecDoc() {
       <Section icon={Lock} title="7. 보안 요구사항" subtitle="암호화 · 키 관리 · 통신">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <SecCard title="암호화 · 서명">
-            <ul className="text-[13px] text-slate-300 space-y-1.5">
+            <ul className="text-[15px] text-slate-300 space-y-1.5">
               <li>· JWT 서명: <code className="text-emerald-300">RS256</code></li>
               <li>· K-water 페이로드: <code className="text-emerald-300">JWE A256GCM + RSA-OAEP</code></li>
               <li>· DB 개인정보: <code className="text-emerald-300">AES-256</code> 컬럼 암호화</li>
@@ -199,7 +199,7 @@ export default function SpecDoc() {
             </ul>
           </SecCard>
           <SecCard title="공격 방어">
-            <ul className="text-[13px] text-slate-300 space-y-1.5">
+            <ul className="text-[15px] text-slate-300 space-y-1.5">
               <li>· CSRF: <code className="text-emerald-300">state</code> 파라미터 검증</li>
               <li>· XSS: HttpOnly 쿠키 + CSP 헤더</li>
               <li>· 토큰 도난: 짧은 AT TTL(15분) + RTR + 재사용 탐지</li>
@@ -245,14 +245,14 @@ export default function SpecDoc() {
       <Section icon={ShieldCheck} title="9. 시험 환경 (중요)" subtitle="K-water 운영계 무영향 원칙">
         <div className="bg-rose-500/5 border border-rose-500/30 rounded-2xl p-5 mb-4 flex items-start gap-3">
           <AlertTriangle className="shrink-0 text-rose-400 mt-0.5" size={18} />
-          <div className="text-[13px] text-slate-300 leading-relaxed">
+          <div className="text-[15px] text-slate-300 leading-relaxed">
             <strong className="text-rose-200">K-water 운영 시스템은 어떠한 시험 트래픽도 받아서는 안 됩니다.</strong> 부하 테스트는 IdP가 소유한 엔드포인트에 한정하며, K-water 페이로드 수신부는 <strong className="text-white">Mock 어댑터</strong>로 대체합니다.
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <SecCard title="Mock K-water 어댑터 (개발·시험 환경 전용)">
-            <ul className="text-[13px] text-slate-300 space-y-1.5">
+            <ul className="text-[15px] text-slate-300 space-y-1.5">
               <li>· K-water와 동일한 JWE 페이로드 발급 (테스트 키 사용)</li>
               <li>· 사전 정의된 N명의 가상 사용자 풀 (예: kwater_test_user_0001 ~ 1000)</li>
               <li>· <strong className="text-white">운영 K-water와 네트워크 격리</strong> — DNS는 사내 VIP/Hosts로 분리</li>
@@ -260,7 +260,7 @@ export default function SpecDoc() {
             </ul>
           </SecCard>
           <SecCard title="부하 테스트 시나리오 (IdP 자체)">
-            <ul className="text-[13px] text-slate-300 space-y-1.5">
+            <ul className="text-[15px] text-slate-300 space-y-1.5">
               <li>· <strong className="text-white">사전 준비</strong>: Redis에 N개 SSO 세션 직접 주입 (Mock 어댑터로 사전 로그인)</li>
               <li>· <strong className="text-white">측정 대상</strong>: /authorize · /token · /userinfo · /logout · 백채널 푸시</li>
               <li>· <strong className="text-white">측정 제외</strong>: /oauth2/kwater/callback (Mock로 대체)</li>
@@ -275,7 +275,7 @@ export default function SpecDoc() {
       <Section icon={Users} title="10. 권한 관리 모델 (CMP 권한 허브)" subtitle="신원과 권한의 책임 분리 · 중앙 신청·승인 UX">
         <div className="bg-indigo-500/5 border border-indigo-500/30 rounded-2xl p-5 mb-4 flex items-start gap-3">
           <AlertTriangle className="shrink-0 text-indigo-400 mt-0.5" size={18} />
-          <div className="text-[13px] text-slate-300 leading-relaxed">
+          <div className="text-[15px] text-slate-300 leading-relaxed">
             <strong className="text-indigo-200">IdP는 신원만 책임지고 권한 데이터를 보유하지 않습니다.</strong> 권한 관리는 <strong className="text-white">CMP가 중앙 허브 역할</strong>을 맡고, 실제 권한 데이터는 각 포털 DB에 저장합니다. 본 절은 IdP 구축 범위 밖이지만, 발주처가 RFP를 작성하거나 CMP 사업 범위를 산정할 때 참고할 권장 아키텍처입니다.
           </div>
         </div>
@@ -283,30 +283,30 @@ export default function SpecDoc() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
             <h4 className="text-sm font-bold text-white mb-2">K-water</h4>
-            <p className="text-[13px] text-slate-400 leading-relaxed">직원 마스터 (sub, 부서, 직급). 포털 기능 권한과 무관.</p>
+            <p className="text-[15px] text-slate-400 leading-relaxed">직원 마스터 (sub, 부서, 직급). 포털 기능 권한과 무관.</p>
           </div>
           <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
             <h4 className="text-sm font-bold text-white mb-2">IdP (디지털플랫폼 통합인증)</h4>
-            <p className="text-[13px] text-slate-400 leading-relaxed">신원 증명. JWT에 sub + 기본 속성만. <strong className="text-rose-300">권한 데이터 미보유.</strong></p>
+            <p className="text-[15px] text-slate-400 leading-relaxed">신원 증명. JWT에 sub + 기본 속성만. <strong className="text-rose-300">권한 데이터 미보유.</strong></p>
           </div>
           <div className="bg-slate-900 border border-indigo-500/30 rounded-xl p-5">
             <h4 className="text-sm font-bold text-white mb-2">CMP (권한 허브)</h4>
-            <p className="text-[13px] text-slate-400 leading-relaxed">통합 신청·승인 UI · 워크플로 엔진 · 각 포털 grant API 호출 · 통합 감사 로그</p>
+            <p className="text-[15px] text-slate-400 leading-relaxed">통합 신청·승인 UI · 워크플로 엔진 · 각 포털 grant API 호출 · 통합 감사 로그</p>
           </div>
         </div>
 
         <h4 className="text-base font-bold text-white mb-2 mt-6">10.1 권한 신청·승인 워크플로</h4>
-        <div className="bg-slate-950 border border-slate-800 rounded-xl p-5 text-[13px] text-slate-300">
+        <div className="bg-slate-950 border border-slate-800 rounded-xl p-5 text-[15px] text-slate-300">
           <ol className="space-y-2">
-            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">1</span><span>사용자가 <strong className="text-white">CMP "권한 신청" 페이지</strong>에서 [target_portal · role · resource(선택) · 사유] 입력</span></li>
-            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">2</span><span>CMP가 <code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">cmp_permission_requests</code>에 저장 + target_portal의 <strong className="text-white">owner(승인자)</strong> 식별</span></li>
-            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">3</span><span>owner에게 알림 발송 (이메일 / Slack / 포털 알림센터)</span></li>
-            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">4</span><span>owner가 CMP 승인 페이지에서 승인/반려</span></li>
-            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">5</span><span>승인 시 CMP가 <strong className="text-white">service-to-service 토큰</strong>(client_credentials grant)으로 해당 포털의 <code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">POST /api/admin/grant</code> 호출</span></li>
-            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">6</span><span>해당 포털이 자체 RBAC DB에 role 부여 + 감사 로그 기록 + 결과 응답</span></li>
-            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">7</span><span>CMP가 사용자에게 결과 통보 + 권한 이력 갱신</span></li>
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[13px] font-bold text-indigo-300">1</span><span>사용자가 <strong className="text-white">CMP "권한 신청" 페이지</strong>에서 [target_portal · role · resource(선택) · 사유] 입력</span></li>
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[13px] font-bold text-indigo-300">2</span><span>CMP가 <code className="text-[14px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">cmp_permission_requests</code>에 저장 + target_portal의 <strong className="text-white">owner(승인자)</strong> 식별</span></li>
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[13px] font-bold text-indigo-300">3</span><span>owner에게 알림 발송 (이메일 / Slack / 포털 알림센터)</span></li>
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[13px] font-bold text-indigo-300">4</span><span>owner가 CMP 승인 페이지에서 승인/반려</span></li>
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[13px] font-bold text-indigo-300">5</span><span>승인 시 CMP가 <strong className="text-white">service-to-service 토큰</strong>(client_credentials grant)으로 해당 포털의 <code className="text-[14px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">POST /api/admin/grant</code> 호출</span></li>
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[13px] font-bold text-indigo-300">6</span><span>해당 포털이 자체 RBAC DB에 role 부여 + 감사 로그 기록 + 결과 응답</span></li>
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[13px] font-bold text-indigo-300">7</span><span>CMP가 사용자에게 결과 통보 + 권한 이력 갱신</span></li>
           </ol>
-          <div className="mt-4 pt-4 border-t border-slate-800 text-[12px] text-slate-500">
+          <div className="mt-4 pt-4 border-t border-slate-800 text-[14px] text-slate-500">
             ※ Push 실패 시 비동기 재시도 큐 + 재시도 한도 초과 시 운영 알람. 멱등성은 request_id로 보장.
           </div>
         </div>
@@ -333,12 +333,12 @@ export default function SpecDoc() {
 
         <h4 className="text-base font-bold text-white mb-2 mt-6">10.3 각 포털이 구현해야 하는 Admin API</h4>
         <div className="bg-slate-950 border border-slate-800 rounded-xl p-5">
-          <ul className="space-y-2.5 text-[13px] text-slate-300">
-            <li><code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">POST /api/admin/grant</code> — body: <code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">{`{ sub, role, resource_id?, granted_by, request_id }`}</code></li>
-            <li><code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">POST /api/admin/revoke</code> — body: <code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">{`{ sub, role, resource_id?, revoked_by, reason }`}</code></li>
-            <li><code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">GET /api/admin/roles?sub={'{sub}'}</code> — 응답: 해당 사용자의 모든 role/permission 목록</li>
+          <ul className="space-y-2.5 text-[15px] text-slate-300">
+            <li><code className="text-[14px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">POST /api/admin/grant</code> — body: <code className="text-[14px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">{`{ sub, role, resource_id?, granted_by, request_id }`}</code></li>
+            <li><code className="text-[14px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">POST /api/admin/revoke</code> — body: <code className="text-[14px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">{`{ sub, role, resource_id?, revoked_by, reason }`}</code></li>
+            <li><code className="text-[14px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">GET /api/admin/roles?sub={'{sub}'}</code> — 응답: 해당 사용자의 모든 role/permission 목록</li>
           </ul>
-          <div className="mt-4 pt-4 border-t border-slate-800 text-[12px] text-slate-500 space-y-1">
+          <div className="mt-4 pt-4 border-t border-slate-800 text-[14px] text-slate-500 space-y-1">
             <div>· 인증: Bearer service token (client_id = <code className="text-amber-300">cmp-admin-svc</code> · scope = <code className="text-amber-300">{`{portal}:admin`}</code>)</div>
             <div>· 각 포털은 토큰의 client_id가 <code className="text-amber-300">cmp-admin-svc</code>인지 확인 (다른 client는 거부)</div>
             <div>· 멱등성: <code className="text-amber-300">request_id</code>가 이미 처리된 경우 같은 결과 반환 (중복 grant 방지)</div>
@@ -346,26 +346,26 @@ export default function SpecDoc() {
         </div>
 
         <h4 className="text-base font-bold text-white mb-2 mt-6">10.4 Service-to-Service 인증 (CMP → 각 포털)</h4>
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 text-[13px] text-slate-300">
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 text-[15px] text-slate-300">
           <p className="leading-relaxed mb-3">CMP가 다른 포털의 admin API를 호출할 때는 일반 사용자 토큰이 아닌, <strong className="text-white">전용 client_credentials 토큰</strong>을 IdP에서 발급받아 사용합니다.</p>
-          <pre className="text-[12px] font-mono bg-slate-950 border border-slate-800 rounded p-3 text-slate-300 overflow-x-auto whitespace-pre">{`POST /oauth2/v1/token HTTP/1.1
+          <pre className="text-[14px] font-mono bg-slate-950 border border-slate-800 rounded p-3 text-slate-300 overflow-x-auto whitespace-pre">{`POST /oauth2/v1/token HTTP/1.1
 Host: auth.kwater.com
 Authorization: Basic <base64(cmp-admin-svc:secret)>
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=client_credentials&scope=datahub:admin`}</pre>
-          <p className="mt-3 text-[12px] text-slate-500">· IdP는 <code className="text-amber-300">cmp-admin-svc</code> client에 한해 <code className="text-amber-300">{`{portal}:admin`}</code> scope 부여 허용</p>
+          <p className="mt-3 text-[14px] text-slate-500">· IdP는 <code className="text-amber-300">cmp-admin-svc</code> client에 한해 <code className="text-amber-300">{`{portal}:admin`}</code> scope 부여 허용</p>
         </div>
 
         <h4 className="text-base font-bold text-white mb-2 mt-6">10.5 책임 분리 매트릭스</h4>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-[13px] border-collapse">
+          <table className="w-full text-left text-[15px] border-collapse">
             <thead>
               <tr className="border-b border-slate-700 text-slate-400">
-                <th className="py-2 px-3 font-semibold text-[12px] uppercase tracking-wider">책임</th>
-                <th className="py-2 px-3 font-semibold text-[12px] uppercase tracking-wider">IdP</th>
-                <th className="py-2 px-3 font-semibold text-[12px] uppercase tracking-wider">CMP</th>
-                <th className="py-2 px-3 font-semibold text-[12px] uppercase tracking-wider">각 포털</th>
+                <th className="py-2 px-3 font-semibold text-[14px] uppercase tracking-wider">책임</th>
+                <th className="py-2 px-3 font-semibold text-[14px] uppercase tracking-wider">IdP</th>
+                <th className="py-2 px-3 font-semibold text-[14px] uppercase tracking-wider">CMP</th>
+                <th className="py-2 px-3 font-semibold text-[14px] uppercase tracking-wider">각 포털</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
@@ -386,7 +386,7 @@ grant_type=client_credentials&scope=datahub:admin`}</pre>
             <AlertTriangle size={14} className="text-amber-400" />
             흔한 함정
           </h4>
-          <ul className="space-y-1.5 text-[13px] text-slate-300">
+          <ul className="space-y-1.5 text-[15px] text-slate-300">
             <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">CMP DB에만 권한 저장</strong> → 매 API 호출마다 CMP 조회 필요. Push로 각 포털에도 반영.</span></li>
             <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">권한 회수 시 CMP만 업데이트</strong> → 각 포털의 revoke API도 반드시 호출.</span></li>
             <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">일반 사용자 토큰으로 grant API 호출</strong> → service-to-service 전용 토큰 사용. 일반 사용자가 admin API를 직접 칠 수 없게 차단.</span></li>
@@ -402,8 +402,8 @@ grant_type=client_credentials&scope=datahub:admin`}</pre>
           <table className="w-full text-left text-sm border-collapse">
             <thead>
               <tr className="border-b border-slate-700 text-slate-400">
-                <th className="py-2 px-3 font-semibold text-[12px] uppercase tracking-wider w-32">단계</th>
-                <th className="py-2 px-3 font-semibold text-[12px] uppercase tracking-wider">산출물</th>
+                <th className="py-2 px-3 font-semibold text-[14px] uppercase tracking-wider w-32">단계</th>
+                <th className="py-2 px-3 font-semibold text-[14px] uppercase tracking-wider">산출물</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
@@ -421,7 +421,7 @@ grant_type=client_credentials&scope=datahub:admin`}</pre>
       {/* 마무리 */}
       <div className="bg-amber-500/5 border border-amber-500/30 rounded-2xl p-5 flex items-start gap-3">
         <AlertTriangle className="shrink-0 text-amber-400 mt-0.5" size={18} />
-        <div className="text-[13px] text-slate-300 leading-relaxed">
+        <div className="text-[15px] text-slate-300 leading-relaxed">
           본 문서는 사업 진행 시 실제 요구사항 정의서·제안 요청서(RFP)와 발주처 표준 양식에 맞춰 재구성합니다. 표준 산출물 외 추가 산출물(보안 검토서·개인정보 영향평가 등)은 발주처 요구에 따라 별도 작성합니다.
         </div>
       </div>
@@ -438,7 +438,7 @@ function Section({ icon: Icon, title, subtitle, children }) {
         <Icon className="text-indigo-400 shrink-0" size={22} />
         <div>
           <h3 className="text-2xl font-bold text-white tracking-tight">{title}</h3>
-          {subtitle && <p className="text-[13px] text-slate-500 mt-0.5">{subtitle}</p>}
+          {subtitle && <p className="text-[15px] text-slate-500 mt-0.5">{subtitle}</p>}
         </div>
       </div>
       {children}
@@ -454,7 +454,7 @@ function Card({ title, accent, children }) {
   return (
     <div className={`rounded-xl border ${colorMap[accent]} p-5`}>
       <h4 className="text-sm font-bold text-white mb-2 uppercase tracking-wider">{title}</h4>
-      <p className="text-[13px] text-slate-300 leading-relaxed">{children}</p>
+      <p className="text-[15px] text-slate-300 leading-relaxed">{children}</p>
     </div>
   );
 }
@@ -468,7 +468,7 @@ function ScopeCard({ inScope, title, items }) {
       <h4 className="text-sm font-bold text-white mb-3">{title}</h4>
       <ul className="space-y-1.5">
         {items.map((item, i) => (
-          <li key={i} className="flex gap-2 text-[13px] text-slate-300 items-start">
+          <li key={i} className="flex gap-2 text-[15px] text-slate-300 items-start">
             <Icon className={`shrink-0 ${iconColor} mt-0.5`} size={14} />
             <span>{item}</span>
           </li>
@@ -481,9 +481,9 @@ function ScopeCard({ inScope, title, items }) {
 function FrRow({ id, name, desc }) {
   return (
     <tr className="hover:bg-slate-900/40">
-      <td className="py-3 px-4 font-mono text-emerald-300 text-[12px] font-bold align-top">{id}</td>
+      <td className="py-3 px-4 font-mono text-emerald-300 text-[14px] font-bold align-top">{id}</td>
       <td className="py-3 px-4 text-white font-semibold align-top">{name}</td>
-      <td className="py-3 px-4 text-[13px] text-slate-300 leading-relaxed">{desc}</td>
+      <td className="py-3 px-4 text-[15px] text-slate-300 leading-relaxed">{desc}</td>
     </tr>
   );
 }
@@ -491,9 +491,9 @@ function FrRow({ id, name, desc }) {
 function NfrRow({ id, name, target }) {
   return (
     <tr className="hover:bg-slate-900/40">
-      <td className="py-3 px-4 font-mono text-emerald-300 text-[12px] font-bold align-top">{id}</td>
+      <td className="py-3 px-4 font-mono text-emerald-300 text-[14px] font-bold align-top">{id}</td>
       <td className="py-3 px-4 text-white font-semibold align-top">{name}</td>
-      <td className="py-3 px-4 text-[13px] text-slate-300 leading-relaxed">{target}</td>
+      <td className="py-3 px-4 text-[15px] text-slate-300 leading-relaxed">{target}</td>
     </tr>
   );
 }
@@ -502,7 +502,7 @@ function StdCard({ std, desc }) {
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
       <div className="font-mono text-sm font-bold text-emerald-300 mb-1.5">{std}</div>
-      <div className="text-[13px] text-slate-400 leading-relaxed">{desc}</div>
+      <div className="text-[15px] text-slate-400 leading-relaxed">{desc}</div>
     </div>
   );
 }
@@ -516,7 +516,7 @@ function ArchBox({ color, title, items }) {
   return (
     <div className={`rounded-xl border ${colorMap[color]} p-4`}>
       <h4 className="text-sm font-bold text-white mb-2">{title}</h4>
-      <ul className="space-y-1 text-[12px] font-mono text-slate-300">
+      <ul className="space-y-1 text-[14px] font-mono text-slate-300">
         {items.map((item, i) => <li key={i}>· {item}</li>)}
       </ul>
     </div>
@@ -528,9 +528,9 @@ function DbTable({ name, desc, rows }) {
     <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
       <div className="bg-slate-950 px-4 py-3 border-b border-slate-800">
         <div className="font-mono text-sm font-bold text-emerald-300">{name}</div>
-        <div className="text-[12px] text-slate-500 mt-0.5">{desc}</div>
+        <div className="text-[14px] text-slate-500 mt-0.5">{desc}</div>
       </div>
-      <table className="w-full text-left text-[12px] font-mono">
+      <table className="w-full text-left text-[14px] font-mono">
         <tbody>
           {rows.map(([col, type], i) => (
             <tr key={i} className="border-t border-slate-800/60">
@@ -567,13 +567,13 @@ function PhaseCard({ phase, weeks, name, deliverables, color }) {
   return (
     <div className={`rounded-xl border ${colorMap[color]} p-5`}>
       <div className="flex flex-wrap items-baseline gap-3 mb-2">
-        <span className="text-[12px] font-mono font-bold uppercase tracking-widest">{phase}</span>
-        <span className="text-[12px] font-mono text-slate-500">{weeks}</span>
+        <span className="text-[14px] font-mono font-bold uppercase tracking-widest">{phase}</span>
+        <span className="text-[14px] font-mono text-slate-500">{weeks}</span>
         <h4 className="text-base font-bold text-white">{name}</h4>
       </div>
       <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-1 mt-2">
         {deliverables.map((d, i) => (
-          <li key={i} className="text-[13px] text-slate-300 flex gap-2 items-start">
+          <li key={i} className="text-[15px] text-slate-300 flex gap-2 items-start">
             <Check className="shrink-0 text-emerald-400 mt-0.5" size={13} />
             <span>{d}</span>
           </li>
@@ -587,9 +587,9 @@ function DelvRow({ stage, items }) {
   return (
     <tr className="hover:bg-slate-900/40">
       <td className="py-2.5 px-3 align-top">
-        <span className="text-[11px] font-mono font-bold text-indigo-300 bg-indigo-500/10 border border-indigo-500/30 px-2 py-0.5 rounded">{stage}</span>
+        <span className="text-[13px] font-mono font-bold text-indigo-300 bg-indigo-500/10 border border-indigo-500/30 px-2 py-0.5 rounded">{stage}</span>
       </td>
-      <td className="py-2.5 px-3 text-[13px] text-slate-300 leading-relaxed">{items}</td>
+      <td className="py-2.5 px-3 text-[15px] text-slate-300 leading-relaxed">{items}</td>
     </tr>
   );
 }
@@ -597,7 +597,7 @@ function DelvRow({ stage, items }) {
 function RaciRow({ item, r1, r2, r3 }) {
   return (
     <tr className="hover:bg-slate-900/40">
-      <td className="py-2 px-3 text-[13px] text-slate-300">{item}</td>
+      <td className="py-2 px-3 text-[15px] text-slate-300">{item}</td>
       <td className="py-2 px-3 text-emerald-400 font-bold text-center w-20">{r1}</td>
       <td className="py-2 px-3 text-emerald-400 font-bold text-center w-20">{r2}</td>
       <td className="py-2 px-3 text-emerald-400 font-bold text-center w-20">{r3}</td>

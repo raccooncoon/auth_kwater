@@ -12,8 +12,8 @@ export default function Comparison() {
         <div className="absolute -top-12 -right-12 w-48 h-48 bg-rose-500/20 rounded-full blur-3xl pointer-events-none"></div>
         <div className="relative">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-[14px] font-mono font-bold uppercase tracking-widest bg-rose-500/20 text-rose-300 border border-rose-500/30 px-2.5 py-0.5 rounded">왜 별도 IdP가 필요한가</span>
-            <span className="text-[14px] font-mono font-bold uppercase tracking-widest bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded">설득 근거 자료</span>
+            <span className="text-[16px] font-mono font-bold uppercase tracking-widest bg-rose-500/20 text-rose-300 border border-rose-500/30 px-2.5 py-0.5 rounded">왜 별도 IdP가 필요한가</span>
+            <span className="text-[16px] font-mono font-bold uppercase tracking-widest bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded">설득 근거 자료</span>
           </div>
           <h2 className="text-4xl font-extrabold text-white tracking-tight mb-3 leading-tight">OASIS 비교 · 디지털플랫폼 통합인증 서버 구축 필요성</h2>
           <p className="text-slate-300 text-lg leading-relaxed max-w-3xl">
@@ -27,31 +27,31 @@ export default function Comparison() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-slate-900 border border-emerald-500/30 rounded-xl p-5">
             <h4 className="text-sm font-bold text-emerald-300 mb-3 uppercase tracking-wider">OASIS가 하는 일</h4>
-            <ul className="space-y-1.5 text-[15px] text-slate-300">
+            <ul className="space-y-1.5 text-[17px] text-slate-300">
               <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>K-water Fasoo SSO 페이로드 복호화</span></li>
               <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>자체 JWT 발급 (HS256 추정)</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>사용자 마스터 조회 (<code className="text-[15px] text-emerald-300">/api/member</code>)</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>토큰 검증 (<code className="text-[15px] text-emerald-300">/api/auth/validate</code>)</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>사용자 마스터 조회 (<code className="text-[17px] text-emerald-300">/api/member</code>)</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>토큰 검증 (<code className="text-[17px] text-emerald-300">/api/auth/validate</code>)</span></li>
               <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>카카오 알림톡 발송</span></li>
             </ul>
           </div>
           <div className="bg-slate-900 border border-rose-500/30 rounded-xl p-5">
             <h4 className="text-sm font-bold text-rose-300 mb-3 uppercase tracking-wider">OASIS가 안 하는 일</h4>
-            <ul className="space-y-1.5 text-[15px] text-slate-300">
-              <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>OIDC 표준 흐름 (<code className="text-[15px] text-rose-300">/authorize</code>, PKCE, state, nonce)</span></li>
+            <ul className="space-y-1.5 text-[17px] text-slate-300">
+              <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>OIDC 표준 흐름 (<code className="text-[17px] text-rose-300">/authorize</code>, PKCE, state, nonce)</span></li>
               <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>Discovery / JWKS 공개</span></li>
               <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>Refresh Token Rotation</span></li>
               <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>Single Logout / 백채널 콜백</span></li>
               <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>client_id별 토큰 분리</span></li>
               <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>scope·role 관리</span></li>
               <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>토큰 즉시 폐기(revoke)</span></li>
-              <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>Step-up 재인증 (<code className="text-[15px] text-rose-300">prompt=login</code>)</span></li>
+              <li className="flex gap-2"><X className="shrink-0 text-rose-400 mt-0.5" size={14} /><span>Step-up 재인증 (<code className="text-[17px] text-rose-300">prompt=login</code>)</span></li>
             </ul>
           </div>
         </div>
         <div className="bg-amber-500/5 border border-amber-500/30 rounded-xl p-5 mt-4 flex items-start gap-3">
           <AlertTriangle className="shrink-0 text-amber-400 mt-0.5" size={18} />
-          <div className="text-[15px] text-slate-300 leading-relaxed">
+          <div className="text-[17px] text-slate-300 leading-relaxed">
             <strong className="text-amber-200">OASIS의 메시지를 한 줄로:</strong> "Fasoo 어려운 거 내가 풀어줄게. JWT 받아서 나머지는 너희가 알아서 해." → 그런데 "나머지"가 OIDC IdP 본체이며, 4개 포털이 안전하게 묶이려면 누군가는 그 본체를 만들어야 합니다.
           </div>
         </div>
@@ -63,9 +63,9 @@ export default function Comparison() {
           <table className="w-full text-left text-sm border-collapse">
             <thead>
               <tr className="border-b border-slate-700 text-slate-400">
-                <th className="py-3 px-4 font-semibold text-[14px] uppercase tracking-wider">항목</th>
-                <th className="py-3 px-4 font-semibold text-[14px] uppercase tracking-wider text-indigo-300">디지털플랫폼 통합인증 서버 (제안)</th>
-                <th className="py-3 px-4 font-semibold text-[14px] uppercase tracking-wider text-rose-300">OASIS Portal API (현재 가이드)</th>
+                <th className="py-3 px-4 font-semibold text-[16px] uppercase tracking-wider">항목</th>
+                <th className="py-3 px-4 font-semibold text-[16px] uppercase tracking-wider text-indigo-300">디지털플랫폼 통합인증 서버 (제안)</th>
+                <th className="py-3 px-4 font-semibold text-[16px] uppercase tracking-wider text-rose-300">OASIS Portal API (현재 가이드)</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
@@ -97,10 +97,10 @@ export default function Comparison() {
           <table className="w-full text-left text-sm border-collapse">
             <thead>
               <tr className="border-b border-slate-700 text-slate-400">
-                <th className="py-3 px-4 font-semibold text-[14px] uppercase tracking-wider">방식</th>
-                <th className="py-3 px-4 font-semibold text-[14px] uppercase tracking-wider w-32">비밀키 공유</th>
-                <th className="py-3 px-4 font-semibold text-[14px] uppercase tracking-wider w-24">성능</th>
-                <th className="py-3 px-4 font-semibold text-[14px] uppercase tracking-wider">보안 약점</th>
+                <th className="py-3 px-4 font-semibold text-[16px] uppercase tracking-wider">방식</th>
+                <th className="py-3 px-4 font-semibold text-[16px] uppercase tracking-wider w-32">비밀키 공유</th>
+                <th className="py-3 px-4 font-semibold text-[16px] uppercase tracking-wider w-24">성능</th>
+                <th className="py-3 px-4 font-semibold text-[16px] uppercase tracking-wider">보안 약점</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
@@ -108,32 +108,32 @@ export default function Comparison() {
                 <td className="py-3 px-4 text-white font-semibold">A. 각 포털이 로컬 HS256 검증</td>
                 <td className="py-3 px-4 text-rose-300 font-bold">❌ 필요</td>
                 <td className="py-3 px-4 text-emerald-300 font-bold">✓ 빠름</td>
-                <td className="py-3 px-4 text-[15px] text-rose-300">4개 포털에 비밀키 분산 → 한 곳 유출 = 전체 위조</td>
+                <td className="py-3 px-4 text-[17px] text-rose-300">4개 포털에 비밀키 분산 → 한 곳 유출 = 전체 위조</td>
               </tr>
               <tr>
-                <td className="py-3 px-4 text-white font-semibold">B. 매 요청마다 <code className="text-emerald-300 text-[14px]">/api/auth/validate</code> 호출</td>
+                <td className="py-3 px-4 text-white font-semibold">B. 매 요청마다 <code className="text-emerald-300 text-[16px]">/api/auth/validate</code> 호출</td>
                 <td className="py-3 px-4 text-emerald-300 font-bold">✓ 불필요</td>
                 <td className="py-3 px-4 text-rose-300 font-bold">❌ 느림</td>
-                <td className="py-3 px-4 text-[15px] text-rose-300">OASIS가 4 포털 SPOF, latency hop, 부하 폭발</td>
+                <td className="py-3 px-4 text-[17px] text-rose-300">OASIS가 4 포털 SPOF, latency hop, 부하 폭발</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 text-white font-semibold">C. /validate + 캐시</td>
                 <td className="py-3 px-4 text-emerald-300 font-bold">✓ 불필요</td>
                 <td className="py-3 px-4 text-emerald-300 font-bold">✓ 빠름</td>
-                <td className="py-3 px-4 text-[15px] text-rose-300">캐시 만료 전 권한 회수 무효 (퇴직자·사고 대응 지연)</td>
+                <td className="py-3 px-4 text-[17px] text-rose-300">캐시 만료 전 권한 회수 무효 (퇴직자·사고 대응 지연)</td>
               </tr>
               <tr className="bg-emerald-500/5">
                 <td className="py-3 px-4 text-emerald-200 font-bold">D. <strong>OIDC RS256 + JWKS</strong> (디지털플랫폼 통합인증 서버)</td>
                 <td className="py-3 px-4 text-emerald-300 font-bold">✓ 불필요</td>
                 <td className="py-3 px-4 text-emerald-300 font-bold">✓ 빠름</td>
-                <td className="py-3 px-4 text-[15px] text-emerald-300 font-semibold">트릴레마 깨짐 — 공개키로 로컬 검증 + JWKS 1시간 캐시 + revoke API로 즉시 폐기</td>
+                <td className="py-3 px-4 text-[17px] text-emerald-300 font-semibold">트릴레마 깨짐 — 공개키로 로컬 검증 + JWKS 1시간 캐시 + revoke API로 즉시 폐기</td>
               </tr>
             </tbody>
           </table>
         </div>
         <div className="bg-indigo-500/5 border border-indigo-500/30 rounded-xl p-5 mt-4 flex items-start gap-3">
           <Lightbulb className="shrink-0 text-indigo-400 mt-0.5" size={18} />
-          <div className="text-[15px] text-slate-300 leading-relaxed">
+          <div className="text-[17px] text-slate-300 leading-relaxed">
             <strong className="text-indigo-200">OIDC가 해결한 핵심:</strong> 비대칭 키(RS256/ES256) + 공개 JWKS 모델은 각 포털이 <strong className="text-white">공개키로 로컬 검증</strong>(빠름) + <strong className="text-white">비공개키는 IdP에만 보관</strong>(안전) + <strong className="text-white">revoke API로 즉시 폐기</strong>(권한 회수). 이 트릴레마를 OASIS 단독으로는 어떤 방식으로도 해결할 수 없습니다.
           </div>
         </div>
@@ -210,7 +210,7 @@ export default function Comparison() {
         <p className="text-base text-slate-200 leading-relaxed mb-4">
           <strong className="text-indigo-300">"OASIS는 K-water 메인 포탈 전용 JWT 발급기이지 OIDC 표준 IdP가 아닙니다.</strong> 디지털플랫폼 4개 포털에 OASIS JWT를 그대로 통용시키는 것은 <strong className="text-rose-300">검증 트릴레마, 단일 토큰 침투, SLO 부재, RTR 부재, 권한 관리 위치 부재, 외부 SaaS 비호환, PII 노출, URL 토큰 노출</strong>이라는 8개 영역의 누적 리스크를 발생시킵니다. <strong className="text-emerald-300">디지털플랫폼 통합인증 서버는 OIDC 표준(RS256+JWKS, PKCE, RTR, BCL 1.0, client_id 분리, /userinfo)으로 이 모든 리스크를 해결</strong>하면서 향후 외부 SaaS 연동·권한 통합 관리·감사 단일 지점을 확보합니다."
         </p>
-        <div className="text-[14px] text-slate-500 font-mono mt-3 pt-3 border-t border-slate-800">
+        <div className="text-[16px] text-slate-500 font-mono mt-3 pt-3 border-t border-slate-800">
           ※ 발주처·K-water 회의 자료, 결재 문서, RFP 수정 요청서 등에 그대로 인용 가능합니다.
         </div>
       </div>
@@ -218,7 +218,7 @@ export default function Comparison() {
       {/* 활용 가이드 */}
       <div className="bg-amber-500/5 border border-amber-500/30 rounded-2xl p-5 flex items-start gap-3">
         <AlertTriangle className="shrink-0 text-amber-400 mt-0.5" size={18} />
-        <div className="text-[15px] text-slate-300 leading-relaxed">
+        <div className="text-[17px] text-slate-300 leading-relaxed">
           <strong className="text-amber-200">활용 가이드</strong>
           <ul className="mt-2 space-y-1 list-disc list-inside">
             <li>섹션 2 비교표는 회의 슬라이드 1장으로 압축 사용 가능</li>
@@ -242,7 +242,7 @@ function Section({ icon: Icon, title, subtitle, children }) {
         <Icon className="text-indigo-400 shrink-0" size={22} />
         <div>
           <h3 className="text-2xl font-bold text-white tracking-tight">{title}</h3>
-          {subtitle && <p className="text-[15px] text-slate-500 mt-0.5">{subtitle}</p>}
+          {subtitle && <p className="text-[17px] text-slate-500 mt-0.5">{subtitle}</p>}
         </div>
       </div>
       {children}
@@ -253,9 +253,9 @@ function Section({ icon: Icon, title, subtitle, children }) {
 function CmpRow({ item, ours, theirs, warn }) {
   return (
     <tr className="hover:bg-slate-900/40">
-      <td className="py-2.5 px-4 text-slate-300 font-semibold text-[15px] align-top">{item}</td>
-      <td className="py-2.5 px-4 text-[15px] text-emerald-200 align-top">{ours}</td>
-      <td className={`py-2.5 px-4 text-[15px] align-top ${warn ? 'text-rose-300' : 'text-slate-400'}`}>{warn && <span className="mr-1">⚠</span>}{theirs}</td>
+      <td className="py-2.5 px-4 text-slate-300 font-semibold text-[17px] align-top">{item}</td>
+      <td className="py-2.5 px-4 text-[17px] text-emerald-200 align-top">{ours}</td>
+      <td className={`py-2.5 px-4 text-[17px] align-top ${warn ? 'text-rose-300' : 'text-slate-400'}`}>{warn && <span className="mr-1">⚠</span>}{theirs}</td>
     </tr>
   );
 }
@@ -279,12 +279,12 @@ function ReasonCard({ num, severity, icon: Icon, title, problem, solution }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
             <Icon className="text-slate-400 shrink-0" size={14} />
-            <span className={`text-[14px] font-mono font-bold uppercase tracking-widest px-1.5 py-0.5 rounded border ${badgeMap[severity]}`}>{sevLabel}</span>
+            <span className={`text-[16px] font-mono font-bold uppercase tracking-widest px-1.5 py-0.5 rounded border ${badgeMap[severity]}`}>{sevLabel}</span>
           </div>
           <h4 className="text-base font-bold text-white leading-tight">{title}</h4>
         </div>
       </div>
-      <div className="space-y-2 text-[15px]">
+      <div className="space-y-2 text-[17px]">
         <div className="flex gap-2">
           <span className="shrink-0 text-rose-400 font-bold">문제</span>
           <span className="text-slate-300 leading-relaxed">{problem}</span>
@@ -301,11 +301,11 @@ function ReasonCard({ num, severity, icon: Icon, title, problem, solution }) {
 function CounterRow({ objection, rebut }) {
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
-      <div className="text-[15px] mb-3 flex gap-2">
+      <div className="text-[17px] mb-3 flex gap-2">
         <span className="shrink-0 text-rose-400 font-bold">"Q.</span>
         <span className="text-slate-200 italic">{objection}"</span>
       </div>
-      <div className="text-[15px] flex gap-2 pl-4 border-l-2 border-emerald-500/40">
+      <div className="text-[17px] flex gap-2 pl-4 border-l-2 border-emerald-500/40">
         <span className="shrink-0 text-emerald-400 font-bold">A.</span>
         <span className="text-slate-300 leading-relaxed">{rebut}</span>
       </div>

@@ -12,7 +12,7 @@ function CodeSnippetCard({ snippet, language, copiedId, onCopy }) {
             <Code2 className="text-indigo-400 shrink-0" size={16} />
             <span>{snippet.title}</span>
             {snippet.badge && (
-              <span className={`text-[10px] font-mono font-bold uppercase tracking-widest px-2 py-0.5 rounded ${snippet.badgeColor || 'bg-slate-700 text-slate-200'}`}>
+              <span className={`text-[12px] font-mono font-bold uppercase tracking-widest px-2 py-0.5 rounded ${snippet.badgeColor || 'bg-slate-700 text-slate-200'}`}>
                 {snippet.badge}
               </span>
             )}
@@ -683,7 +683,7 @@ export default function CodeExample({ handleCopy, copiedId }) {
       {codeLang === 'react' && (
         <div className="space-y-6">
           {/* BFF/SPA 안내 */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 flex items-start gap-2 text-[13px] text-slate-300 leading-relaxed">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 flex items-start gap-2 text-[15px] text-slate-300 leading-relaxed">
             <Info className="text-indigo-400 shrink-0 mt-0.5" size={16} />
             <div>
               본 가이드는 <strong className="text-emerald-300">BFF 패턴(권장)</strong>을 기본으로 합니다 — 토큰은 백엔드에 보관, 브라우저엔 세션 쿠키만.

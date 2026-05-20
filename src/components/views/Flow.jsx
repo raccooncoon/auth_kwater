@@ -14,7 +14,7 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
 
       <div className="bg-indigo-500/5 border border-indigo-500/30 rounded-xl px-4 py-3 flex items-start gap-2">
         <Info className="text-indigo-400 shrink-0 mt-0.5" size={16} />
-        <p className="text-[13px] text-slate-300 leading-relaxed">
+        <p className="text-[15px] text-slate-300 leading-relaxed">
           본 시뮬레이터는 핵심 흐름만 <strong className="text-white">6개 단계</strong>로 단순화하여 페이로드·상태 변화를 추적합니다. 토큰 갱신(RTR)·사용자 로그아웃 트리거 등을 포함한 <strong className="text-white">전체 17단계 흐름</strong>은 <button onClick={() => setActiveTab('sequence')} className="text-indigo-300 hover:text-indigo-200 underline underline-offset-2">3. 데이터 흐름 시퀀스</button> 탭의 시퀀스 다이어그램을 참고하세요.
         </p>
       </div>
@@ -38,8 +38,8 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
                   : 'bg-slate-900/40 border-slate-800 text-slate-500 hover:border-slate-700 hover:bg-slate-900/80'
               }`}
             >
-              <span className="text-[12px] font-bold tracking-wider uppercase mb-1.5">Step {idx + 1}</span>
-              <span className="text-[13px] font-semibold line-clamp-2 leading-relaxed text-slate-300 break-keep">{step.shortTitle || step.title}</span>
+              <span className="text-[14px] font-bold tracking-wider uppercase mb-1.5">Step {idx + 1}</span>
+              <span className="text-[15px] font-semibold line-clamp-2 leading-relaxed text-slate-300 break-keep">{step.shortTitle || step.title}</span>
             </button>
           ))}
         </div>
@@ -74,7 +74,7 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
           <div className="lg:col-span-7 space-y-6">
             <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
               <div className="flex flex-col md:flex-row md:items-center gap-3">
-                <span className="self-start md:self-auto text-[12px] font-mono font-bold uppercase tracking-widest px-2.5 py-1.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shadow-sm">
+                <span className="self-start md:self-auto text-[14px] font-mono font-bold uppercase tracking-widest px-2.5 py-1.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shadow-sm">
                   {simulationSteps[simStep].phase}
                 </span>
                 <div className="flex flex-wrap items-center gap-2 text-xs font-mono bg-slate-950/80 px-3 py-1.5 rounded-lg border border-slate-800 shadow-inner">
@@ -97,7 +97,7 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
               <div className="bg-slate-900 border border-emerald-500/30 rounded-xl p-5 space-y-2">
                 <div className="flex items-center gap-2">
                   <Eye className="text-emerald-400" size={16} />
-                  <span className="text-[12px] font-mono font-bold uppercase tracking-widest text-emerald-300">User View · 사용자가 보는 화면</span>
+                  <span className="text-[14px] font-mono font-bold uppercase tracking-widest text-emerald-300">User View · 사용자가 보는 화면</span>
                 </div>
                 <p className="text-sm text-slate-300 leading-relaxed">{simulationSteps[simStep].userView}</p>
               </div>
@@ -107,7 +107,7 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
               <div className="bg-slate-900 border border-indigo-500/30 rounded-xl p-5 space-y-2">
                 <div className="flex items-center gap-2">
                   <Info className="text-indigo-400" size={16} />
-                  <span className="text-[12px] font-mono font-bold uppercase tracking-widest text-indigo-300">Why · 이 단계가 필요한 이유</span>
+                  <span className="text-[14px] font-mono font-bold uppercase tracking-widest text-indigo-300">Why · 이 단계가 필요한 이유</span>
                 </div>
                 <p className="text-sm text-slate-300 leading-relaxed">{simulationSteps[simStep].purpose}</p>
               </div>
@@ -117,7 +117,7 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
               <div className="bg-slate-900 border border-amber-500/30 rounded-xl p-5 space-y-2">
                 <div className="flex items-center gap-2">
                   <AlertTriangle className="text-amber-400" size={16} />
-                  <span className="text-[12px] font-mono font-bold uppercase tracking-widest text-amber-300">Pitfall · 자주 빠지는 함정</span>
+                  <span className="text-[14px] font-mono font-bold uppercase tracking-widest text-amber-300">Pitfall · 자주 빠지는 함정</span>
                 </div>
                 <p className="text-sm text-slate-300 leading-relaxed">{simulationSteps[simStep].warning}</p>
               </div>
@@ -155,7 +155,7 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
                 <div className="p-4 space-y-4 text-xs">
                   {/* session storage */}
                   <div>
-                    <div className="text-[12px] font-mono font-semibold text-slate-500 uppercase mb-1.5 tracking-wider">sessionStorage (OIDC State / CSRF 방지)</div>
+                    <div className="text-[14px] font-mono font-semibold text-slate-500 uppercase mb-1.5 tracking-wider">sessionStorage (OIDC State / CSRF 방지)</div>
                     <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-lg font-mono space-y-1">
                       {Object.entries(simulationSteps[simStep].browserState.sessionStorage).map(([key, val]) => (
                         <div key={key} className="flex justify-between gap-2">
@@ -171,7 +171,7 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
 
                   {/* Memory Access Token */}
                   <div>
-                    <div className="text-[12px] font-mono font-semibold text-slate-500 uppercase mb-1.5 tracking-wider">JS In-Memory State (Access Token)</div>
+                    <div className="text-[14px] font-mono font-semibold text-slate-500 uppercase mb-1.5 tracking-wider">JS In-Memory State (Access Token)</div>
                     <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-lg font-mono flex justify-between gap-2">
                       <span className="text-emerald-400">accessToken:</span>
                       <span className="text-slate-400 truncate max-w-[200px]" title={simulationSteps[simStep].browserState.memory.accessToken}>
@@ -182,7 +182,7 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
 
                   {/* HttpOnly Cookies */}
                   <div>
-                    <div className="text-[12px] font-mono font-semibold text-slate-500 uppercase mb-1.5 tracking-wider">HttpOnly Cookies (IdP SSO Session)</div>
+                    <div className="text-[14px] font-mono font-semibold text-slate-500 uppercase mb-1.5 tracking-wider">HttpOnly Cookies (IdP SSO Session)</div>
                     <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-lg font-mono space-y-1">
                       {Object.entries(simulationSteps[simStep].browserState.cookies).map(([key, val]) => (
                         <div key={key} className="flex justify-between gap-2">
@@ -203,12 +203,12 @@ export default function Flow({ simulationSteps, simStep, setSimStep, handleCopy,
                 </div>
                 <div className="p-4 space-y-4 text-xs">
                   <div className="space-y-1.5 pb-3 border-b border-slate-800/50">
-                    <div className="text-[11px] font-mono font-semibold text-slate-500 uppercase tracking-wider">SSO 통합 인증 세션 (IdP)</div>
-                    <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-lg font-mono text-indigo-300 text-[12px] leading-relaxed break-all">{simulationSteps[simStep].serverState.authServer}</div>
+                    <div className="text-[13px] font-mono font-semibold text-slate-500 uppercase tracking-wider">SSO 통합 인증 세션 (IdP)</div>
+                    <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-lg font-mono text-indigo-300 text-[14px] leading-relaxed break-all">{simulationSteps[simStep].serverState.authServer}</div>
                   </div>
                   <div className="space-y-1.5">
-                    <div className="text-[11px] font-mono font-semibold text-slate-500 uppercase tracking-wider">백엔드 API 리소스 서버 인가</div>
-                    <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-lg font-mono text-emerald-300 text-[12px] leading-relaxed break-all">{simulationSteps[simStep].serverState.resourceServer}</div>
+                    <div className="text-[13px] font-mono font-semibold text-slate-500 uppercase tracking-wider">백엔드 API 리소스 서버 인가</div>
+                    <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-lg font-mono text-emerald-300 text-[14px] leading-relaxed break-all">{simulationSteps[simStep].serverState.resourceServer}</div>
                   </div>
                 </div>
               </div>

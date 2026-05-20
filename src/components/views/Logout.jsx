@@ -109,7 +109,7 @@ Host: auth.kwater.com`} />
           {/* Back-channel example */}
           <div>
             <h4 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
-              <span className="bg-emerald-500/20 text-emerald-300 text-[12px] font-mono px-2 py-0.5 rounded">RECOMMENDED</span>
+              <span className="bg-emerald-500/20 text-emerald-300 text-[14px] font-mono px-2 py-0.5 rounded">RECOMMENDED</span>
               Back-Channel Logout 수신 엔드포인트 예시
             </h4>
             <CodeBlock language="http" code={`POST /oauth2/v1/kwater/backchannel-logout HTTP/1.1
@@ -117,7 +117,7 @@ Host: auth.kwater.com
 Content-Type: application/x-www-form-urlencoded
 
 logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-water>`} />
-            <p className="text-[13px] text-slate-400 mt-2 leading-relaxed">
+            <p className="text-[15px] text-slate-400 mt-2 leading-relaxed">
               <code className="text-emerald-300">logout_token</code> 검증 필수 항목: <code className="text-slate-300">iss</code>=K-water issuer · <code className="text-slate-300">aud</code>=우리 client_id · <code className="text-slate-300">iat</code> 신선도 · <code className="text-slate-300">jti</code> 재사용 차단 · <code className="text-slate-300">events</code>에 <code className="text-slate-300">http://schemas.openid.net/event/backchannel-logout</code> 포함 · <code className="text-slate-300">nonce</code> 부재 · <code className="text-slate-300">sub</code> 또는 <code className="text-slate-300">sid</code>로 세션 식별 (OIDC BCL 1.0 §2.4 (RFC 8417 SET)).
             </p>
           </div>
@@ -125,7 +125,7 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-water>`} />
           {/* K-water request checklist */}
           <div className="bg-sky-950/30 border border-sky-500/30 rounded-xl p-4">
             <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-              <span className="bg-sky-500/20 text-sky-300 text-[12px] font-mono px-2 py-0.5 rounded">CHECKLIST</span>
+              <span className="bg-sky-500/20 text-sky-300 text-[14px] font-mono px-2 py-0.5 rounded">CHECKLIST</span>
               K-water에 정식 요청할 항목
             </h4>
             <ul className="space-y-1.5 text-xs text-slate-300">
