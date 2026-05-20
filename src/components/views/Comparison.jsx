@@ -17,7 +17,7 @@ export default function Comparison() {
           </div>
           <h2 className="text-4xl font-extrabold text-white tracking-tight mb-3 leading-tight">디지털플랫폼 통합인증 서버 구축 필요성 — 구조적 분리 근거</h2>
           <p className="text-slate-300 text-lg leading-relaxed max-w-3xl">
-            <strong className="text-emerald-200">OASIS는 K-water가 기존부터 운영해 온 시스템</strong>으로 그 자체로는 안정적으로 작동하고 있습니다. 본 페이지는 OASIS의 결함을 지적하는 것이 아니라, <strong className="text-white">디지털플랫폼 사업 안에서 클라우드(CMP)가 디지털플랫폼 통합인증 서버를 별도로 구축하지 않고 OASIS 인증값을 그대로 다른 포털(데이터허브·생성형 AI·SaaS)에 넘기는 현재 가이드 구조</strong>의 구조적 문제와, <strong className="text-indigo-300">디지털플랫폼이 자체 통합인증 서버를 갖춰야 하는 이유</strong>를 정리한 자료입니다.
+            <strong className="text-white">디지털플랫폼 사업 안에서 클라우드(CMP)가 디지털플랫폼 통합인증 서버를 별도로 구축하지 않고 OASIS 인증값을 그대로 다른 포털(데이터허브·생성형 AI·SaaS)에 넘기는 현재 가이드 구조</strong>의 구조적 문제와, <strong className="text-indigo-300">디지털플랫폼이 자체 통합인증 서버를 갖춰야 하는 이유</strong>를 정리한 자료입니다.
           </p>
         </div>
       </div>
