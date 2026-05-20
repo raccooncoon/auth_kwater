@@ -19,10 +19,11 @@ export const SPEC_DOC_MARKDOWN = `# 디지털플랫폼 통합인증 서버 — �
 8. [보안 요구사항](#8-보안-요구사항)
 9. [개발 마일스톤](#9-개발-마일스톤)
 10. [시험 계획](#10-시험-계획)
-11. [산출물](#11-산출물)
-12. [부록 A: 용어 정의](#부록-a-용어-정의)
-13. [부록 B: 참조 표준](#부록-b-참조-표준)
-14. [부록 C: K-water Mock 어댑터 명세](#부록-c-k-water-mock-어댑터-명세)
+11. [권한 관리 모델 (CMP 권한 허브)](#11-권한-관리-모델-cmp-권한-허브)
+12. [산출물](#12-산출물)
+13. [부록 A: 용어 정의](#부록-a-용어-정의)
+14. [부록 B: 참조 표준](#부록-b-참조-표준)
+15. [부록 C: K-water Mock 어댑터 명세](#부록-c-k-water-mock-어댑터-명세)
 
 ---
 
@@ -56,7 +57,8 @@ K-water 인증 시스템에서 1차 인증을 거친 사용자가 디지털플�
 
 - 자체 회원가입/비밀번호 관리 (K-water 영역)
 - MFA · OTP · WebAuthn 등 추가 인증 수단 (K-water 영역)
-- 포털별 권한(Role) 정밀 관리 (각 포털 자체 관리)
+- 포털별 권한(Role) 데이터 — IdP는 신원만 책임. 권한은 CMP 허브 + 각 포털 DB에서 관리 (11절 참조)
+- 권한 신청·승인 UI — CMP 권한 허브 사업 범위에서 다룸 (11절 참조)
 - 사용자 프로필 편집 UI
 - 이메일/SMS 발송
 - 결제/과금
@@ -798,7 +800,146 @@ CREATE INDEX idx_audit_created ON audit_logs(created_at);
 
 ---
 
-## 11. 산출물
+## 11. 권한 관리 모델 (CMP 권한 허브)
+
+> **본 절은 IdP 구축 범위 밖**이지만, 발주처 RFP 작성이나 CMP 사업 범위 산정 시 참고할 권장 아키텍처입니다. IdP는 신원만 책임지고 권한 데이터는 보유하지 않습니다.
+
+### 11.1 책임 분리
+
+| 컴포넌트 | 책임 |
+|---------|------|
+| **K-water** | 직원 마스터 (sub, 부서, 직급). 포털 기능 권한과 무관. |
+| **IdP (디지털플랫폼 통합인증)** | 신원 증명. JWT에 sub + 기본 속성만. **권한 데이터 미보유.** |
+| **CMP (권한 허브)** | 통합 신청·승인 UI · 워크플로 엔진 · 각 포털 grant API 호출 · 통합 감사 로그 |
+| **각 포털 (CMP/데이터허브/생성형 AI/SaaS)** | 자체 RBAC DB 보유. Admin API (grant/revoke) 구현. |
+
+### 11.2 권한 신청·승인 워크플로
+
+\`\`\`
+1. 사용자가 CMP "권한 신청" 페이지에서 입력
+   [target_portal · role · resource(선택) · 사유]
+            ↓
+2. CMP가 cmp_permission_requests에 저장
+   target_portal owner 식별
+            ↓
+3. owner에게 알림 발송 (이메일 / Slack / 포털 알림센터)
+            ↓
+4. owner가 CMP 승인 페이지에서 승인/반려
+            ↓
+5. 승인 시 CMP가 service-to-service 토큰으로
+   해당 포털의 POST /api/admin/grant 호출
+            ↓
+6. 해당 포털이 자체 RBAC DB에 role 부여
+   감사 로그 기록 + 결과 응답
+            ↓
+7. CMP가 사용자에게 결과 통보 + 권한 이력 갱신
+\`\`\`
+
+Push 실패 시 비동기 재시도 큐 + 최종 실패 시 운영 알람. 멱등성은 request_id로 보장.
+
+### 11.3 데이터 모델 (CMP 권한 허브 측)
+
+\`\`\`sql
+CREATE TABLE cmp_permission_requests (
+  id BIGSERIAL PRIMARY KEY,
+  requester_sub VARCHAR(128) NOT NULL,
+  target_portal VARCHAR(32) NOT NULL,    -- 'cmp' | 'datahub' | 'genai' | 'saas'
+  requested_role VARCHAR(64) NOT NULL,
+  resource_id VARCHAR(128),              -- 데이터셋/리소스 식별자 (선택)
+  reason TEXT,
+  status VARCHAR(16) DEFAULT 'pending',  -- pending | approved | rejected | revoked
+  approver_sub VARCHAR(128),
+  approved_at TIMESTAMPTZ,
+  request_id VARCHAR(64) UNIQUE,         -- 멱등성 키
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE cmp_portal_owners (
+  portal_id VARCHAR(32) PRIMARY KEY,
+  owner_subs TEXT[] NOT NULL,            -- 승인 권한자들
+  fallback_owner_sub VARCHAR(128),       -- owner 부재 시
+  sla_hours INT DEFAULT 24                -- 응답 SLA
+);
+\`\`\`
+
+각 포털은 자체 \`{portal}_user_roles\` 테이블을 별도 운영 (포털별 스키마 자율).
+
+### 11.4 각 포털이 구현해야 하는 Admin API
+
+| Method | Path | 용도 |
+|--------|------|------|
+| POST | \`/api/admin/grant\` | role 부여 |
+| POST | \`/api/admin/revoke\` | role 회수 |
+| GET | \`/api/admin/roles?sub={sub}\` | 사용자 권한 조회 |
+
+**Request body (grant 예시)**
+\`\`\`json
+{
+  "sub": "kwater_user_1234",
+  "role": "datahub_dataset_reader",
+  "resource_id": "dataset:water_quality_2024",
+  "granted_by": "kwater_admin_999",
+  "request_id": "req_a3f9b2c4d5"
+}
+\`\`\`
+
+**인증**
+- 헤더: \`Authorization: Bearer <service_access_token>\`
+- 토큰 검증 시 client_id가 \`cmp-admin-svc\`인지 확인 (다른 client는 403 거부)
+
+**멱등성**
+- 같은 \`request_id\`로 재호출 시 같은 결과 반환 (DB에 INSERT ON CONFLICT)
+
+### 11.5 Service-to-Service 인증 (CMP → 각 포털)
+
+CMP가 다른 포털의 admin API를 호출할 때는 일반 사용자 토큰이 아닌, **전용 client_credentials 토큰**을 IdP에서 발급받아 사용:
+
+\`\`\`
+POST /oauth2/v1/token HTTP/1.1
+Host: auth.kwater.com
+Authorization: Basic <base64(cmp-admin-svc:secret)>
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&scope=datahub:admin
+\`\`\`
+
+IdP는 \`cmp-admin-svc\` client에 한해 \`{portal}:admin\` scope 부여를 허용해야 합니다 (사전 client 등록 시 결정).
+
+### 11.6 책임 분리 매트릭스 (RACI 단순화)
+
+| 책임 | IdP | CMP | 각 포털 |
+|------|-----|-----|---------|
+| 사용자 신원 증명 (sub 발급) | ✓ |  |  |
+| 권한 신청·승인 UI |  | ✓ |  |
+| 승인 워크플로·알림 |  | ✓ |  |
+| 권한 데이터 저장 (role · permissions) |  |  | ✓ |
+| Admin API (grant/revoke) 구현 |  |  | ✓ |
+| 요청 라우팅·재시도 |  | ✓ |  |
+| 권한 부여/회수 감사 로그 |  | ✓ (요청) | ✓ (실행) |
+| 권한 캐시 (BFF 세션에) |  |  | ✓ |
+
+### 11.7 흔한 함정
+
+- **CMP DB에만 권한 저장** → 매 API 호출마다 CMP 조회 필요. Push로 각 포털에도 반영해야 함
+- **권한 회수 시 CMP만 업데이트** → 각 포털의 revoke API도 반드시 호출
+- **일반 사용자 토큰으로 grant API 호출** → service-to-service 전용 토큰 사용. 일반 사용자가 admin API를 직접 칠 수 없게 차단
+- **한 포털의 admin role을 다른 포털의 admin으로 가정** → 각 포털 role은 독립. CMP_ADMIN이 자동으로 데이터허브 ADMIN이 아님
+- **Push 실패 처리 누락** → 비동기 재시도 큐 + 알람 + 최종 실패 시 신청자/owner에게 통지
+
+### 11.8 IdP 사업과의 경계
+
+본 절의 모든 항목은 **IdP 사업 범위 밖**입니다. IdP는:
+- ✓ CMP가 client_credentials grant로 토큰을 받을 수 있도록 \`cmp-admin-svc\` client를 등록 지원
+- ✓ \`{portal}:admin\` scope 정의 지원
+- ✗ 권한 데이터 저장 없음
+- ✗ 권한 신청·승인 UI 구현 없음
+- ✗ 각 포털의 admin API 구현 없음
+
+CMP 권한 허브 + 각 포털 Admin API는 **별도 사업 범위**로 RFP에 명시되어야 합니다.
+
+---
+
+## 12. 산출물
 
 | 단계 | 산출물 |
 |------|--------|

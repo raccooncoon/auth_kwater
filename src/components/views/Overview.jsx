@@ -183,7 +183,7 @@ export default function Overview({ setActiveTab, handleCopy }) {
               <tr>
                 <td className="py-3 px-5"><span className="bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 rounded px-2 py-0.5 text-[12px] font-bold">MASTER</span> <span className="text-white font-semibold ml-2">클라우드 관리 포털 (CMP)</span></td>
                 <td className="py-3 px-5"><code className="text-slate-400 font-mono">cmp.kwater.com</code></td>
-                <td className="py-3 px-5 text-slate-400">K-water 페이로드 최초 수신 · 디지털플랫폼 진입점</td>
+                <td className="py-3 px-5 text-slate-400">K-water 페이로드 최초 수신 · 디지털플랫폼 진입점 · <strong className="text-indigo-300">전사 권한 신청·승인 허브</strong></td>
               </tr>
               <tr>
                 <td className="py-3 px-5"><span className="bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 rounded px-2 py-0.5 text-[12px] font-bold">SUB</span> <span className="text-white font-semibold ml-2">데이터허브 포털</span></td>

@@ -62,12 +62,12 @@ export default function MultiSso() {
         {/* Tier 3: 4 Client Portals (master + 3 sub) */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-slate-900 border border-indigo-500/40 rounded-2xl p-4 flex flex-col items-center text-center shadow-lg relative">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-indigo-300 text-[12px] px-2.5 py-0.5 rounded-full font-bold tracking-wider uppercase border border-indigo-500/40 whitespace-nowrap">Master Client</div>
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-800 text-indigo-300 text-[12px] px-2.5 py-0.5 rounded-full font-bold tracking-wider uppercase border border-indigo-500/40 whitespace-nowrap">Master · 권한 허브</div>
             <Laptop className="text-indigo-400 my-2" size={26} />
             <h4 className="font-bold text-white text-[13px]">클라우드 관리 포털 (CMP)</h4>
             <span className="text-[12px] text-slate-500 mt-1 font-mono">cmp.kwater.com</span>
             <div className="w-full h-px bg-slate-800 my-2.5"></div>
-            <p className="text-[12px] text-slate-400 leading-relaxed">K-water 페이로드 복호화 결과로 최초 로그인을 완료합니다.</p>
+            <p className="text-[12px] text-slate-400 leading-relaxed">K-water 페이로드 최초 진입 + <strong className="text-indigo-300">전사 권한 신청·승인 허브</strong></p>
           </div>
 
           <div className="bg-slate-900 border border-emerald-500/40 rounded-2xl p-4 flex flex-col items-center text-center shadow-lg relative">

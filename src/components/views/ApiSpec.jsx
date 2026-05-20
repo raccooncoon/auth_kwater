@@ -70,7 +70,7 @@ export default function ApiSpec() {
   "introspection_endpoint": "https://auth.kwater.com/oauth2/v1/introspect",
   "revocation_endpoint": "https://auth.kwater.com/oauth2/v1/revoke",
   "response_types_supported": ["code"],
-  "grant_types_supported": ["authorization_code", "refresh_token"],
+  "grant_types_supported": ["authorization_code", "refresh_token", "client_credentials"],
   "id_token_signing_alg_values_supported": ["RS256"],
   "backchannel_logout_supported": true,
   "backchannel_logout_session_supported": true
@@ -203,7 +203,7 @@ JWKS 응답에서 같은 kid를 찾아 그 공개키로 검증`} />
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/40">
-                  <tr><td className="py-2 px-3 font-mono text-white">grant_type</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3 text-slate-400"><code className="text-slate-300">authorization_code</code> 또는 <code className="text-slate-300">refresh_token</code></td></tr>
+                  <tr><td className="py-2 px-3 font-mono text-white">grant_type</td><td className="py-2 px-3 text-rose-400 font-semibold">Required</td><td className="py-2 px-3 text-slate-400"><code className="text-slate-300">authorization_code</code> · <code className="text-slate-300">refresh_token</code> · <code className="text-slate-300">client_credentials</code> (CMP 권한 허브 → 각 포털 Admin API 호출용)</td></tr>
                   <tr><td className="py-2 px-3 font-mono text-white">code</td><td className="py-2 px-3 text-amber-400">Code 교환 시</td><td className="py-2 px-3 text-slate-400">/authorize에서 받은 일회용 인가 코드</td></tr>
                   <tr><td className="py-2 px-3 font-mono text-white">refresh_token</td><td className="py-2 px-3 text-amber-400">갱신 시</td><td className="py-2 px-3 text-slate-400">HttpOnly 쿠키 또는 본문 어느 쪽으로든 가능</td></tr>
                   <tr><td className="py-2 px-3 font-mono text-white">redirect_uri</td><td className="py-2 px-3 text-amber-400">Code 교환 시</td><td className="py-2 px-3 text-slate-400">/authorize에서 사용한 값과 정확히 일치</td></tr>

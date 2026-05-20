@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   FileText, Target, ListChecks, ShieldCheck, Database, Layers,
-  Activity, AlertTriangle, Check, X, GitBranch, Lock, Download
+  Activity, AlertTriangle, Check, X, GitBranch, Lock, Download, Users
 } from 'lucide-react';
 import { SPEC_DOC_MARKDOWN } from '../../data/specDocMarkdown';
 import { openPdfPreview } from '../../utils/mdToHtml';
@@ -64,7 +64,8 @@ export default function SpecDoc() {
           <ScopeCard inScope={false} title="범위 제외 (Out of Scope)" items={[
             "자체 회원가입/비밀번호 관리 (K-water 영역)",
             "MFA · OTP (K-water 영역)",
-            "포털별 권한(Role) 관리 (각 포털 자체 관리)",
+            "포털별 권한(Role) 데이터 — IdP는 신원만 책임, 권한은 CMP 허브 + 각 포털 DB",
+            "권한 신청·승인 UI — CMP 권한 허브 사업 범위에서 다룸 (12절 참조)",
             "사용자 프로필 편집 UI",
           ]} />
         </div>
@@ -270,8 +271,133 @@ export default function SpecDoc() {
         </div>
       </Section>
 
-      {/* SECTION 10 — 표준 SI 산출물 */}
-      <Section icon={FileText} title="10. 산출물" subtitle="SI 표준 산출물">
+      {/* SECTION 10 — 권한 관리 모델 (CMP 권한 허브) */}
+      <Section icon={Users} title="10. 권한 관리 모델 (CMP 권한 허브)" subtitle="신원과 권한의 책임 분리 · 중앙 신청·승인 UX">
+        <div className="bg-indigo-500/5 border border-indigo-500/30 rounded-2xl p-5 mb-4 flex items-start gap-3">
+          <AlertTriangle className="shrink-0 text-indigo-400 mt-0.5" size={18} />
+          <div className="text-[13px] text-slate-300 leading-relaxed">
+            <strong className="text-indigo-200">IdP는 신원만 책임지고 권한 데이터를 보유하지 않습니다.</strong> 권한 관리는 <strong className="text-white">CMP가 중앙 허브 역할</strong>을 맡고, 실제 권한 데이터는 각 포털 DB에 저장합니다. 본 절은 IdP 구축 범위 밖이지만, 발주처가 RFP를 작성하거나 CMP 사업 범위를 산정할 때 참고할 권장 아키텍처입니다.
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
+            <h4 className="text-sm font-bold text-white mb-2">K-water</h4>
+            <p className="text-[13px] text-slate-400 leading-relaxed">직원 마스터 (sub, 부서, 직급). 포털 기능 권한과 무관.</p>
+          </div>
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
+            <h4 className="text-sm font-bold text-white mb-2">IdP (디지털플랫폼 통합인증)</h4>
+            <p className="text-[13px] text-slate-400 leading-relaxed">신원 증명. JWT에 sub + 기본 속성만. <strong className="text-rose-300">권한 데이터 미보유.</strong></p>
+          </div>
+          <div className="bg-slate-900 border border-indigo-500/30 rounded-xl p-5">
+            <h4 className="text-sm font-bold text-white mb-2">CMP (권한 허브)</h4>
+            <p className="text-[13px] text-slate-400 leading-relaxed">통합 신청·승인 UI · 워크플로 엔진 · 각 포털 grant API 호출 · 통합 감사 로그</p>
+          </div>
+        </div>
+
+        <h4 className="text-base font-bold text-white mb-2 mt-6">10.1 권한 신청·승인 워크플로</h4>
+        <div className="bg-slate-950 border border-slate-800 rounded-xl p-5 text-[13px] text-slate-300">
+          <ol className="space-y-2">
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">1</span><span>사용자가 <strong className="text-white">CMP "권한 신청" 페이지</strong>에서 [target_portal · role · resource(선택) · 사유] 입력</span></li>
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">2</span><span>CMP가 <code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">cmp_permission_requests</code>에 저장 + target_portal의 <strong className="text-white">owner(승인자)</strong> 식별</span></li>
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">3</span><span>owner에게 알림 발송 (이메일 / Slack / 포털 알림센터)</span></li>
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">4</span><span>owner가 CMP 승인 페이지에서 승인/반려</span></li>
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">5</span><span>승인 시 CMP가 <strong className="text-white">service-to-service 토큰</strong>(client_credentials grant)으로 해당 포털의 <code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">POST /api/admin/grant</code> 호출</span></li>
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">6</span><span>해당 포털이 자체 RBAC DB에 role 부여 + 감사 로그 기록 + 결과 응답</span></li>
+            <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-[11px] font-bold text-indigo-300">7</span><span>CMP가 사용자에게 결과 통보 + 권한 이력 갱신</span></li>
+          </ol>
+          <div className="mt-4 pt-4 border-t border-slate-800 text-[12px] text-slate-500">
+            ※ Push 실패 시 비동기 재시도 큐 + 재시도 한도 초과 시 운영 알람. 멱등성은 request_id로 보장.
+          </div>
+        </div>
+
+        <h4 className="text-base font-bold text-white mb-2 mt-6">10.2 데이터 모델 (CMP 권한 허브 측)</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <DbTable name="cmp_permission_requests" desc="신청·승인·이력" rows={[
+            ["id", "PK"],
+            ["requester_sub", "신청자"],
+            ["target_portal", "cmp/datahub/genai/saas"],
+            ["requested_role", "예: datahub_dataset_reader"],
+            ["resource_id", "선택 (데이터셋 등)"],
+            ["reason", "신청 사유"],
+            ["status", "pending/approved/rejected/revoked"],
+            ["approver_sub · approved_at", "승인 이력"],
+          ]} />
+          <DbTable name="cmp_portal_owners" desc="포털별 승인자(owner) 매핑" rows={[
+            ["portal_id", "PK"],
+            ["owner_sub[]", "승인 권한자들"],
+            ["fallback_owner_sub", "owner 부재 시"],
+            ["sla_hours", "응답 SLA (예: 24h)"],
+          ]} />
+        </div>
+
+        <h4 className="text-base font-bold text-white mb-2 mt-6">10.3 각 포털이 구현해야 하는 Admin API</h4>
+        <div className="bg-slate-950 border border-slate-800 rounded-xl p-5">
+          <ul className="space-y-2.5 text-[13px] text-slate-300">
+            <li><code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">POST /api/admin/grant</code> — body: <code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">{`{ sub, role, resource_id?, granted_by, request_id }`}</code></li>
+            <li><code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">POST /api/admin/revoke</code> — body: <code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">{`{ sub, role, resource_id?, revoked_by, reason }`}</code></li>
+            <li><code className="text-[12px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">GET /api/admin/roles?sub={'{sub}'}</code> — 응답: 해당 사용자의 모든 role/permission 목록</li>
+          </ul>
+          <div className="mt-4 pt-4 border-t border-slate-800 text-[12px] text-slate-500 space-y-1">
+            <div>· 인증: Bearer service token (client_id = <code className="text-amber-300">cmp-admin-svc</code> · scope = <code className="text-amber-300">{`{portal}:admin`}</code>)</div>
+            <div>· 각 포털은 토큰의 client_id가 <code className="text-amber-300">cmp-admin-svc</code>인지 확인 (다른 client는 거부)</div>
+            <div>· 멱등성: <code className="text-amber-300">request_id</code>가 이미 처리된 경우 같은 결과 반환 (중복 grant 방지)</div>
+          </div>
+        </div>
+
+        <h4 className="text-base font-bold text-white mb-2 mt-6">10.4 Service-to-Service 인증 (CMP → 각 포털)</h4>
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 text-[13px] text-slate-300">
+          <p className="leading-relaxed mb-3">CMP가 다른 포털의 admin API를 호출할 때는 일반 사용자 토큰이 아닌, <strong className="text-white">전용 client_credentials 토큰</strong>을 IdP에서 발급받아 사용합니다.</p>
+          <pre className="text-[12px] font-mono bg-slate-950 border border-slate-800 rounded p-3 text-slate-300 overflow-x-auto whitespace-pre">{`POST /oauth2/v1/token HTTP/1.1
+Host: auth.kwater.com
+Authorization: Basic <base64(cmp-admin-svc:secret)>
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&scope=datahub:admin`}</pre>
+          <p className="mt-3 text-[12px] text-slate-500">· IdP는 <code className="text-amber-300">cmp-admin-svc</code> client에 한해 <code className="text-amber-300">{`{portal}:admin`}</code> scope 부여 허용</p>
+        </div>
+
+        <h4 className="text-base font-bold text-white mb-2 mt-6">10.5 책임 분리 매트릭스</h4>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-[13px] border-collapse">
+            <thead>
+              <tr className="border-b border-slate-700 text-slate-400">
+                <th className="py-2 px-3 font-semibold text-[12px] uppercase tracking-wider">책임</th>
+                <th className="py-2 px-3 font-semibold text-[12px] uppercase tracking-wider">IdP</th>
+                <th className="py-2 px-3 font-semibold text-[12px] uppercase tracking-wider">CMP</th>
+                <th className="py-2 px-3 font-semibold text-[12px] uppercase tracking-wider">각 포털</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800">
+              <RaciRow item="사용자 신원 증명 (sub 발급)" r1="✓" r2="" r3="" />
+              <RaciRow item="권한 신청·승인 UI" r1="" r2="✓" r3="" />
+              <RaciRow item="승인 워크플로·알림" r1="" r2="✓" r3="" />
+              <RaciRow item="권한 데이터 저장 (role · permissions)" r1="" r2="" r3="✓" />
+              <RaciRow item="Admin API (grant/revoke) 구현" r1="" r2="" r3="✓" />
+              <RaciRow item="요청 라우팅·재시도" r1="" r2="✓" r3="" />
+              <RaciRow item="권한 부여/회수 감사 로그" r1="" r2="✓ (요청)" r3="✓ (실행)" />
+              <RaciRow item="권한 캐시 (BFF 세션에)" r1="" r2="" r3="✓" />
+            </tbody>
+          </table>
+        </div>
+
+        <div className="bg-amber-500/5 border border-amber-500/30 rounded-xl p-4 mt-6">
+          <h4 className="text-sm font-bold text-amber-200 mb-2 flex items-center gap-2">
+            <AlertTriangle size={14} className="text-amber-400" />
+            흔한 함정
+          </h4>
+          <ul className="space-y-1.5 text-[13px] text-slate-300">
+            <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">CMP DB에만 권한 저장</strong> → 매 API 호출마다 CMP 조회 필요. Push로 각 포털에도 반영.</span></li>
+            <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">권한 회수 시 CMP만 업데이트</strong> → 각 포털의 revoke API도 반드시 호출.</span></li>
+            <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">일반 사용자 토큰으로 grant API 호출</strong> → service-to-service 전용 토큰 사용. 일반 사용자가 admin API를 직접 칠 수 없게 차단.</span></li>
+            <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">한 포털의 admin role을 다른 포털의 admin으로 가정</strong> → 각 포털 role은 독립. CMP_ADMIN이 자동으로 데이터허브 ADMIN이 아님.</span></li>
+            <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">Push 실패 처리 누락</strong> → 비동기 재시도 큐 + 알람 + 최종 실패 시 신청자/owner에게 통지.</span></li>
+          </ul>
+        </div>
+      </Section>
+
+      {/* SECTION 11 — 표준 SI 산출물 */}
+      <Section icon={FileText} title="11. 산출물" subtitle="SI 표준 산출물">
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
           <table className="w-full text-left text-sm border-collapse">
             <thead>
@@ -464,6 +590,17 @@ function DelvRow({ stage, items }) {
         <span className="text-[11px] font-mono font-bold text-indigo-300 bg-indigo-500/10 border border-indigo-500/30 px-2 py-0.5 rounded">{stage}</span>
       </td>
       <td className="py-2.5 px-3 text-[13px] text-slate-300 leading-relaxed">{items}</td>
+    </tr>
+  );
+}
+
+function RaciRow({ item, r1, r2, r3 }) {
+  return (
+    <tr className="hover:bg-slate-900/40">
+      <td className="py-2 px-3 text-[13px] text-slate-300">{item}</td>
+      <td className="py-2 px-3 text-emerald-400 font-bold text-center w-20">{r1}</td>
+      <td className="py-2 px-3 text-emerald-400 font-bold text-center w-20">{r2}</td>
+      <td className="py-2 px-3 text-emerald-400 font-bold text-center w-20">{r3}</td>
     </tr>
   );
 }
