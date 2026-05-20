@@ -193,7 +193,7 @@ export default function SpecDoc() {
           <SecCard title="암호화 · 서명">
             <ul className="text-[15px] text-slate-300 space-y-1.5">
               <li>· JWT 서명: <code className="text-emerald-300">RS256</code></li>
-              <li>· K-water 페이로드: <code className="text-emerald-300">JWE A256GCM + RSA-OAEP</code></li>
+              <li>· K-water 페이로드: <code className="text-emerald-300">Fasoo 암호화 (사내 표준)</code></li>
               <li>· DB 개인정보: <code className="text-emerald-300">AES-256</code> 컬럼 암호화</li>
               <li>· 통신: <code className="text-emerald-300">TLS 1.2 이상</code>, HTTPS 강제</li>
             </ul>

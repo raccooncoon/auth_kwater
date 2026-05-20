@@ -141,7 +141,7 @@ K-water 인증 시스템에서 1차 인증을 거친 사용자가 디지털플�
 ### FR-1: 사용자 인증 (K-water 페이로드 수신)
 
 **입력**
-- HTTP GET \`/oauth2/kwater/callback?kwater_enc_payload=<JWE>&state=<random>\`
+- HTTP GET \`/oauth2/kwater/callback?kwater_enc_payload=<Fasoo>&state=<random>\`
 
 **처리**
 1. Fasoo 암호화 페이로드를 IdP 개인키(RSA-OAEP)로 복호화
@@ -690,7 +690,7 @@ CREATE INDEX idx_audit_created ON audit_logs(created_at);
 
 ### Phase 1 — MVP (W1~W4): CMP 단일 로그인
 
-- [ ] K-water 페이로드 수신 + 복호화 (JWE)
+- [ ] K-water Fasoo 페이로드 수신 + 복호화
 - [ ] SSO 세션 쿠키 발급
 - [ ] Authorization Code Flow + PKCE
 - [ ] Access Token / ID Token 발급
@@ -1018,7 +1018,7 @@ CMP 권한 허브 + 각 포털 Admin API는 **별도 사업 범위**로 RFP에 �
 
 #### MK-1: K-water Fasoo 암호화 페이로드 발급 시뮬레이션
 
-- 실 K-water와 **동일한 JWE 구조** 발급 (RSA-OAEP + AES-256-GCM)
+- 실 K-water와 **동일한 Fasoo 암호화 형식** 발급 (테스트 키 사용)
 - 페이로드 클레임 구조:
   \`\`\`json
   {
@@ -1078,7 +1078,7 @@ Content-Type: application/json
 **응답:**
 \`\`\`json
 {
-  "redirect_url": "https://auth.kwater.com/oauth2/kwater/callback?kwater_enc_payload=eyJhbGc...&state=test_state_abc123"
+  "redirect_url": "https://auth.kwater.com/oauth2/kwater/callback?kwater_enc_payload=51172B4CE7291F71A8E32D...&state=test_state_abc123"
 }
 \`\`\`
 

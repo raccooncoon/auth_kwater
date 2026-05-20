@@ -437,7 +437,7 @@ public class KWaterPayloadDecryptionFilter extends OncePerRequestFilter {
         }
         session.removeAttribute("kwater_state");                              // 일회용 소비
 
-        // 2) JWE 복호화 — K-water가 우리 공개키로 암호화한 사용자 정보
+        // 2) Fasoo 복호화 — K-water가 Fasoo로 암호화한 사용자 정보
         EncryptedJWT jwt = EncryptedJWT.parse(encPayload);
         jwt.decrypt(decrypter);
         JWTClaimsSet claims = jwt.getJWTClaimsSet();
@@ -708,7 +708,7 @@ export default function CodeExample({ handleCopy, copiedId }) {
         <div className="space-y-6">
           {[
             { id: 'spring-security', title: '1) Security 설정 — JWT Resource Server', desc: 'IdP JWKS로 Bearer 토큰을 자동 검증. K-water 페이로드 복호화 필터를 빈으로 주입, CSRF는 콜백/백채널 경로만 제외.', code: springCode },
-            { id: 'spring-kwater-filter', title: '2) K-water 페이로드 복호화 필터', desc: 'JWE 복호화 → SSO 세션 발급. ResponseCookie로 SameSite 명시, CMP 콜백 리다이렉트에 state 동봉.', code: springKwaterFilterCode },
+            { id: 'spring-kwater-filter', title: '2) K-water 페이로드 복호화 필터', desc: 'Fasoo 복호화 → SSO 세션 발급. ResponseCookie로 SameSite 명시, CMP 콜백 리다이렉트에 state 동봉.', code: springKwaterFilterCode },
             { id: 'spring-bff-callback', title: '3) BFF 콜백 컨트롤러 — code↔token 교환', desc: 'MultiValueMap으로 form 인코딩, PKCE code_verifier 함께 전달, id_token 포함 응답 매핑, RestClient 에러 처리.', code: springBffCallbackCode },
             { id: 'spring-backchannel', title: '4) 백채널 로그아웃 수신 엔드포인트', desc: 'OIDC BCL 1.0 §2.4 (RFC 8417 SET) 전체 검증: typ=logout+jwt · iss · aud · iat(±스큐) · jti(Caffeine TTL) · events · nonce 부재 · sub/sid. Cache-Control: no-store 응답.', code: springBackchannelCode },
           ].map(s => (

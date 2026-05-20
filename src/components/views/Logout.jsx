@@ -97,10 +97,10 @@ Host: auth.kwater.com`} />
                   <td className="py-2 px-3 text-slate-400">브라우저가 K-water 로그아웃 페이지를 실제 방문해야 동작</td>
                 </tr>
                 <tr>
-                  <td className="py-2 px-3 font-mono text-purple-300">SAML SLO</td>
-                  <td className="py-2 px-3 text-slate-400">K-water IdP → 우리 SP SLO endpoint (LogoutRequest)</td>
-                  <td className="py-2 px-3 text-emerald-400 font-semibold">높음</td>
-                  <td className="py-2 px-3 text-slate-400">K-water 페이로드가 SAML Assertion 기반인 경우</td>
+                  <td className="py-2 px-3 font-mono text-purple-300">Fasoo 세션 폐기 콜백</td>
+                  <td className="py-2 px-3 text-slate-400">K-water SSO → 우리 엔드포인트 (사내 표준 호출)</td>
+                  <td className="py-2 px-3 text-emerald-400 font-semibold">중간~높음</td>
+                  <td className="py-2 px-3 text-slate-400">K-water 사내 표준 콜백을 지원하는 경우 (인터페이스 협의 필요)</td>
                 </tr>
               </tbody>
             </table>
@@ -135,7 +135,7 @@ logout_token=eyJhbGciOiJSUzI1NiJ9.<JWT signed by K-water>`} />
               <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>우리에게 발급될 <code className="text-sky-300">client_id</code> (RP 등록)</span></li>
               <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span><code className="text-sky-300">sub</code> claim 형식 및 디지털플랫폼 user_id 매핑 정책</span></li>
               <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>(Back-channel 미지원시) Front-channel iframe 방식 협의</span></li>
-              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>(SAML 기반이면) SP SLO Metadata 등록 + 인증서 교환</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>(Fasoo 세션 폐기 콜백 지원 시) 인터페이스 명세·인증서 교환 협의</span></li>
               <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={14} /><span>실제 <code className="text-sky-300">logout_token</code> 또는 <code className="text-sky-300">LogoutRequest</code> 샘플 1건 사전 공유 (테스트용)</span></li>
             </ul>
           </div>
