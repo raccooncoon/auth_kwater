@@ -58,7 +58,7 @@ const TAB_ORDER = [
   { id: 'api',       label: 'Endpoints Spec' },
   { id: 'code',      label: '구현 예제 코드' },
   { id: 'spec-doc',  label: '서버 구축 요구사항 & 스펙' },
-  { id: 'comparison',label: '별도 인증 서버 구축 필요성' },
+  // { id: 'comparison',label: '별도 인증 서버 구축 필요성' },  // 일시 숨김
 ];
 
 export default function App() {
@@ -168,7 +168,7 @@ export default function App() {
             { id: 'api', icon: Terminal, label: 'Endpoints Spec' },
             { id: 'code', icon: Code2, label: '구현 예제 코드' },
             { id: 'spec-doc', icon: FileText, label: '서버 구축 요구사항 & 스펙' },
-            { id: 'comparison', icon: AlertTriangle, label: '별도 인증 서버 구축 필요성' },
+            // { id: 'comparison', icon: AlertTriangle, label: '별도 인증 서버 구축 필요성' },  // 일시 숨김
           ].map(item => {
             const Icon = item.icon;
             const active = activeTab === item.id;
