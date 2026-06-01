@@ -126,7 +126,7 @@ export default function App() {
       {/* Main Container */}
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Navigation Sidebar (collapsible on lg+) */}
-        <nav className={`hidden lg:block ${sidebarCollapsed ? 'lg:w-16' : 'lg:w-72'} lg:border-r border-slate-800 bg-slate-950/40 p-3 lg:p-4 space-y-1 shrink-0 transition-all duration-200 relative lg:overflow-y-auto`}>
+        <nav className={`hidden lg:block ${sidebarCollapsed ? 'lg:w-16' : 'lg:w-80'} lg:border-r border-slate-800 bg-slate-950/40 p-3 lg:p-4 space-y-1.5 shrink-0 transition-all duration-200 relative lg:overflow-y-auto`}>
           {/* Collapse toggle (visible on lg+) */}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -153,9 +153,9 @@ export default function App() {
                 key={item.id}
                 onClick={() => goToTab(item.id)}
                 title={sidebarCollapsed ? item.label : undefined}
-                className={`w-full flex items-center ${sidebarCollapsed ? 'lg:justify-center lg:px-2' : 'space-x-3 px-3'} py-2.5 rounded-lg text-sm font-medium transition-all ${active ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
+                className={`w-full flex items-center ${sidebarCollapsed ? 'lg:justify-center lg:px-2' : 'space-x-3 px-3.5'} py-3 rounded-lg text-[16px] font-semibold transition-all ${active ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
               >
-                <Icon size={18} className="shrink-0" />
+                <Icon size={20} className="shrink-0" />
                 <span className={sidebarCollapsed ? 'lg:hidden' : ''}>{item.label}</span>
               </button>
             );
@@ -168,7 +168,6 @@ export default function App() {
             { id: 'api', icon: Terminal, label: 'Endpoints Spec' },
             { id: 'code', icon: Code2, label: '구현 예제 코드' },
             { id: 'spec-doc', icon: FileText, label: '서버 구축 요구사항 & 스펙' },
-            // { id: 'comparison', icon: AlertTriangle, label: '별도 인증 서버 구축 필요성' },  // 일시 숨김
           ].map(item => {
             const Icon = item.icon;
             const active = activeTab === item.id;
@@ -177,9 +176,9 @@ export default function App() {
                 key={item.id}
                 onClick={() => goToTab(item.id)}
                 title={sidebarCollapsed ? item.label : undefined}
-                className={`w-full flex items-center ${sidebarCollapsed ? 'lg:justify-center lg:px-2' : 'space-x-3 px-3'} py-2.5 rounded-lg text-sm font-medium transition-all ${active ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
+                className={`w-full flex items-center ${sidebarCollapsed ? 'lg:justify-center lg:px-2' : 'space-x-3 px-3.5'} py-3 rounded-lg text-[16px] font-semibold transition-all ${active ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
               >
-                <Icon size={18} className="shrink-0" />
+                <Icon size={20} className="shrink-0" />
                 <span className={sidebarCollapsed ? 'lg:hidden' : ''}>{item.label}</span>
               </button>
             );
