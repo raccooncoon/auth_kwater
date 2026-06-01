@@ -31,9 +31,11 @@ function Collapsible({ open, onToggle, icon: Icon, iconColor = 'text-indigo-400'
 }
 
 export default function Tokens() {
-  // 6개 섹션 + 1개 nested (SPA) 접이식 상태 — 모두 기본 닫힘
+  // 접이식 섹션 상태 — 모두 기본 닫힘
   const [open, setOpen] = useState({
     jwt: false,
+    viewer: false,      // 인터랙티브 토큰 구조 뷰어
+    role: false,        // 토큰 내 권한(Role) 관리 방안
     storage: false,
     lifecycle: false,
     rtr: false,
@@ -42,6 +44,8 @@ export default function Tokens() {
     spa: false,         // nested in storage
   });
   const toggle = (key) => setOpen(prev => ({ ...prev, [key]: !prev[key] }));
+  // 인터랙티브 토큰 뷰어 — 선택된 파트 (header / payload / signature)
+  const [viewerPart, setViewerPart] = useState('payload');
   return (
     <div className="space-y-8">
       <div>
@@ -394,6 +398,202 @@ await redis.setex(\`jti:\${payload.jti}\`, payload.exp - now, '1');`} />
               <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">JWT를 localStorage에 저장</strong> — XSS 한 번이면 모든 토큰 탈취. <strong className="text-emerald-300">HttpOnly 쿠키 (BFF 세션 ID)</strong>를 사용하세요.</span></li>
               <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">매 요청마다 JWKS 재조회</strong> — IdP 부하 + 응답 지연. 보통 1시간 캐시, 키 미스 시 1회 재조회.</span></li>
               <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">자체 JWT 파싱 함수 구현</strong> — 표준 라이브러리(<code className="text-emerald-300">jose</code>, <code className="text-emerald-300">jsonwebtoken</code>, <code className="text-emerald-300">nimbus-jose-jwt</code>) 사용. 직접 구현하면 알고리즘 confusion 등 미묘한 취약점 발생.</span></li>
+            </ul>
+          </div>
+        </div>
+      </Collapsible>
+
+      {/* Interactive Token Viewer — 접이식 */}
+      <Collapsible
+        open={open.viewer}
+        onToggle={() => toggle('viewer')}
+        icon={Code2}
+        iconColor="text-sky-400"
+        title="인터랙티브 토큰 구조 뷰어 — 클릭해서 각 부분 살펴보기"
+        subtitle="3등분된 토큰을 클릭하면 해당 부분의 디코딩 결과와 설명이 펼쳐집니다"
+      >
+        <div className="p-6 space-y-5">
+          <p className="text-sm text-slate-300 leading-relaxed">
+            아래 토큰은 <code className="text-[14px] bg-slate-950 px-1.5 py-0.5 rounded text-sky-300">cmp-portal</code> 클라이언트에 발급된 <strong className="text-white">예시 Access Token</strong>입니다. 색깔별 영역을 <strong className="text-sky-300">클릭</strong>하면 그 부분이 어떻게 디코딩되는지 볼 수 있습니다.
+          </p>
+
+          {/* Clickable token bar */}
+          <div className="bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-[14px] leading-relaxed break-all">
+            <button
+              type="button"
+              onClick={() => setViewerPart('header')}
+              className={`transition rounded px-0.5 ${viewerPart === 'header' ? 'bg-indigo-500/30 text-indigo-200 ring-1 ring-indigo-400' : 'text-indigo-400 hover:bg-indigo-500/15'}`}
+            >eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Imt3LTIwMjYtMDEifQ</button>
+            <span className="text-slate-600 mx-0.5">.</span>
+            <button
+              type="button"
+              onClick={() => setViewerPart('payload')}
+              className={`transition rounded px-0.5 ${viewerPart === 'payload' ? 'bg-emerald-500/30 text-emerald-200 ring-1 ring-emerald-400' : 'text-emerald-400 hover:bg-emerald-500/15'}`}
+            >eyJpc3MiOiJodHRwczovL2F1dGgua3dhdGVyLmNvbSIsInN1YiI6Imt3YXRlcl91c2VyXzEyMzQiLCJhdWQiOiJjbXAtcG9ydGFsIiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBjbXA6YWRtaW4iLCJyb2xlcyI6WyJDTVBfQURNSU4iXSwiZXhwIjoxNzE2OTg1NTkzLCJpYXQiOjE3MTY5ODE5OTN9</button>
+            <span className="text-slate-600 mx-0.5">.</span>
+            <button
+              type="button"
+              onClick={() => setViewerPart('signature')}
+              className={`transition rounded px-0.5 ${viewerPart === 'signature' ? 'bg-rose-500/30 text-rose-200 ring-1 ring-rose-400' : 'text-rose-400 hover:bg-rose-500/15'}`}
+            >SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</button>
+          </div>
+
+          {/* Part legend */}
+          <div className="flex flex-wrap gap-2 text-[13px] font-mono">
+            <button type="button" onClick={() => setViewerPart('header')} className={`px-2.5 py-1 rounded-full border transition ${viewerPart === 'header' ? 'bg-indigo-500/20 text-indigo-200 border-indigo-500/50' : 'text-indigo-400 border-indigo-500/30 hover:bg-indigo-500/10'}`}>● Header</button>
+            <button type="button" onClick={() => setViewerPart('payload')} className={`px-2.5 py-1 rounded-full border transition ${viewerPart === 'payload' ? 'bg-emerald-500/20 text-emerald-200 border-emerald-500/50' : 'text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/10'}`}>● Payload</button>
+            <button type="button" onClick={() => setViewerPart('signature')} className={`px-2.5 py-1 rounded-full border transition ${viewerPart === 'signature' ? 'bg-rose-500/20 text-rose-200 border-rose-500/50' : 'text-rose-400 border-rose-500/30 hover:bg-rose-500/10'}`}>● Signature</button>
+          </div>
+
+          {/* Decoded detail */}
+          {viewerPart === 'header' && (
+            <div className="bg-slate-950/60 border border-indigo-500/30 rounded-xl p-5 space-y-3">
+              <div className="text-indigo-300 text-[14px] font-mono font-bold uppercase">Header — 디코딩 결과</div>
+              <CodeBlock language="json" fontSize="0.82rem" code={`{
+  "alg": "RS256",       // 서명 알고리즘 (비대칭)
+  "typ": "JWT",         // 토큰 타입
+  "kid": "kw-2026-01"   // 서명 키 식별자 → JWKS에서 공개키 조회
+}`} />
+              <p className="text-[14px] text-slate-400 leading-relaxed">리소스 서버는 <code className="text-[13px] bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300">kid</code>로 어떤 공개키를 쓸지 식별합니다. <code className="text-[13px] bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300">alg</code>는 반드시 RS256만 허용 — <code className="text-[13px] bg-slate-900 px-1.5 py-0.5 rounded text-rose-300">none</code>/<code className="text-[13px] bg-slate-900 px-1.5 py-0.5 rounded text-rose-300">HS256</code> 수용 금지.</p>
+            </div>
+          )}
+          {viewerPart === 'payload' && (
+            <div className="bg-slate-950/60 border border-emerald-500/30 rounded-xl p-5 space-y-3">
+              <div className="text-emerald-300 text-[14px] font-mono font-bold uppercase">Payload — 디코딩 결과</div>
+              <CodeBlock language="json" fontSize="0.82rem" code={`{
+  "iss": "https://auth.kwater.com",  // 발급자 (IdP)
+  "sub": "kwater_user_1234",         // 사용자 식별자
+  "aud": "cmp-portal",               // 토큰 수신 대상 (client_id)
+  "scope": "openid profile cmp:admin",  // 거친 권한 (OAuth scope)
+  "roles": ["CMP_ADMIN"],            // 세부 역할 (RBAC) — 아래 섹션 참조
+  "exp": 1716985593,                 // 만료 시각 (UNIX)
+  "iat": 1716981993                  // 발급 시각 (UNIX)
+}`} />
+              <p className="text-[14px] text-slate-400 leading-relaxed"><strong className="text-emerald-300">암호화되지 않음</strong> — Base64 디코딩만 하면 누구나 읽습니다. 비밀번호·민감정보 절대 금지. <code className="text-[13px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">scope</code>(거친 권한)와 <code className="text-[13px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">roles</code>(세부 역할)의 차이는 아래 "토큰 내 권한 관리" 섹션에서 설명합니다.</p>
+            </div>
+          )}
+          {viewerPart === 'signature' && (
+            <div className="bg-slate-950/60 border border-rose-500/30 rounded-xl p-5 space-y-3">
+              <div className="text-rose-300 text-[14px] font-mono font-bold uppercase">Signature — 생성·검증 방식</div>
+              <CodeBlock language="javascript" fontSize="0.82rem" code={`// IdP가 비공개키로 서명 (발급 시)
+signature = RS256_sign(
+  base64url(header) + "." + base64url(payload),
+  IdP_private_key   // KMS에만 보관
+)
+
+// 리소스 서버가 공개키로 검증 (요청 시)
+RS256_verify(token, JWKS_public_key)  // → true/false`} />
+              <p className="text-[14px] text-slate-400 leading-relaxed">Header나 Payload를 <strong className="text-white">1바이트만 바꿔도</strong> 서명 검증이 실패합니다. 공개키는 누구나 가질 수 있지만(검증용), 비공개키는 IdP만 보유(발급용)하므로 위조 불가.</p>
+            </div>
+          )}
+        </div>
+      </Collapsible>
+
+      {/* Role / RBAC management — 접이식 */}
+      <Collapsible
+        open={open.role}
+        onToggle={() => toggle('role')}
+        icon={ShieldCheck}
+        iconColor="text-amber-400"
+        title="토큰 내 권한(Role) 관리 방안 — scope vs roles, 어디에 무엇을 담는가"
+        subtitle="OAuth scope와 RBAC role의 역할 분담 · 권한 변경 즉시 반영 전략"
+      >
+        <div className="p-6 space-y-6">
+          <p className="text-sm text-slate-300 leading-relaxed">
+            "이 사용자가 무엇을 할 수 있는가"를 토큰에 어떻게 담을지는 SSO 설계의 핵심입니다. 권한 정보를 <strong className="text-white">토큰에 넣을지(빠름·간편)</strong>, <strong className="text-white">백엔드 DB에서 조회할지(즉시 반영)</strong>를 구분해야 합니다.
+          </p>
+
+          {/* scope vs roles */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-slate-950/60 border border-indigo-500/30 rounded-xl p-5">
+              <div className="text-indigo-300 text-[14px] font-mono font-bold uppercase mb-2">scope — 거친 권한 (Coarse)</div>
+              <p className="text-[14px] text-slate-400 leading-relaxed mb-2">"이 토큰이 어느 <strong className="text-white">API 카테고리</strong>에 접근 가능한가". OAuth 표준 개념. 토큰 발급 시 client_id·사용자에 따라 결정.</p>
+              <CodeBlock language="json" fontSize="0.78rem" code={`"scope": "openid profile cmp:read cmp:admin"`} />
+              <p className="text-[13px] text-slate-500 mt-2">예: <code className="text-indigo-300">datahub:read</code> 있으면 데이터허브 조회 API 호출 가능</p>
+            </div>
+            <div className="bg-slate-950/60 border border-amber-500/30 rounded-xl p-5">
+              <div className="text-amber-300 text-[14px] font-mono font-bold uppercase mb-2">roles — 세부 역할 (Fine, RBAC)</div>
+              <p className="text-[14px] text-slate-400 leading-relaxed mb-2">"이 사용자가 포털 안에서 어떤 <strong className="text-white">업무 역할</strong>인가". 각 포털 자체 RBAC. 메뉴 노출·버튼 활성화·데이터 필터링 결정.</p>
+              <CodeBlock language="json" fontSize="0.78rem" code={`"roles": ["CMP_ADMIN", "DATAHUB_VIEWER"]`} />
+              <p className="text-[13px] text-slate-500 mt-2">예: <code className="text-amber-300">CMP_ADMIN</code>이면 CMP 관리자 메뉴 노출</p>
+            </div>
+          </div>
+
+          {/* 권한을 토큰에 vs DB에 */}
+          <div>
+            <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
+              <Info size={16} className="text-amber-400" />
+              권한 정보를 어디에 둘까 — 토큰 vs DB
+            </h4>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[14px] border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-700 text-slate-500 text-[13px]">
+                    <th className="py-2 px-3 font-semibold uppercase tracking-wider">방식</th>
+                    <th className="py-2 px-3 font-semibold uppercase tracking-wider">담는 위치</th>
+                    <th className="py-2 px-3 font-semibold uppercase tracking-wider">장점</th>
+                    <th className="py-2 px-3 font-semibold uppercase tracking-wider">단점</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                  <tr>
+                    <td className="py-2.5 px-3 font-semibold text-indigo-300">토큰에 claim 포함</td>
+                    <td className="py-2.5 px-3 font-mono text-[13px]">scope / roles claim</td>
+                    <td className="py-2.5 px-3">매 요청 DB 조회 불필요 (빠름)</td>
+                    <td className="py-2.5 px-3 text-amber-300">권한 변경이 토큰 만료까지 반영 안 됨</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2.5 px-3 font-semibold text-emerald-300">백엔드 DB 조회</td>
+                    <td className="py-2.5 px-3 font-mono text-[13px]">sub → 포털 RBAC DB</td>
+                    <td className="py-2.5 px-3">권한 변경 <strong className="text-emerald-300">즉시 반영</strong> · 행(row) 단위 권한 가능</td>
+                    <td className="py-2.5 px-3 text-amber-300">매 요청 조회 (캐시 5~15분으로 완화)</td>
+                  </tr>
+                  <tr className="bg-emerald-500/5">
+                    <td className="py-2.5 px-3 font-bold text-emerald-200">권장: 하이브리드</td>
+                    <td className="py-2.5 px-3 text-[13px]">scope는 토큰 · 세부 role은 DB</td>
+                    <td className="py-2.5 px-3 text-emerald-300 font-semibold">거친 권한 빠르게 + 세부 권한 즉시 반영</td>
+                    <td className="py-2.5 px-3 text-slate-400">설계 약간 복잡 (가치 충분)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* 권한 흐름 */}
+          <div className="bg-slate-950 border border-slate-800 rounded-xl p-5">
+            <h4 className="text-sm font-bold text-white mb-3">권한 흐름 — 발급부터 검증까지</h4>
+            <ol className="space-y-2 text-[14px] text-slate-300">
+              <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[12px] font-bold text-amber-300">1</span><span>IdP가 토큰 발급 시 <strong className="text-white">client별 허용 scope</strong>를 토큰에 포함 (예: <code className="text-[13px] bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300">cmp:admin</code>)</span></li>
+              <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[12px] font-bold text-amber-300">2</span><span>포털 백엔드가 토큰 검증 후 <code className="text-[13px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">sub</code>로 자체 RBAC DB 조회 → 세부 role/permission 획득 (5~15분 캐시)</span></li>
+              <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[12px] font-bold text-amber-300">3</span><span>API 라우트별 권한 체크: <code className="text-[13px] bg-slate-900 px-1.5 py-0.5 rounded text-amber-300">requireScope('cmp:admin')</code> + <code className="text-[13px] bg-slate-900 px-1.5 py-0.5 rounded text-amber-300">requireRole('CMP_ADMIN')</code></span></li>
+              <li className="flex gap-3"><span className="shrink-0 w-6 h-6 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[12px] font-bold text-amber-300">4</span><span>권한 변경 시 CMP 권한 허브가 각 포털 RBAC DB 갱신 → 다음 조회 시 즉시 반영 (토큰 재발급 불필요)</span></li>
+            </ol>
+          </div>
+
+          {/* 권한 변경 즉시 반영 */}
+          <div className="bg-indigo-500/5 border border-indigo-500/30 rounded-xl p-4">
+            <h4 className="text-[14px] font-bold text-indigo-200 mb-2 flex items-center gap-2">
+              <Info size={14} className="text-indigo-400" />
+              권한 변경을 즉시 반영하려면
+            </h4>
+            <ul className="space-y-1.5 text-[14px] text-slate-300">
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={13} /><span>세부 role은 토큰이 아닌 <strong className="text-white">DB에서 조회</strong> (5~15분 캐시)</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={13} /><span>긴급 회수가 필요하면 캐시 TTL을 짧게 + 토큰 <code className="text-[13px] bg-slate-900 px-1.5 py-0.5 rounded text-emerald-300">/revoke</code> 병행</span></li>
+              <li className="flex gap-2"><Check className="shrink-0 text-emerald-400 mt-0.5" size={13} /><span>scope 변경은 다음 토큰 발급(또는 RTR 갱신) 시점에 반영 — Access Token TTL이 짧을수록 빠름</span></li>
+            </ul>
+          </div>
+
+          {/* 안티패턴 */}
+          <div className="bg-rose-500/5 border border-rose-500/30 rounded-xl p-4">
+            <h4 className="text-[14px] font-bold text-rose-200 mb-2 flex items-center gap-2">
+              <AlertTriangle size={14} className="text-rose-400" />
+              권한 설계 시 피해야 할 것
+            </h4>
+            <ul className="space-y-1.5 text-[14px] text-slate-300">
+              <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">수백 개 행(row) 권한을 토큰에 모두 담기</strong> — 토큰이 비대해짐. 행 단위 권한은 무조건 DB.</span></li>
+              <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">한 포털 role을 다른 포털에 그대로 적용</strong> — CMP_ADMIN이 자동으로 데이터허브 ADMIN이 아님. 포털별 독립.</span></li>
+              <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">scope만으로 모든 권한 판단</strong> — scope는 API 카테고리 수준. 세부 업무 권한은 role로.</span></li>
+              <li className="flex gap-2"><span className="shrink-0 text-rose-400">✗</span><span><strong className="text-rose-200">K-water 직급을 그대로 포털 권한으로</strong> — 직급(참조용)과 포털 기능 권한은 별개.</span></li>
             </ul>
           </div>
         </div>
